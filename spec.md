@@ -1,32 +1,45 @@
 # SIMLABS Website
 
 ## Current State
-Full SIMLABS website with sections: Hero, About, Services (VR/AR/MR/VS), Products (10 items), Industries (7 sectors), Why SIMLABS, Customers (testimonials + badges), Jobs, Contact form, Footer. Uses icon-only cards for all sections. Contact form has no captcha. Email shown as info@simlabs.in. Header logo uses Cpu icon + gradient SIM + white LABS text.
+Multi-page React site with Services (VR, AR, MR, VS), Products (10 COTS tools), Industries (7 segments), Customers, Jobs, and Contact sections. SharedHeader and dedicated pages for each Service, Product, and Industry.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Images to each Service card (VR/AR/MR/VS) using generated images
-- Images to each Product card (10 products) using generated images
-- Images to each Industry card (7 industries) using generated images
-- Customer logo images in Customers section (replace plain text badges), 18 customers with generated logo PNGs
-- SIMLABS logo (fetched from simlabs.in as simlabs-logo.png) displayed in header top right corner area, replacing Cpu icon
-- Simple math-based CAPTCHA field in contact form before submit button
+- **Manufacturing** industry segment with dedicated page and image
+- **LAYAR** product (ML-based object recognition and AR augmentation tool)
+- **INTBOT** product (AI-based chatbot for products, spare parts, and services)
+- **Artificial Intelligence (AI)** technology service with dedicated page mentioning Machine Learning
+- **Cookie consent banner**: bottom-of-screen banner with Accept/Decline buttons; stores choice in localStorage; disappears on acceptance
+- **Privacy Policy page**: accessible via `/privacy-policy` route and linked from cookie banner and footer
+- Generate images: AI service, Manufacturing industry, LAYAR product, INTBOT product
 
 ### Modify
-- SIMLABS word in header and footer: ALL letters same color (currently SIM=gradient, LABS=foreground) - use gradient-text for entire SIMLABS
-- Contact email: change from clickable mailto:info@simlabs.in to displayed text "info at simlabs dot in" (both the href/display)
-- Customers section: replace the CUSTOMER_ORGS text badges with logo image grid showing all 18 customer logos
+- **Header images on all pages**: fully visible (no cropping) – use `object-contain` with dark bg or natural height, removing fixed-height crop
+- **SIMLABS logo**: ensure it hyperlinks to Home page (`href="/"` in SharedHeader, `href="#home"` in App.tsx Header)
+- **VR icon**: change from `Headset` to `Glasses` (VR goggles look)
+- **Remove "Get in Touch" CTA button** from top nav (both App.tsx Header and SharedHeader)
+- **Remove COTS word**: change badge from "COTS Software" to "Software Products"; update descriptions
+- **"Explore Solutions" → "Explore What We Offer"**: in Hero button and IndustryPage sidebar CTA
+- **Remove Follow Us social media links** from Contact section (right side panel)
+- **Footer "Connect" heading → "Follow Us"**
+- **Hover colors**: change all blue/primary hover effects to orange – update CSS primary color to orange in index.css or use Tailwind orange classes throughout
+- **Footer**: add Privacy Policy link
 
 ### Remove
-- Old plain text customer org badges
+- "Get in Touch" button from navigation header
+- Social media links block from the Contact section (next to contact form)
+- "COTS" word from all occurrences
 
 ## Implementation Plan
-1. Update Header: use simlabs-logo.png in place of Cpu icon; make full SIMLABS text same gradient color
-2. Update Footer: make full SIMLABS text same gradient color
-3. Update Services section: add image at top of each card
-4. Update Products section: add image to each product card (image above the icon+text)
-5. Update Industries section: add image to each industry card
-6. Update Customers section: show 18 customer logo images in a responsive grid
-7. Update Contact form: add simple math captcha (e.g. "What is 3 + 5?") with random numbers, validate before submit
-8. Update Contact email: change to display "info at simlabs dot in" without mailto href
+1. Update index.css primary color token to orange (oklch orange value)
+2. Update data.tsx: add Manufacturing to INDUSTRIES + INDUSTRY_SOLUTIONS; add LAYAR and INTBOT to PRODUCTS + PRODUCT_DETAILS; add Artificial Intelligence to SERVICES + SERVICE_DETAILS
+3. Update App.tsx: remove Get in Touch button from Header nav; change VR icon to Glasses; change "COTS Software" badge to "Software Products"; update hero button text; update footer heading; remove social links from Contact; add Privacy Policy footer link
+4. Update SharedHeader.tsx: remove Get in Touch button; ensure logo links to home
+5. Update ServicePage.tsx: fix header image to show fully (object-contain or auto-height)
+6. Update ProductPage.tsx: fix header image; change COTS badge to Software Products
+7. Update IndustryPage.tsx: fix header image; update CTA text to "Explore What We Offer"
+8. Create CookieBanner.tsx component with localStorage persistence
+9. Create PrivacyPolicyPage.tsx with full privacy policy content
+10. Register /privacy-policy route in router
+11. Mount CookieBanner in App.tsx root

@@ -4,8 +4,18 @@ import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  Link,
+  Outlet,
+  RouterProvider,
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from "@tanstack/react-router";
+import {
   ArrowRight,
+  Bot,
   Box,
+  Brain,
   Briefcase,
   Car,
   CheckCircle2,
@@ -14,10 +24,11 @@ import {
   Crosshair,
   Download,
   Eye,
+  Factory,
   FileText,
+  Glasses,
   Globe,
   HardHat,
-  Headset,
   HeartPulse,
   Layers,
   Loader2,
@@ -27,6 +38,7 @@ import {
   Monitor,
   Plane,
   Radio,
+  ScanSearch,
   Search,
   Shield,
   ShieldCheck,
@@ -43,7 +55,12 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { SiFacebook, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
 import { toast } from "sonner";
-import { useSubmitContactForm } from "./hooks/useQueries";
+import CookieBanner from "./components/CookieBanner";
+import { INDUSTRIES, PRODUCTS, SERVICES, slugify } from "./data";
+import IndustryPage from "./pages/IndustryPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import ProductPage from "./pages/ProductPage";
+import ServicePage from "./pages/ServicePage";
 
 // ─── Scroll-reveal hook ────────────────────────────────────────────────────
 function useSectionReveal() {
@@ -105,7 +122,7 @@ function Header() {
           data-ocid="nav.link"
         >
           <img
-            src="/assets/generated/simlabs-logo.dim_400x120.png"
+            src="/assets/uploads/01-1.png"
             alt="SIMLABS"
             className="h-10 w-auto"
           />
@@ -121,26 +138,12 @@ function Header() {
               key={l.href}
               href={l.href}
               data-ocid="nav.link"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
             >
               {l.label}
             </a>
           ))}
         </nav>
-
-        {/* CTA */}
-        <a
-          href="#contact"
-          className="hidden lg:block"
-          data-ocid="nav.primary_button"
-        >
-          <Button
-            size="sm"
-            className="btn-gradient border-0 text-white font-semibold"
-          >
-            Get in Touch
-          </Button>
-        </a>
 
         {/* Mobile hamburger */}
         <button
@@ -168,7 +171,7 @@ function Header() {
                 key={l.href}
                 href={l.href}
                 data-ocid="nav.link"
-                className="block py-3 text-sm font-medium text-muted-foreground hover:text-foreground border-b border-border last:border-0"
+                className="block py-3 text-sm font-medium text-muted-foreground hover:text-primary border-b border-border last:border-0"
                 onClick={() => setOpen(false)}
               >
                 {l.label}
@@ -232,7 +235,7 @@ function Hero() {
                   size="lg"
                   className="btn-gradient border-0 text-white font-semibold gap-2"
                 >
-                  Explore Our Solutions
+                  Explore What We Offer
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </a>
@@ -318,36 +321,6 @@ function AboutBanner() {
 }
 
 // ─── Services ──────────────────────────────────────────────────────────────
-const SERVICES = [
-  {
-    icon: <Headset className="w-7 h-7" />,
-    title: "Virtual Reality (VR)",
-    desc: "Immersive VR training applications, virtual interactive experiences, and marketing applications across multiple platforms and hardware types.",
-    tag: "Training · Education · Defence",
-    image: "/assets/generated/service-vr.dim_800x500.jpg",
-  },
-  {
-    icon: <Eye className="w-7 h-7" />,
-    title: "Augmented Reality (AR)",
-    desc: "Cutting-edge AR solutions for maintenance training, education, marketing, architecture, and retail use cases.",
-    tag: "Manufacturing · Healthcare · Retail",
-    image: "/assets/generated/service-ar.dim_800x500.jpg",
-  },
-  {
-    icon: <Layers className="w-7 h-7" />,
-    title: "Mixed Reality (MR)",
-    desc: "Blended MR experiences that merge physical and digital worlds for advanced training, collaboration, and design review.",
-    tag: "Aerospace · Engineering · Design",
-    image: "/assets/generated/service-mr.dim_800x500.jpg",
-  },
-  {
-    icon: <Monitor className="w-7 h-7" />,
-    title: "Visual Simulation (VS)",
-    desc: "Professional 3D model development, terrain development, and simulation application development.",
-    tag: "Aerospace · Defence · Automotive",
-    image: "/assets/generated/service-vs.dim_800x500.jpg",
-  },
-];
 
 function Services() {
   return (
@@ -370,36 +343,42 @@ function Services() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {SERVICES.map((s, i) => (
-            <motion.div
+            <Link
               key={s.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              to="/services/$slug"
+              params={{ slug: slugify(s.title) }}
+              className="block"
               data-ocid={`services.item.${i + 1}`}
-              className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group"
             >
-              <img
-                src={s.image}
-                alt={s.title}
-                className="w-full h-36 object-cover"
-                loading="lazy"
-              />
-              <div className="p-6">
-                <div className="w-12 h-12 rounded-lg btn-gradient flex items-center justify-center mb-4 text-white">
-                  {s.icon}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group cursor-pointer h-full"
+              >
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  className="w-full h-36 object-cover"
+                  loading="lazy"
+                />
+                <div className="p-6">
+                  <div className="w-12 h-12 rounded-lg btn-gradient flex items-center justify-center mb-4 text-white">
+                    {s.icon}
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
+                    {s.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    {s.desc}
+                  </p>
+                  <span className="text-xs text-primary/80 font-medium">
+                    {s.tag}
+                  </span>
                 </div>
-                <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-                  {s.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  {s.desc}
-                </p>
-                <span className="text-xs text-primary/80 font-medium">
-                  {s.tag}
-                </span>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>
@@ -408,68 +387,6 @@ function Services() {
 }
 
 // ─── Products ─────────────────────────────────────────────────────────────
-const PRODUCTS = [
-  {
-    icon: <MapIcon className="w-5 h-5" />,
-    name: "TRIAN3DBUILDER",
-    desc: "Advanced 3D Terrain Development software",
-    image: "/assets/generated/product-trian3dbuilder.dim_600x380.jpg",
-  },
-  {
-    icon: <Box className="w-5 h-5" />,
-    name: "REMO3D",
-    desc: "3D model development software",
-    image: "/assets/generated/product-remo3d.dim_600x380.jpg",
-  },
-  {
-    icon: <Crosshair className="w-5 h-5" />,
-    name: "SiMAX",
-    desc: "War Gaming software",
-    image: "/assets/generated/product-simax.dim_600x380.jpg",
-  },
-  {
-    icon: <Cloud className="w-5 h-5" />,
-    name: "SILVERLINING",
-    desc: "Cloud and Sky rendering SDK",
-    image: "/assets/generated/product-silverlining.dim_600x380.jpg",
-  },
-  {
-    icon: <Waves className="w-5 h-5" />,
-    name: "TRITON",
-    desc: "Ocean simulation SDK",
-    image: "/assets/generated/product-triton.dim_600x380.jpg",
-  },
-  {
-    icon: <Search className="w-5 h-5" />,
-    name: "VIDERE",
-    desc: "Virtual Design Review tool",
-    image: "/assets/generated/product-videre.dim_600x380.jpg",
-  },
-  {
-    icon: <ShieldCheck className="w-5 h-5" />,
-    name: "VRSAFE",
-    desc: "VR based Fire Safety Training tool",
-    image: "/assets/generated/product-vrsafe.dim_600x380.jpg",
-  },
-  {
-    icon: <Radio className="w-5 h-5" />,
-    name: "AUGMENTOR",
-    desc: "Remote Assistance Tool",
-    image: "/assets/generated/product-augmentor.dim_600x380.jpg",
-  },
-  {
-    icon: <Sofa className="w-5 h-5" />,
-    name: "FARNISH",
-    desc: "AR based Furniture Trial and Sales tool",
-    image: "/assets/generated/product-farnish.dim_600x380.jpg",
-  },
-  {
-    icon: <FileText className="w-5 h-5" />,
-    name: "PRODOC",
-    desc: "Interactive product document creator tool",
-    image: "/assets/generated/product-prodoc.dim_600x380.jpg",
-  },
-];
 
 function Products() {
   return (
@@ -483,45 +400,51 @@ function Products() {
             variant="outline"
             className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
           >
-            COTS Software
+            Software Products
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Products</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Commercial off-the-shelf software solutions built with world-class
-            simulation and visualization technology.
+            Professional simulation and visualization software solutions built
+            with world-class technology.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PRODUCTS.map((p, i) => (
-            <motion.div
+            <Link
               key={p.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
+              to="/products/$slug"
+              params={{ slug: slugify(p.name) }}
+              className="block"
               data-ocid={`products.item.${i + 1}`}
-              className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group"
             >
-              <img
-                src={p.image}
-                alt={p.name}
-                className="w-full h-40 object-cover"
-                loading="lazy"
-              />
-              <div className="p-5 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center flex-shrink-0 text-white">
-                  {p.icon}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.07 }}
+                className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group cursor-pointer h-full"
+              >
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  className="w-full h-40 object-cover"
+                  loading="lazy"
+                />
+                <div className="p-5 flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center flex-shrink-0 text-white">
+                    {p.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors tracking-wide">
+                      {p.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {p.desc}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors tracking-wide">
-                    {p.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {p.desc}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>
@@ -530,50 +453,6 @@ function Products() {
 }
 
 // ─── Industries ────────────────────────────────────────────────────────────
-const INDUSTRIES = [
-  {
-    icon: <Plane className="w-7 h-7" />,
-    name: "Aerospace",
-    desc: "Flight simulation, mission training, and avionics visualization",
-    image: "/assets/generated/industry-aerospace.dim_600x400.jpg",
-  },
-  {
-    icon: <Shield className="w-7 h-7" />,
-    name: "Defense",
-    desc: "War gaming, tactical training, and defense simulation systems",
-    image: "/assets/generated/industry-defense.dim_600x400.jpg",
-  },
-  {
-    icon: <Car className="w-7 h-7" />,
-    name: "Automotive",
-    desc: "Design review, assembly training, and driver simulation",
-    image: "/assets/generated/industry-automotive.dim_600x400.jpg",
-  },
-  {
-    icon: <Wrench className="w-7 h-7" />,
-    name: "Engineering",
-    desc: "CAD visualization, maintenance training, and process simulation",
-    image: "/assets/generated/industry-engineering.dim_600x400.jpg",
-  },
-  {
-    icon: <HardHat className="w-7 h-7" />,
-    name: "Mining",
-    desc: "Safety training, underground navigation, and equipment simulation",
-    image: "/assets/generated/industry-mining.dim_600x400.jpg",
-  },
-  {
-    icon: <Train className="w-7 h-7" />,
-    name: "Transport",
-    desc: "Driver training, route simulation, and operational systems",
-    image: "/assets/generated/industry-transport.dim_600x400.jpg",
-  },
-  {
-    icon: <HeartPulse className="w-7 h-7" />,
-    name: "Healthcare",
-    desc: "Medical procedure training and patient care visualization",
-    image: "/assets/generated/industry-healthcare.dim_600x400.jpg",
-  },
-];
 
 function Industries() {
   return (
@@ -596,33 +475,39 @@ function Industries() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {INDUSTRIES.map((ind, i) => (
-            <motion.div
+            <Link
               key={ind.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              to="/industries/$slug"
+              params={{ slug: slugify(ind.name) }}
+              className="block"
               data-ocid={`industries.item.${i + 1}`}
-              className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group"
             >
-              <img
-                src={ind.image}
-                alt={ind.name}
-                className="w-full h-36 object-cover"
-                loading="lazy"
-              />
-              <div className="p-5 text-center">
-                <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center mb-3 text-white mx-auto">
-                  {ind.icon}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group cursor-pointer h-full"
+              >
+                <img
+                  src={ind.image}
+                  alt={ind.name}
+                  className="w-full h-36 object-cover"
+                  loading="lazy"
+                />
+                <div className="p-5 text-center">
+                  <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center mb-3 text-white mx-auto">
+                    {ind.icon}
+                  </div>
+                  <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors">
+                    {ind.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {ind.desc}
+                  </p>
                 </div>
-                <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors">
-                  {ind.name}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {ind.desc}
-                </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>
@@ -947,7 +832,9 @@ function Contact() {
     company: "",
     message: "",
   });
-  const mutation = useSubmitContactForm();
+  const [isPending, setIsPending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const [captchaQuestion, setCaptchaQuestion] = useState(() => {
     const a = Math.floor(Math.random() * 9) + 1;
@@ -957,27 +844,40 @@ function Contact() {
   const [captchaInput, setCaptchaInput] = useState("");
   const [captchaError, setCaptchaError] = useState(false);
 
+  const resetCaptcha = () => {
+    const a = Math.floor(Math.random() * 9) + 1;
+    const b = Math.floor(Math.random() * 9) + 1;
+    setCaptchaQuestion({ a, b, answer: a + b });
+    setCaptchaInput("");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (Number.parseInt(captchaInput) !== captchaQuestion.answer) {
       setCaptchaError(true);
-      const a = Math.floor(Math.random() * 9) + 1;
-      const b = Math.floor(Math.random() * 9) + 1;
-      setCaptchaQuestion({ a, b, answer: a + b });
-      setCaptchaInput("");
+      resetCaptcha();
       return;
     }
     setCaptchaError(false);
+    setIsPending(true);
+    setIsSuccess(false);
+    setIsError(false);
     try {
-      await mutation.mutateAsync(form);
+      const res = await fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      setIsSuccess(true);
       toast.success("Message sent! We'll be in touch soon.");
       setForm({ name: "", email: "", company: "", message: "" });
-      setCaptchaInput("");
-      const a = Math.floor(Math.random() * 9) + 1;
-      const b = Math.floor(Math.random() * 9) + 1;
-      setCaptchaQuestion({ a, b, answer: a + b });
+      resetCaptcha();
     } catch {
+      setIsError(true);
       toast.error("Failed to send. Please try again.");
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -1132,11 +1032,11 @@ function Contact() {
               <Button
                 type="submit"
                 size="lg"
-                disabled={mutation.isPending}
+                disabled={isPending}
                 className="btn-gradient border-0 text-white font-semibold w-full gap-2"
                 data-ocid="contact.submit_button"
               >
-                {mutation.isPending ? (
+                {isPending ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" /> Sending...
                   </>
@@ -1146,7 +1046,7 @@ function Contact() {
                   </>
                 )}
               </Button>
-              {mutation.isSuccess && (
+              {isSuccess && (
                 <p
                   className="text-sm text-primary text-center"
                   data-ocid="contact.success_state"
@@ -1154,7 +1054,7 @@ function Contact() {
                   ✓ Your message has been delivered successfully.
                 </p>
               )}
-              {mutation.isError && (
+              {isError && (
                 <p
                   className="text-sm text-destructive text-center"
                   data-ocid="contact.error_state"
@@ -1214,48 +1114,6 @@ function Contact() {
               </div>
             </div>
 
-            <div>
-              <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-                Follow Us
-              </h4>
-              <div className="flex gap-3">
-                {[
-                  {
-                    icon: <SiLinkedin className="w-4 h-4" />,
-                    href: "https://linkedin.com",
-                    label: "LinkedIn",
-                  },
-                  {
-                    icon: <SiX className="w-4 h-4" />,
-                    href: "https://x.com",
-                    label: "Twitter / X",
-                  },
-                  {
-                    icon: <SiFacebook className="w-4 h-4" />,
-                    href: "https://facebook.com",
-                    label: "Facebook",
-                  },
-                  {
-                    icon: <SiYoutube className="w-4 h-4" />,
-                    href: "https://youtube.com",
-                    label: "YouTube",
-                  },
-                ].map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    data-ocid="contact.link"
-                    className="w-10 h-10 rounded-lg bg-card border border-border hover:border-primary/50 hover:bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary transition-all"
-                  >
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
             <div className="p-6 rounded-xl bg-primary/5 border border-primary/20">
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <span className="font-semibold text-foreground">
@@ -1284,7 +1142,7 @@ function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <img
-                src="/assets/generated/simlabs-logo.dim_400x120.png"
+                src="/assets/uploads/01-1.png"
                 alt="SIMLABS"
                 className="h-8 w-auto"
               />
@@ -1318,7 +1176,7 @@ function Footer() {
           {/* Social */}
           <div>
             <h5 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
-              Connect
+              Follow Us
             </h5>
             <div className="flex gap-3">
               {[
@@ -1362,6 +1220,14 @@ function Footer() {
           <p className="text-xs text-muted-foreground">
             © {year} Simlabs Software LLP. All rights reserved.
           </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="/privacy-policy"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              Privacy Policy
+            </a>
+          </div>
           <p className="text-xs text-muted-foreground">
             Built with ❤️ using{" "}
             <a
@@ -1380,7 +1246,7 @@ function Footer() {
 }
 
 // ─── App ──────────────────────────────────────────────────────────────────
-export default function App() {
+function AppHome() {
   useSectionReveal();
 
   return (
@@ -1399,6 +1265,63 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <CookieBanner />
     </div>
   );
+}
+
+// Router setup
+
+const rootRoute = createRootRoute({
+  component: () => <Outlet />,
+});
+
+const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: AppHome,
+});
+
+const serviceRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/services/$slug",
+  component: ServicePage,
+});
+
+const productRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/products/$slug",
+  component: ProductPage,
+});
+
+const industryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/industries/$slug",
+  component: IndustryPage,
+});
+
+const privacyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/privacy-policy",
+  component: PrivacyPolicyPage,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  serviceRoute,
+  productRoute,
+  industryRoute,
+  privacyRoute,
+]);
+
+const router = createRouter({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }
