@@ -122,7 +122,7 @@ function Header() {
           data-ocid="nav.link"
         >
           <img
-            src="/assets/uploads/01-1.png"
+            src="/assets/uploads/01_1-1.png"
             alt="SIMLABS"
             className="h-10 w-auto"
           />
@@ -252,20 +252,12 @@ function Hero() {
 
             {/* Stats row */}
             <div className="mt-12 flex gap-8 border-t border-border pt-8">
-              {[
-                { val: "15+", label: "Years Experience" },
-                { val: "100+", label: "Projects Delivered" },
-                { val: "50+", label: "Enterprise Clients" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <div className="text-2xl font-extrabold gradient-text">
-                    {s.val}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
-                    {s.label}
-                  </div>
+              <div>
+                <div className="text-2xl font-extrabold gradient-text">13+</div>
+                <div className="text-xs text-muted-foreground mt-0.5">
+                  Years Experience
                 </div>
-              ))}
+              </div>
             </div>
           </motion.div>
 
@@ -308,11 +300,15 @@ function AboutBanner() {
               Simlabs Software LLP (
               <span className="gradient-text">SIMLABS</span>)
             </span>{" "}
-            is a visual technology firm run by a team of visionary professionals
-            with deep expertise in modeling, simulation, and training. We
-            specialize in delivering advanced, high-quality, and cost-effective
-            solutions in visual simulation, virtual reality, and augmented
-            reality across a wide spectrum of industries.
+            is a visual technology firm with{" "}
+            <span className="text-primary font-bold">
+              13+ years of experience
+            </span>
+            , run by a team of visionary professionals with deep expertise in
+            modeling, simulation, and training. We specialize in delivering
+            advanced, high-quality, and cost-effective solutions in visual
+            simulation, virtual reality, augmented reality, and digital twins
+            across a wide spectrum of industries.
           </p>
         </div>
       </div>
@@ -684,6 +680,63 @@ const CUSTOMER_LOGOS = [
   },
 ];
 
+const REFERENCE_PROJECTS = [
+  {
+    name: "Su-30 MKI Fighter Aircraft",
+    desc: "VR based maintenance training simulator",
+    image: "/assets/generated/project-su30mki.dim_600x380.jpg",
+  },
+  {
+    name: "Dornier Aircraft",
+    desc: "VR based maintenance training simulator",
+    image: "/assets/generated/project-dornier.dim_600x380.jpg",
+  },
+  {
+    name: "Futuristic Infantry Combat Vehicle (FICV)",
+    desc: "VR based design experience simulation application",
+    image: "/assets/generated/project-ficv.dim_600x380.jpg",
+  },
+  {
+    name: "DH 350 Rig",
+    desc: "VR based operational and product experience simulation application",
+    image: "/assets/generated/project-dh350rig.dim_600x380.jpg",
+  },
+  {
+    name: "MT65 Truck",
+    desc: "VR based operational training simulator",
+    image: "/assets/generated/project-mt65truck.dim_600x380.jpg",
+  },
+  {
+    name: "Scooptram (ST7LP) & Mine Truck (MT2010)",
+    desc: "Optimised 3D Model development for VR application",
+    image: "/assets/generated/project-scooptram.dim_600x380.jpg",
+  },
+  {
+    name: "PV270 (Epiroc)",
+    desc: "VR based operational training simulator",
+    image: "/assets/generated/project-pv270.dim_600x380.jpg",
+  },
+  {
+    name: "SIMBA (Epiroc)",
+    desc: "VR based operational training simulator",
+    image: "/assets/generated/project-simba.dim_600x380.jpg",
+  },
+  {
+    name: "Process Master (ABB)",
+    desc: "AR application to assist field engineer",
+    image: "/assets/generated/project-processmaster.dim_600x380.jpg",
+  },
+  {
+    name: "Industrial Motor (ABB)",
+    desc: "IOT+MR based application to assist field assistant",
+    image: "/assets/generated/project-industrialmotor.dim_600x380.jpg",
+  },
+  { name: "Coming Soon", desc: "Upcoming Reference Project", image: null },
+  { name: "Coming Soon", desc: "Upcoming Reference Project", image: null },
+  { name: "Coming Soon", desc: "Upcoming Reference Project", image: null },
+  { name: "Coming Soon", desc: "Upcoming Reference Project", image: null },
+];
+
 function Customers() {
   return (
     <section id="customers" className="py-24 section-fade">
@@ -757,6 +810,63 @@ function Customers() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Reference Projects */}
+        <div className="mt-20">
+          <div className="text-center mb-10">
+            <Badge
+              variant="outline"
+              className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+            >
+              Reference Projects
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Our Projects
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              A selection of simulation, training, and visualisation solutions
+              delivered across defence, aerospace, mining, and industry.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            {REFERENCE_PROJECTS.map((proj, i) => (
+              <motion.div
+                key={`${proj.name}-${i}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="bg-card border border-border rounded-xl overflow-hidden group hover:border-primary/50 transition-all duration-300"
+              >
+                {proj.image ? (
+                  <div className="relative overflow-hidden h-40">
+                    <img
+                      src={proj.image}
+                      alt={proj.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  </div>
+                ) : (
+                  <div className="h-40 bg-card flex items-center justify-center border-b border-border">
+                    <div className="text-4xl text-muted-foreground/30 font-bold">
+                      ?
+                    </div>
+                  </div>
+                )}
+                <div className="p-3">
+                  <p className="font-semibold text-sm leading-tight mb-1">
+                    {proj.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {proj.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1142,7 +1252,7 @@ function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <img
-                src="/assets/uploads/01-1.png"
+                src="/assets/uploads/01_1-1.png"
                 alt="SIMLABS"
                 className="h-8 w-auto"
               />

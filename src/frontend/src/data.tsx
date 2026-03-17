@@ -14,12 +14,15 @@ import {
   Layers,
   MapIcon,
   Monitor,
+  Network,
+  Paintbrush,
   Plane,
   Radio,
   ScanSearch,
   Search,
   Shield,
   ShieldCheck,
+  ShieldEllipsis,
   Sofa,
   Train,
   Waves,
@@ -56,9 +59,39 @@ export function slugify(str: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+// Custom VR Headset icon (person wearing Meta Quest style)
+function VRHeadsetIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      role="img"
+      aria-label="VR Headset"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      {/* Head */}
+      <circle cx="12" cy="7" r="3" />
+      {/* VR Headset on face */}
+      <rect x="5" y="11" width="14" height="7" rx="3" />
+      {/* Lens left */}
+      <circle cx="9" cy="14.5" r="1.5" />
+      {/* Lens right */}
+      <circle cx="15" cy="14.5" r="1.5" />
+      {/* Strap */}
+      <path d="M5 14 Q2 14 2 11" />
+      <path d="M19 14 Q22 14 22 11" />
+    </svg>
+  );
+}
+
 export const SERVICES: Service[] = [
   {
-    icon: <Glasses className="w-7 h-7" />,
+    icon: <VRHeadsetIcon className="w-7 h-7" />,
     title: "Virtual Reality (VR)",
     desc: "Immersive VR training applications, virtual interactive experiences, and marketing applications across multiple platforms and hardware types.",
     tag: "Training · Education · Defence",
@@ -84,6 +117,13 @@ export const SERVICES: Service[] = [
     desc: "Professional 3D model development, terrain development, and simulation application development.",
     tag: "Aerospace · Defence · Automotive",
     image: "/assets/generated/service-vs.dim_800x500.jpg",
+  },
+  {
+    icon: <Network className="w-7 h-7" />,
+    title: "Digital Twins",
+    desc: "Real-time virtual replicas of physical assets, systems, and processes — enabling predictive maintenance, performance optimization, and remote monitoring.",
+    tag: "Manufacturing · Aerospace · Infrastructure",
+    image: "/assets/generated/service-digitaltwin.dim_800x500.jpg",
   },
   {
     icon: <Brain className="w-7 h-7" />,
@@ -167,6 +207,12 @@ export const PRODUCTS: Product[] = [
     desc: "AI-based Chatbot to assist users about products, spare parts, and services",
     image: "/assets/generated/product-intbot.dim_600x380.jpg",
   },
+  {
+    icon: <Paintbrush className="w-5 h-5" />,
+    name: "PAINTX",
+    desc: "VR based training tool for painters",
+    image: "/assets/generated/product-paintx-car.dim_600x380.jpg",
+  },
 ];
 
 export const INDUSTRIES: Industry[] = [
@@ -217,6 +263,12 @@ export const INDUSTRIES: Industry[] = [
     name: "Manufacturing",
     desc: "AR-guided assembly, quality inspection simulation, and smart factory training",
     image: "/assets/generated/industry-manufacturing.dim_600x400.jpg",
+  },
+  {
+    icon: <ShieldEllipsis className="w-7 h-7" />,
+    name: "Homeland Security",
+    desc: "Surveillance simulation, border security training, and crisis response systems",
+    image: "/assets/generated/industry-homeland-security.dim_600x400.jpg",
   },
 ];
 
@@ -274,6 +326,24 @@ export const SERVICE_DETAILS: Record<
       "Database management tools for large-scale terrain datasets",
     ],
     industries: ["Aerospace", "Defence", "Automotive", "Mining", "Transport"],
+  },
+  "digital-twins": {
+    features: [
+      "Real-time synchronization between physical assets and their virtual counterparts",
+      "Predictive maintenance using sensor data and ML-based anomaly detection",
+      "Remote monitoring dashboards with 3D interactive visualization",
+      "Integration with IoT sensors, SCADA systems, and industrial protocols",
+      "Performance simulation for what-if scenario analysis and optimization",
+      "Digital twin lifecycle management from design through decommissioning",
+      "Integration with VR/AR for immersive digital twin interaction",
+    ],
+    industries: [
+      "Manufacturing",
+      "Aerospace",
+      "Infrastructure",
+      "Energy",
+      "Defence",
+    ],
   },
   "artificial-intelligence-ai": {
     features: [
@@ -491,6 +561,22 @@ export const PRODUCT_DETAILS: Record<
       "Analytics dashboard",
     ],
   },
+  paintx: {
+    features: [
+      "Realistic VR-based car painting simulation with accurate spray dynamics",
+      "Training scenarios covering surface preparation, primer, base coat, and clear coat",
+      "Real-time feedback on coverage, distance, and spray angle",
+      "Performance scoring and progress tracking for trainees",
+      "Compatible with major VR headsets",
+      "Customizable vehicle models and paint specifications",
+    ],
+    highlights: [
+      "Spray dynamics simulation",
+      "Real-time feedback",
+      "Performance scoring",
+      "Multi-vehicle support",
+    ],
+  },
 };
 
 export const INDUSTRY_SOLUTIONS: Record<
@@ -560,5 +646,13 @@ export const INDUSTRY_SOLUTIONS: Record<
       "Artificial Intelligence (AI)",
     ],
     products: ["LAYAR", "AUGMENTOR", "PRODOC", "INTBOT"],
+  },
+  "homeland-security": {
+    services: [
+      "Virtual Reality (VR)",
+      "Visual Simulation (VS)",
+      "Artificial Intelligence (AI)",
+    ],
+    products: ["SiMAX", "VRSAFE", "AUGMENTOR"],
   },
 };
