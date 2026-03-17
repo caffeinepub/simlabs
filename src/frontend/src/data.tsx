@@ -229,6 +229,12 @@ export const INDUSTRIES: Industry[] = [
     image: "/assets/generated/industry-defense.dim_600x400.jpg",
   },
   {
+    icon: <ShieldEllipsis className="w-7 h-7" />,
+    name: "Homeland Security",
+    desc: "Surveillance simulation, border security training, and crisis response systems",
+    image: "/assets/generated/industry-homeland-security.dim_600x400.jpg",
+  },
+  {
     icon: <Car className="w-7 h-7" />,
     name: "Automotive",
     desc: "Design review, assembly training, and driver simulation",
@@ -263,12 +269,6 @@ export const INDUSTRIES: Industry[] = [
     name: "Manufacturing",
     desc: "AR-guided assembly, quality inspection simulation, and smart factory training",
     image: "/assets/generated/industry-manufacturing.dim_600x400.jpg",
-  },
-  {
-    icon: <ShieldEllipsis className="w-7 h-7" />,
-    name: "Homeland Security",
-    desc: "Surveillance simulation, border security training, and crisis response systems",
-    image: "/assets/generated/industry-homeland-security.dim_600x400.jpg",
   },
 ];
 

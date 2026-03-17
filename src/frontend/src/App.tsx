@@ -239,25 +239,22 @@ function Hero() {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </a>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-border text-muted-foreground hover:text-foreground hover:border-primary gap-2"
-                data-ocid="hero.secondary_button"
+              <a
+                href="/assets/uploads/Brochure_SIMLABS-1.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="SIMLABS-Brochure.pdf"
               >
-                <Download className="w-4 h-4" />
-                Download Brochure
-              </Button>
-            </div>
-
-            {/* Stats row */}
-            <div className="mt-12 flex gap-8 border-t border-border pt-8">
-              <div>
-                <div className="text-2xl font-extrabold gradient-text">13+</div>
-                <div className="text-xs text-muted-foreground mt-0.5">
-                  Years Experience
-                </div>
-              </div>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-border text-muted-foreground hover:text-foreground hover:border-primary gap-2"
+                  data-ocid="hero.secondary_button"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Brochure
+                </Button>
+              </a>
             </div>
           </motion.div>
 
@@ -269,19 +266,20 @@ function Hero() {
             className="relative"
           >
             <div
-              className="absolute inset-0 rounded-2xl opacity-30 blur-3xl"
+              className="absolute -inset-4 rounded-3xl opacity-50 blur-3xl"
               style={{
                 background:
-                  "linear-gradient(135deg, oklch(0.55 0.22 255), oklch(0.68 0.18 222))",
+                  "linear-gradient(135deg, oklch(0.55 0.22 255), oklch(0.68 0.18 222), oklch(0.60 0.20 280))",
               }}
             />
             <img
               src="/assets/generated/hero-vr.dim_1200x600.jpg"
               alt="VR technology visualization"
-              className="relative rounded-2xl w-full object-cover shadow-2xl border border-border animate-float"
-              style={{ maxHeight: "500px" }}
+              className="relative rounded-2xl w-full object-cover shadow-2xl border border-primary/30 animate-float"
+              style={{ maxHeight: "620px", minHeight: "420px" }}
               loading="eager"
             />
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-primary/20 pointer-events-none" />
           </motion.div>
         </div>
       </div>
@@ -692,7 +690,7 @@ const REFERENCE_PROJECTS = [
     image: "/assets/generated/project-dornier.dim_600x380.jpg",
   },
   {
-    name: "Futuristic Infantry Combat Vehicle (FICV)",
+    name: "Futuristic Infantry Combat Vehicle",
     desc: "VR based design experience simulation application",
     image: "/assets/generated/project-ficv.dim_600x380.jpg",
   },
@@ -707,27 +705,32 @@ const REFERENCE_PROJECTS = [
     image: "/assets/generated/project-mt65truck.dim_600x380.jpg",
   },
   {
-    name: "Scooptram (ST7LP) & Mine Truck (MT2010)",
+    name: "Scooptram",
     desc: "Optimised 3D Model development for VR application",
     image: "/assets/generated/project-scooptram.dim_600x380.jpg",
   },
   {
-    name: "PV270 (Epiroc)",
+    name: "Mine Truck",
+    desc: "Optimised 3D Model development for VR application",
+    image: "/assets/generated/project-scooptram.dim_600x380.jpg",
+  },
+  {
+    name: "PV270",
     desc: "VR based operational training simulator",
     image: "/assets/generated/project-pv270.dim_600x380.jpg",
   },
   {
-    name: "SIMBA (Epiroc)",
+    name: "SIMBA",
     desc: "VR based operational training simulator",
     image: "/assets/generated/project-simba.dim_600x380.jpg",
   },
   {
-    name: "Process Master (ABB)",
+    name: "Process Master",
     desc: "AR application to assist field engineer",
     image: "/assets/generated/project-processmaster.dim_600x380.jpg",
   },
   {
-    name: "Industrial Motor (ABB)",
+    name: "Industrial Motor",
     desc: "IOT+MR based application to assist field assistant",
     image: "/assets/generated/project-industrialmotor.dim_600x380.jpg",
   },
