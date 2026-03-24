@@ -262,7 +262,7 @@ export const INDUSTRIES: Industry[] = [
     icon: <HeartPulse className="w-7 h-7" />,
     name: "Healthcare",
     desc: "Medical procedure training and patient care visualization",
-    image: "/assets/generated/industry-healthcare-mri.dim_600x400.jpg",
+    image: "/assets/generated/industry-healthcare.dim_600x400.jpg",
   },
   {
     icon: <Factory className="w-7 h-7" />,

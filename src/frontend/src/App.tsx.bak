@@ -125,7 +125,7 @@ function Header() {
           <img
             src="/assets/uploads/01_1-1.png"
             alt="SIMLABS"
-            className="h-12 w-auto"
+            className="h-10 w-auto"
           />
         </a>
 
@@ -220,13 +220,11 @@ function Hero() {
             <h1 className="text-3xl md:text-4xl xl:text-5xl font-extrabold leading-tight uppercase tracking-tight mb-6">
               <span className="text-foreground">YOU GOT THE </span>
               <span className="gradient-text">VISION</span>
-              <br />
-              <span className="text-foreground">TO REALIZE,</span>
+              <span className="text-foreground"> TO REALIZE.</span>
               <br />
               <span className="text-foreground">WE GOT THE </span>
               <span className="gradient-text">MISSION</span>
-              <br />
-              <span className="text-foreground">TO VISUALIZE.</span>
+              <span className="text-foreground"> TO VISUALIZE.</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-xl">
               Delivering advanced Virtual Reality (VR), Augmented Reality (AR),
@@ -397,7 +395,7 @@ function Products() {
             variant="outline"
             className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
           >
-            PRODUCTS
+            Software Products
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Products</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -936,9 +934,8 @@ function Jobs() {
             </h3>
             <p className="text-muted-foreground mb-8 leading-relaxed">
               We don&apos;t have any active openings at the moment, but
-              we&apos;d love to hear from you. Send your resume to{" "}
-              <span className="text-orange-500">jobs at simlabs.in</span>.
-              We&apos;ll reach out when the right opportunity arises.
+              we&apos;d love to hear from you. Send us your resume and
+              we&apos;ll reach out when the right opportunity arises.
             </p>
             <a href="mailto:jobs@simlabs.in">
               <Button className="btn-gradient text-white gap-2">
@@ -1278,18 +1275,12 @@ function Footer() {
               />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              <span className="text-foreground font-semibold">
-                You got the{" "}
+              <span className="gradient-text font-semibold">
+                You got the vision to realize,
               </span>
-              <span className="gradient-text font-semibold">vision</span>
               <br />
-              <span className="text-foreground font-semibold">to realize,</span>
-              <br />
-              <span className="text-foreground font-semibold">We got the </span>
-              <span className="gradient-text font-semibold">mission</span>
-              <br />
-              <span className="text-foreground font-semibold">
-                to visualize.
+              <span className="gradient-text font-semibold">
+                We got the mission to visualize.
               </span>
             </p>
           </div>
