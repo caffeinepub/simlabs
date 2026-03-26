@@ -306,7 +306,7 @@ function Hero() {
             />
             <div
               className="relative rounded-2xl overflow-hidden border border-primary/30 shadow-2xl"
-              style={{ maxHeight: "620px", minHeight: "420px" }}
+              style={{ aspectRatio: "16/9" }}
             >
               {/* Previous image fading out */}
               {prevIdx !== null && (
@@ -316,8 +316,6 @@ function Hero() {
                   className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
                   style={{
                     opacity: transitioning ? 0 : 1,
-                    maxHeight: "620px",
-                    minHeight: "420px",
                   }}
                 />
               )}
@@ -325,11 +323,9 @@ function Hero() {
               <img
                 src={HERO_SLIDES[currentIdx].src}
                 alt={HERO_SLIDES[currentIdx].label}
-                className="w-full h-full object-cover transition-opacity duration-700"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
                 style={{
                   opacity: transitioning && prevIdx !== null ? 0 : 1,
-                  maxHeight: "620px",
-                  minHeight: "420px",
                 }}
                 loading="eager"
               />

@@ -10,7 +10,7 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <main className="pt-20">
-        <section className="py-24">
+        <section className="py-10">
           <div className="container mx-auto px-6">
             <div className="mb-6">
               <Link
@@ -55,16 +55,16 @@ export default function ProjectsPage() {
                 >
                   {proj.image ? (
                     <div
-                      className="relative overflow-hidden"
+                      className="relative w-full overflow-hidden"
                       style={{
-                        height: "160px",
+                        aspectRatio: "16/9",
                         background: "oklch(0.09 0.028 247)",
                       }}
                     >
                       <img
                         src={proj.image}
                         alt={proj.name}
-                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                        className="absolute inset-0 w-full h-full object-contain"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />

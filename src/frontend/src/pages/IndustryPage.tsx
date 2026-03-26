@@ -155,11 +155,16 @@ export default function IndustryPage() {
                       data-ocid="industry.link"
                       className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group block"
                     >
-                      <img
-                        src={s.image}
-                        alt={s.title}
-                        className="w-full h-28 object-cover object-top"
-                      />
+                      <div
+                        className="relative w-full"
+                        style={{ aspectRatio: "16/9" }}
+                      >
+                        <img
+                          src={s.image}
+                          alt={s.title}
+                          className="absolute inset-0 w-full h-full object-contain bg-[oklch(0.08_0.02_247)]"
+                        />
+                      </div>
                       <div className="p-4">
                         <div className="flex items-center gap-3 mb-2">
                           <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">

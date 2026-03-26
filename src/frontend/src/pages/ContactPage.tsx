@@ -92,7 +92,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <main className="pt-20">
-        <section className="py-24 bg-[oklch(0.11_0.028_247)] border-t border-border">
+        <section className="py-10 bg-[oklch(0.11_0.028_247)] border-t border-border">
           <div className="container mx-auto px-6">
             <div className="mb-6">
               <Link

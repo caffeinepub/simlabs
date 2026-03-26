@@ -10,7 +10,7 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <main className="pt-20">
-        <section className="py-24">
+        <section className="py-10">
           <div className="container mx-auto px-6">
             <div className="mb-6">
               <Link
@@ -58,12 +58,17 @@ export default function ProductsPage() {
                     transition={{ duration: 0.5, delay: i * 0.07 }}
                     className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group cursor-pointer h-full"
                   >
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      className="w-full h-40 object-cover"
-                      loading="lazy"
-                    />
+                    <div
+                      className="relative w-full"
+                      style={{ aspectRatio: "16/9" }}
+                    >
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        className="absolute inset-0 w-full h-full object-contain bg-[oklch(0.08_0.02_247)]"
+                        loading="lazy"
+                      />
+                    </div>
                     <div className="p-5 flex items-start gap-3">
                       <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center flex-shrink-0 text-white">
                         {p.icon}

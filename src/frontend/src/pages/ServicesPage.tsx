@@ -10,7 +10,7 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <main className="pt-20">
-        <section className="py-24">
+        <section className="py-10">
           <div className="container mx-auto px-6">
             <div className="mb-6">
               <Link
@@ -58,12 +58,17 @@ export default function ServicesPage() {
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                     className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group cursor-pointer h-full"
                   >
-                    <img
-                      src={s.image}
-                      alt={s.title}
-                      className="w-full h-36 object-cover"
-                      loading="lazy"
-                    />
+                    <div
+                      className="relative w-full"
+                      style={{ aspectRatio: "16/9" }}
+                    >
+                      <img
+                        src={s.image}
+                        alt={s.title}
+                        className="absolute inset-0 w-full h-full object-contain bg-[oklch(0.08_0.02_247)]"
+                        loading="lazy"
+                      />
+                    </div>
                     <div className="p-6">
                       <div className="w-12 h-12 rounded-lg btn-gradient flex items-center justify-center mb-4 text-white">
                         {s.icon}

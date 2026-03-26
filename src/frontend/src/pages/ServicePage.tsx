@@ -43,15 +43,13 @@ export default function ServicePage() {
       <div className="relative pt-16">
         <div
           className="relative w-full overflow-hidden"
-          style={{ minHeight: "300px", background: "oklch(0.09 0.028 247)" }}
+          style={{ aspectRatio: "16/9", background: "oklch(0.09 0.028 247)" }}
         >
           <img
             src={service.image}
             alt={service.title}
-            className="w-full"
+            className="absolute inset-0 w-full h-full"
             style={{
-              display: "block",
-              maxHeight: "550px",
               objectFit: "contain",
               background: "oklch(0.09 0.028 247)",
             }}

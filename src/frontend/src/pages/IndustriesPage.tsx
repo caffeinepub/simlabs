@@ -10,7 +10,7 @@ export default function IndustriesPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <main className="pt-20">
-        <section className="py-24">
+        <section className="py-10">
           <div className="container mx-auto px-6">
             <div className="mb-6">
               <Link
@@ -57,12 +57,17 @@ export default function IndustriesPage() {
                     transition={{ duration: 0.5, delay: i * 0.08 }}
                     className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group h-full cursor-pointer"
                   >
-                    <img
-                      src={ind.image}
-                      alt={ind.name}
-                      className="w-full h-36 object-cover"
-                      loading="lazy"
-                    />
+                    <div
+                      className="relative w-full"
+                      style={{ aspectRatio: "16/9" }}
+                    >
+                      <img
+                        src={ind.image}
+                        alt={ind.name}
+                        className="absolute inset-0 w-full h-full object-contain bg-[oklch(0.08_0.02_247)]"
+                        loading="lazy"
+                      />
+                    </div>
                     <div className="p-5 text-center">
                       <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center mb-3 text-white mx-auto">
                         {ind.icon}

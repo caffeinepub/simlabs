@@ -11,7 +11,7 @@ export default function CustomersPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <main className="pt-20">
-        <section className="py-24">
+        <section className="py-10">
           <div className="container mx-auto px-6">
             <div className="mb-6">
               <Link
@@ -31,9 +31,21 @@ export default function CustomersPage() {
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Our Customers
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Served many leading organizations across multiple industries in
-                India and globally.
+              <p className="text-muted-foreground max-w-3xl mx-auto mb-3">
+                We are proud to serve a diverse set of customers across
+                industries, including aerospace, defense, engineering,
+                manufacturing, and research organizations. Our clients range
+                from global enterprises and system integrators to government
+                institutions and training organizations, who rely on our
+                expertise in visual simulation, XR technologies.
+              </p>
+              <p className="text-muted-foreground max-w-3xl mx-auto">
+                We work closely with our customers as trusted partners,
+                delivering high-quality, cost-effective, and scalable solutions
+                tailored to their specific requirements. Our focus on quality,
+                technical expertise, and timely delivery has enabled us to build
+                long-term relationships and consistently exceed customer
+                expectations.
               </p>
             </div>
 
