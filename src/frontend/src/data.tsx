@@ -149,7 +149,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     icon: <Crosshair className="w-5 h-5" />,
-    name: "SiMAX",
+    name: "SSG",
     desc: "War Gaming software",
     image: "/assets/generated/product-simax.dim_600x380.jpg",
   },
@@ -616,7 +616,7 @@ export const INDUSTRY_SOLUTIONS: Record<
       "Virtual Reality (VR)",
       "Augmented Reality (AR)",
     ],
-    products: ["SiMAX", "TRIAN3DBUILDER", "REMO3D", "VRSAFE", "AUGMENTOR"],
+    products: ["SSG", "TRIAN3DBUILDER", "REMO3D", "VRSAFE", "AUGMENTOR"],
   },
   automotive: {
     services: [
@@ -672,6 +672,6 @@ export const INDUSTRY_SOLUTIONS: Record<
       "Visual Simulation (VS)",
       "Artificial Intelligence (AI)",
     ],
-    products: ["SiMAX", "VRSAFE", "AUGMENTOR"],
+    products: ["SSG", "VRSAFE", "AUGMENTOR"],
   },
 };

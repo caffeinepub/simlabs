@@ -11,6 +11,10 @@ export default function ServicePage() {
   const service = SERVICES.find((s) => slugify(s.title) === slug);
   const details = slug ? SERVICE_DETAILS[slug] : undefined;
 
+  // Determine back link based on referrer or search param
+  const searchParams = new URLSearchParams(window.location.search);
+  const fromHome = searchParams.get("from") === "home";
+
   if (!service) {
     return (
       <div className="min-h-screen bg-[oklch(0.09_0.028_247)] flex flex-col items-center justify-center text-center px-6">
@@ -39,7 +43,7 @@ export default function ServicePage() {
       <div className="relative pt-16">
         <div
           className="relative w-full overflow-hidden"
-          style={{ minHeight: "300px" }}
+          style={{ minHeight: "300px", background: "oklch(0.09 0.028 247)" }}
         >
           <img
             src={service.image}
@@ -71,7 +75,7 @@ export default function ServicePage() {
                 </a>
                 <ChevronRight className="w-4 h-4" />
                 <a
-                  href="/#services"
+                  href="/services"
                   className="hover:text-primary transition-colors"
                 >
                   Services
@@ -95,13 +99,23 @@ export default function ServicePage() {
 
       {/* Back link */}
       <div className="container mx-auto px-6 py-4">
-        <a
-          href="/#services"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          data-ocid="service.link"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Services
-        </a>
+        {fromHome ? (
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            data-ocid="service.back_link"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Home
+          </Link>
+        ) : (
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            data-ocid="service.back_link"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Services
+          </Link>
+        )}
       </div>
 
       {/* Content */}
@@ -189,11 +203,11 @@ export default function ServicePage() {
                 Speak with our experts to understand how {service.title} can
                 transform your operations.
               </p>
-              <a href="/#contact" data-ocid="service.primary_button">
+              <Link to="/contact" data-ocid="service.primary_button">
                 <Button className="w-full btn-gradient border-0 text-white font-semibold">
                   Get in Touch
                 </Button>
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div

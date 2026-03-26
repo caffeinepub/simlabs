@@ -11,6 +11,10 @@ export default function ProductPage() {
   const product = PRODUCTS.find((p) => slugify(p.name) === slug);
   const details = slug ? PRODUCT_DETAILS[slug] : undefined;
 
+  // Determine back link based on search param
+  const searchParams = new URLSearchParams(window.location.search);
+  const fromHome = searchParams.get("from") === "home";
+
   if (!product) {
     return (
       <div className="min-h-screen bg-[oklch(0.09_0.028_247)] flex flex-col items-center justify-center text-center px-6">
@@ -39,7 +43,7 @@ export default function ProductPage() {
       <div className="relative pt-16">
         <div
           className="relative w-full overflow-hidden"
-          style={{ minHeight: "300px" }}
+          style={{ minHeight: "300px", background: "oklch(0.09 0.028 247)" }}
         >
           <img
             src={product.image}
@@ -71,7 +75,7 @@ export default function ProductPage() {
                 </a>
                 <ChevronRight className="w-4 h-4" />
                 <a
-                  href="/#products"
+                  href="/products"
                   className="hover:text-primary transition-colors"
                 >
                   Products
@@ -95,13 +99,23 @@ export default function ProductPage() {
 
       {/* Back link */}
       <div className="container mx-auto px-6 py-4">
-        <a
-          href="/#products"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          data-ocid="product.link"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Products
-        </a>
+        {fromHome ? (
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            data-ocid="product.back_link"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Home
+          </Link>
+        ) : (
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            data-ocid="product.back_link"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Products
+          </Link>
+        )}
       </div>
 
       {/* Content */}
@@ -184,11 +198,11 @@ export default function ProductPage() {
                 See {product.name} in action. Our team will walk you through a
                 tailored demonstration.
               </p>
-              <a href="/#contact" data-ocid="product.primary_button">
+              <Link to="/contact" data-ocid="product.primary_button">
                 <Button className="w-full btn-gradient border-0 text-white font-semibold">
                   Request a Demo
                 </Button>
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div

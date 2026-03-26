@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-router";
 import {
   ArrowRight,
+  ChevronRight,
   Download,
   Menu,
   Shield,
@@ -21,7 +22,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-// appData imports no longer needed in App.tsx
+import { CUSTOMER_LOGOS, REFERENCE_PROJECTS, TESTIMONIALS } from "./appData";
 import CookieBanner from "./components/CookieBanner";
 import { INDUSTRIES, PRODUCTS, SERVICES, slugify } from "./data";
 import CareersPage from "./pages/CareersPage";
@@ -45,6 +46,7 @@ const NAV_LINKS = [
   { label: "Services", to: "/services" },
   { label: "Products", to: "/products" },
   { label: "Industries", to: "/industries" },
+  { label: "Why SIMLABS?", to: "/why-simlabs" },
   { label: "Customers", to: "/customers" },
   { label: "Projects", to: "/projects" },
   { label: "Partners", to: "/partners" },
@@ -105,6 +107,39 @@ function useSectionReveal() {
     }
     return () => observer.disconnect();
   }, []);
+}
+
+// ─── Auto-scroll track ───────────────────────────────────────────────────────
+function AutoScrollTrack({
+  children,
+  speed = 40,
+  reverse = false,
+}: {
+  children: React.ReactNode;
+  speed?: number;
+  reverse?: boolean;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  return (
+    <div className="overflow-hidden relative" aria-hidden="true">
+      {/* left fade */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      {/* right fade */}
+      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div
+        ref={trackRef}
+        className="flex gap-4 w-max"
+        style={{
+          animation: `marqueeScroll ${speed}s linear infinite ${
+            reverse ? "reverse" : "normal"
+          }`,
+        }}
+      >
+        {children}
+        {children}
+      </div>
+    </div>
+  );
 }
 
 // ─── Header ─────────────────────────────────────────────────────────────────
@@ -190,22 +225,21 @@ function Header() {
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [prevIdx, setPrevIdx] = useState<number | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [fading, setFading] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setPrevIdx(currentIdx);
-      setCurrentIdx((i) => (i + 1) % HERO_SLIDES.length);
-      setTransitioning(true);
+      setFading(true);
       setTimeout(() => {
-        setPrevIdx(null);
-        setTransitioning(false);
-      }, 700);
+        setSlideIdx((i) => (i + 1) % HERO_SLIDES.length);
+        setFading(false);
+      }, 400);
     }, 4000);
     return () => clearInterval(timer);
-  }, [currentIdx]);
+  }, []);
+
+  const slide = HERO_SLIDES[slideIdx];
 
   return (
     <section
@@ -255,14 +289,7 @@ function Hero() {
               manufacturing, transport, and beyond.
             </p>
             <div className="flex flex-wrap gap-4">
-              <button
-                type="button"
-                data-ocid="hero.primary_button"
-                onClick={() => {
-                  const el = document.getElementById("services-section");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
+              <Link to="/services" data-ocid="hero.primary_button">
                 <Button
                   size="lg"
                   className="btn-gradient border-0 text-white font-semibold gap-2"
@@ -270,7 +297,7 @@ function Hero() {
                   Explore What We Offer
                   <ArrowRight className="w-4 h-4" />
                 </Button>
-              </button>
+              </Link>
               <a
                 href="/assets/uploads/Brochure_SIMLABS-1.pdf"
                 target="_blank"
@@ -305,44 +332,32 @@ function Hero() {
               }}
             />
             <div
-              className="relative rounded-2xl overflow-hidden border border-primary/30 shadow-2xl"
+              className="relative rounded-2xl overflow-hidden border border-primary/30 shadow-2xl animate-float"
               style={{ maxHeight: "620px", minHeight: "420px" }}
             >
-              {/* Previous image fading out */}
-              {prevIdx !== null && (
-                <img
-                  src={HERO_SLIDES[prevIdx].src}
-                  alt={HERO_SLIDES[prevIdx].label}
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                  style={{
-                    opacity: transitioning ? 0 : 1,
-                    maxHeight: "620px",
-                    minHeight: "420px",
-                  }}
-                />
-              )}
-              {/* Current image fading in */}
               <img
-                src={HERO_SLIDES[currentIdx].src}
-                alt={HERO_SLIDES[currentIdx].label}
-                className="w-full h-full object-cover transition-opacity duration-700"
+                src={slide.src}
+                alt={slide.label}
+                className="w-full h-full object-cover transition-opacity duration-400"
                 style={{
-                  opacity: transitioning && prevIdx !== null ? 0 : 1,
+                  opacity: fading ? 0 : 1,
                   maxHeight: "620px",
                   minHeight: "420px",
                 }}
                 loading="eager"
               />
-              {/* Dots and label */}
+              {/* Slide label */}
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                 <div className="flex gap-2">
                   {HERO_SLIDES.map((s, i) => (
                     <button
                       key={s.abbr}
                       type="button"
-                      onClick={() => setCurrentIdx(i)}
+                      onClick={() => {
+                        setSlideIdx(i);
+                      }}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === currentIdx
+                        i === slideIdx
                           ? "w-6 bg-primary"
                           : "w-1.5 bg-white/40 hover:bg-white/60"
                       }`}
@@ -354,10 +369,11 @@ function Hero() {
                   className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm"
                   style={{ color: "oklch(0.85 0.19 55)" }}
                 >
-                  {HERO_SLIDES[currentIdx].label}
+                  {slide.abbr} &mdash; {slide.label}
                 </span>
               </div>
             </div>
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-primary/20 pointer-events-none" />
           </motion.div>
         </div>
       </div>
@@ -392,10 +408,10 @@ function AboutBanner() {
   );
 }
 
-// ─── Summary: Services ───────────────────────────────────────────────────
+// ─── Summary: Services (auto-scroll) ───────────────────────────────────────
 function ServicesSummary() {
   return (
-    <section id="services-section" className="py-24 section-fade">
+    <section className="py-24 section-fade">
       <div className="container mx-auto px-6">
         <div className="text-center mb-14">
           <Badge
@@ -408,45 +424,51 @@ function ServicesSummary() {
             Our Technology Services
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            End-to-end visual technology solutions tailored for industry
-            requirements across the world.
+            End-to-end visual technology solutions tailored for advanced
+            industry requirements across the world.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((s) => (
-            <Link
-              key={s.title}
-              to="/services/$slug"
-              params={{ slug: slugify(s.title) }}
-              search={(() => ({ from: "home" })) as any}
-              className="flex-shrink-0 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
-            >
-              <img
-                src={s.image}
-                alt={s.title}
-                className="w-full h-32 object-cover"
-                loading="lazy"
-              />
-              <div className="p-4">
-                <div className="w-9 h-9 rounded-lg btn-gradient flex items-center justify-center mb-3 text-white">
-                  {s.icon}
-                </div>
-                <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-tight">
-                  {s.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                  {s.desc}
-                </p>
+      </div>
+      <AutoScrollTrack speed={36}>
+        {SERVICES.map((s) => (
+          <Link
+            key={s.title}
+            to="/services/$slug"
+            params={{ slug: slugify(s.title) }}
+            className="flex-shrink-0 w-64 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
+          >
+            <img
+              src={s.image}
+              alt={s.title}
+              className="w-full h-32 object-cover"
+              loading="lazy"
+            />
+            <div className="p-4">
+              <div className="w-9 h-9 rounded-lg btn-gradient flex items-center justify-center mb-3 text-white">
+                {s.icon}
               </div>
-            </Link>
-          ))}
-        </div>
+              <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-tight">
+                {s.title}
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                {s.desc}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </AutoScrollTrack>
+      <div className="text-center mt-10">
+        <Link to="/services" data-ocid="services.primary_button">
+          <Button className="btn-gradient text-white gap-2">
+            View All Services <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
 }
 
-// ─── Summary: Products ───────────────────────────────────────────────────
+// ─── Summary: Products (auto-scroll) ───────────────────────────────────────
 function ProductsSummary() {
   return (
     <section className="py-24 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
@@ -460,47 +482,53 @@ function ProductsSummary() {
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Products</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Professional visual technology solutions built with world-class
-            technology.
+            Professional simulation and visualization software solutions built
+            with world-class technology.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {PRODUCTS.map((p) => (
-            <Link
-              key={p.name}
-              to="/products/$slug"
-              params={{ slug: slugify(p.name) }}
-              search={(() => ({ from: "home" })) as any}
-              className="flex-shrink-0 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
-            >
-              <img
-                src={p.image}
-                alt={p.name}
-                className="w-full h-32 object-cover"
-                loading="lazy"
-              />
-              <div className="p-4 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center flex-shrink-0 text-white">
-                  {p.icon}
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">
-                    {p.name}
-                  </h3>
-                  <p className="text-xs text-muted-foreground line-clamp-2">
-                    {p.desc}
-                  </p>
-                </div>
+      </div>
+      <AutoScrollTrack speed={42} reverse>
+        {PRODUCTS.map((p) => (
+          <Link
+            key={p.name}
+            to="/products/$slug"
+            params={{ slug: slugify(p.name) }}
+            className="flex-shrink-0 w-56 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
+          >
+            <img
+              src={p.image}
+              alt={p.name}
+              className="w-full h-32 object-cover"
+              loading="lazy"
+            />
+            <div className="p-4 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center flex-shrink-0 text-white">
+                {p.icon}
               </div>
-            </Link>
-          ))}
-        </div>
+              <div>
+                <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">
+                  {p.name}
+                </h3>
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  {p.desc}
+                </p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </AutoScrollTrack>
+      <div className="text-center mt-10">
+        <Link to="/products" data-ocid="products.primary_button">
+          <Button className="btn-gradient text-white gap-2">
+            View All Products <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
 }
 
-// ─── Summary: Industries ────────────────────────────────────────────────
+// ─── Summary: Industries (auto-scroll) ────────────────────────────────────
 function IndustriesSummary() {
   return (
     <section className="py-24 section-fade">
@@ -520,27 +548,130 @@ function IndustriesSummary() {
             worldwide.
           </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {INDUSTRIES.map((ind) => (
-            <div
-              key={ind.name}
-              className="flex-shrink-0 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
-            >
-              <img
-                src={ind.image}
-                alt={ind.name}
-                className="w-full h-28 object-cover"
-                loading="lazy"
-              />
-              <div className="p-3 text-center">
-                <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center mb-2 text-white mx-auto">
-                  {ind.icon}
-                </div>
-                <h3 className="font-bold text-xs">{ind.name}</h3>
+      </div>
+      <AutoScrollTrack speed={30}>
+        {INDUSTRIES.map((ind) => (
+          <div
+            key={ind.name}
+            className="flex-shrink-0 w-48 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
+          >
+            <img
+              src={ind.image}
+              alt={ind.name}
+              className="w-full h-28 object-cover"
+              loading="lazy"
+            />
+            <div className="p-3 text-center">
+              <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center mb-2 text-white mx-auto">
+                {ind.icon}
               </div>
+              <h3 className="font-bold text-xs transition-colors">
+                {ind.name}
+              </h3>
             </div>
-          ))}
+          </div>
+        ))}
+      </AutoScrollTrack>
+      <div className="text-center mt-10">
+        <Link to="/industries" data-ocid="industries.primary_button">
+          <Button className="btn-gradient text-white gap-2">
+            View All Industries <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+// ─── Summary: Customers (auto-scroll) ────────────────────────────────────
+function CustomersSummary() {
+  return (
+    <section className="py-24 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-14">
+          <Badge
+            variant="outline"
+            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+          >
+            Clientele
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Customers</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Served many leading organizations across multiple industries in
+            India and globally.
+          </p>
         </div>
+      </div>
+      <AutoScrollTrack speed={35} reverse>
+        {CUSTOMER_LOGOS.map((c) => (
+          <div
+            key={c.name}
+            className="flex-shrink-0 px-6 py-4 bg-card border border-border rounded-lg hover:border-primary/50 transition-colors flex items-center justify-center min-w-[180px]"
+          >
+            <span className="text-sm font-bold text-foreground text-center leading-tight uppercase tracking-wide">
+              {c.name}
+            </span>
+          </div>
+        ))}
+      </AutoScrollTrack>
+      <div className="text-center mt-10">
+        <Link to="/customers" data-ocid="customers.primary_button">
+          <Button className="btn-gradient text-white gap-2">
+            View All Customers &amp; Testimonials{" "}
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+// ─── Summary: Testimonials (auto-scroll) ─────────────────────────────────
+function TestimonialsSummary() {
+  return (
+    <section className="py-24 section-fade">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-14">
+          <Badge
+            variant="outline"
+            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+          >
+            Customers Feedback
+          </Badge>
+          <h3 className="text-2xl md:text-3xl font-bold">Testimonials</h3>
+        </div>
+      </div>
+      <AutoScrollTrack speed={50}>
+        {TESTIMONIALS.map((t) => (
+          <div
+            key={t.org}
+            className="flex-shrink-0 w-80 bg-card border border-border rounded-xl p-6 flex flex-col"
+          >
+            <div className="flex gap-1 mb-3">
+              <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+              <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+              <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+              <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+              <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+            </div>
+            <blockquote className="text-xs text-muted-foreground leading-relaxed flex-1 mb-4 italic line-clamp-5">
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full btn-gradient flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                {t.org.charAt(0)}
+              </div>
+              <p className="font-semibold text-xs">{t.org}</p>
+            </div>
+          </div>
+        ))}
+      </AutoScrollTrack>
+      <div className="text-center mt-10">
+        <Link to="/customers" data-ocid="testimonials.primary_button">
+          <Button className="btn-gradient text-white gap-2">
+            View All Testimonials <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
@@ -607,6 +738,68 @@ function WhySimlabsSummary() {
             </motion.div>
           ))}
         </div>
+        <div className="text-center mt-10">
+          <Link to="/why-simlabs">
+            <Button className="btn-gradient text-white gap-2">
+              Learn More <ChevronRight className="w-4 h-4" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Summary: Projects (auto-scroll) ────────────────────────────────────
+function ProjectsSummary() {
+  return (
+    <section className="py-24 section-fade">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-14">
+          <Badge
+            variant="outline"
+            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+          >
+            Reference Projects
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Projects</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Some of the VR, AR, MR and VS projects delivered.
+          </p>
+        </div>
+      </div>
+      <AutoScrollTrack speed={45} reverse>
+        {REFERENCE_PROJECTS.map((proj) => (
+          <div
+            key={proj.name}
+            className="flex-shrink-0 w-56 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
+          >
+            <div className="relative overflow-hidden h-36">
+              <img
+                src={proj.image}
+                alt={proj.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </div>
+            <div className="p-3">
+              <p className="font-semibold text-xs leading-tight mb-1">
+                {proj.name}
+              </p>
+              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                {proj.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </AutoScrollTrack>
+      <div className="text-center mt-10">
+        <Link to="/projects" data-ocid="projects.primary_button">
+          <Button className="btn-gradient text-white gap-2">
+            View All Projects <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
@@ -625,10 +818,9 @@ function ContactCTA() {
         </Badge>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
         <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-          Ready to transform your simulation, training, visualization, design,
-          technical assistance, and marketing capabilities? Connect with the{" "}
-          <span className="gradient-text">SIMLABS</span>
-          <sup className="text-xs">®</sup> team.
+          Ready to transform your training and visualization capabilities? Reach
+          out to the <span className="gradient-text">SIMLABS</span>
+          <sup className="text-xs">®</sup> team today.
         </p>
         <Link to="/contact" data-ocid="contact.primary_button">
           <Button
@@ -657,7 +849,10 @@ function AppHome() {
         <ServicesSummary />
         <ProductsSummary />
         <IndustriesSummary />
+        <CustomersSummary />
+        <TestimonialsSummary />
         <WhySimlabsSummary />
+        <ProjectsSummary />
         <ContactCTA />
       </main>
       <Footer />

@@ -1,16 +1,18 @@
+import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/#home" },
-  { label: "Services", href: "/#services" },
-  { label: "Products", href: "/#products" },
-  { label: "Industries", href: "/#industries" },
-  { label: "Why SIMLABS?", href: "/#why" },
-  { label: "Customers", href: "/#customers" },
-  { label: "Jobs", href: "/#jobs" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Home", to: "/" },
+  { label: "Services", to: "/services" },
+  { label: "Products", to: "/products" },
+  { label: "Industries", to: "/industries" },
+  { label: "Customers", to: "/customers" },
+  { label: "Projects", to: "/projects" },
+  { label: "Partners", to: "/partners" },
+  { label: "Careers", to: "/careers" },
+  { label: "Contact", to: "/contact" },
 ];
 
 export default function SharedHeader() {
@@ -32,27 +34,27 @@ export default function SharedHeader() {
       }`}
     >
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2" data-ocid="nav.link">
+        <Link to="/" className="flex items-center gap-2" data-ocid="nav.link">
           <img
-            src="/assets/uploads/01-1.png"
+            src="/assets/uploads/01_1-1.png"
             alt="SIMLABS"
             className="h-12 w-auto"
           />
-        </a>
+        </Link>
 
         <nav
           className="hidden lg:flex items-center gap-5"
           aria-label="Primary navigation"
         >
           {NAV_LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
+            <Link
+              key={l.to}
+              to={l.to}
               data-ocid="nav.link"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -76,15 +78,15 @@ export default function SharedHeader() {
             className="lg:hidden bg-[oklch(0.11_0.028_247/0.98)] border-t border-border px-6 pb-4"
           >
             {NAV_LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
+              <Link
+                key={l.to}
+                to={l.to}
                 data-ocid="nav.link"
                 className="block py-3 text-sm font-medium text-muted-foreground hover:text-primary border-b border-border last:border-0"
                 onClick={() => setOpen(false)}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </motion.div>
         )}
