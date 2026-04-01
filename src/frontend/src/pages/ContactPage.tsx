@@ -97,9 +97,9 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/banner-contacts.dim_1200x400.jpg"
-        badge="Let's Talk"
-        title="Get in Touch"
+        image="/assets/generated/banner-contacts-new.dim_1200x400.jpg"
+        badge="Connect With Us"
+        title="Connect with Our Team"
         objectPosition="center"
       />
       <main className="container mx-auto px-6 py-12">

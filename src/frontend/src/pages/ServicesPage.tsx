@@ -15,7 +15,7 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/service-vr.dim_800x500.jpg"
+        image="/assets/generated/banner-services-new.dim_1200x400.jpg"
         badge="What We Do"
         title="Our Technology Services"
         objectPosition="center 30%"

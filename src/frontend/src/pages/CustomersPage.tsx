@@ -17,7 +17,7 @@ export default function CustomersPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/banner-customers.dim_1200x400.jpg"
+        image="/assets/generated/banner-customers-new.dim_1200x400.jpg"
         badge="Our Clients"
         title="Customers & Testimonials"
         objectPosition="center"

@@ -157,7 +157,7 @@ export default function CareersPage() {
             <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
           </div>
 
-          <div className="max-w-4xl mx-auto">
+          <div>
             <p className="text-muted-foreground mb-10 leading-relaxed">
               We&apos;re always looking for talented individuals passionate
               about VR, AR, MR, Visual Simulation, Digital Twin, and AI/ML
@@ -305,10 +305,10 @@ export default function CareersPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-card border border-border rounded-xl p-10 card-glow text-center"
+              className="bg-card border border-border rounded-xl p-10 card-glow"
               data-ocid="jobs.card"
             >
-              <div className="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mx-auto mb-6 text-white">
+              <div className="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mb-6 text-white">
                 <Mail className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold mb-3">

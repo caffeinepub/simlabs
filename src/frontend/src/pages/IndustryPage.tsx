@@ -10,6 +10,7 @@ import {
   SERVICES,
   slugify,
 } from "../data";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 export default function IndustryPage() {
@@ -48,58 +49,12 @@ export default function IndustryPage() {
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
       <SharedHeader />
 
-      {/* Hero - ribbon banner */}
-      <div className="relative pt-16">
-        <div
-          className="relative w-full overflow-hidden"
-          style={{ height: "200px", background: "oklch(0.09 0.028 247)" }}
-        >
-          <img
-            src={industry.image}
-            alt={industry.name}
-            className="absolute inset-0 w-full h-full"
-            style={{
-              objectFit: "contain",
-              objectPosition: "center",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
-          <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-5">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <nav
-                className="flex items-center gap-2 text-sm text-muted-foreground mb-2"
-                aria-label="Breadcrumb"
-              >
-                <a href="/" className="hover:text-primary transition-colors">
-                  Home
-                </a>
-                <ChevronRight className="w-4 h-4" />
-                <a
-                  href="/#industries"
-                  className="hover:text-primary transition-colors"
-                >
-                  Industries
-                </a>
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-foreground">{industry.name}</span>
-              </nav>
-              <Badge
-                variant="outline"
-                className="mb-2 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-              >
-                Industry
-              </Badge>
-              <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight">
-                {industry.name}
-              </h1>
-            </motion.div>
-          </div>
-        </div>
-      </div>
+      <PageBanner
+        image={industry.image}
+        badge="Industry"
+        title={industry.name}
+        objectPosition="center"
+      />
 
       {/* Content */}
       <main className="container mx-auto px-6 py-12">

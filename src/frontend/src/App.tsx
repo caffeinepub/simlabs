@@ -353,7 +353,7 @@ function AboutBanner() {
   return (
     <section className="py-16 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl">
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
             <span className="text-foreground font-semibold">
               Simlabs Software LLP
@@ -386,12 +386,12 @@ function CustomerLogoSection() {
   return (
     <section className="py-14 section-fade">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-10">
-          <h2 className="text-xl md:text-2xl font-bold mb-4 max-w-3xl mx-auto">
+        <div className="mb-10">
+          <h2 className="text-xl md:text-2xl font-bold mb-4 max-w-3xl">
             SIMLABS helps organizations harness the power of VR, AR, MR, and
             Visual Simulation technologies.
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
+          <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-5 gap-y-7 justify-items-center">
           {CUSTOMER_LOGOS.map((c) => (
@@ -461,7 +461,7 @@ function WhySimlabsSummary() {
   return (
     <section className="py-14 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-8">
+        <div className="mb-8">
           <Badge
             variant="outline"
             className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
@@ -471,7 +471,8 @@ function WhySimlabsSummary() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Why Choose <span className="gradient-text">SIMLABS</span>?
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+          <p className="text-muted-foreground max-w-2xl">
             Three pillars that define our commitment to excellence and client
             success.
           </p>
@@ -485,9 +486,9 @@ function WhySimlabsSummary() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
               data-ocid={`why.item.${i + 1}`}
-              className="bg-card border border-border rounded-xl p-8 text-center card-glow transition-all duration-300 hover:border-primary/50 group"
+              className="bg-card border border-border rounded-xl p-8 card-glow transition-all duration-300 hover:border-primary/50 group"
             >
-              <div className="w-14 h-14 rounded-full btn-gradient flex items-center justify-center mx-auto mb-5 text-white">
+              <div className="w-14 h-14 rounded-full btn-gradient flex items-center justify-center mb-5 text-white">
                 {w.icon}
               </div>
               <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors">
@@ -508,7 +509,7 @@ function WhySimlabsSummary() {
 function ContactCTA() {
   return (
     <section className="py-14 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
-      <div className="container mx-auto px-6 text-center">
+      <div className="container mx-auto px-6">
         <Badge
           variant="outline"
           className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
@@ -516,7 +517,8 @@ function ContactCTA() {
           Let&apos;s Talk
         </Badge>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
-        <p className="text-muted-foreground max-w-xl mx-auto mb-8">
+        <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+        <p className="text-muted-foreground max-w-xl mb-8">
           Ready to transform your simulation, training, visualization, design,
           technical assistance, and marketing capabilities? Connect with the{" "}
           <span className="gradient-text">SIMLABS</span>

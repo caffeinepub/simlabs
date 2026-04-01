@@ -15,7 +15,7 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/product-augmentor.dim_600x380.jpg"
+        image="/assets/generated/banner-products-new.dim_1200x400.jpg"
         badge="PRODUCTS"
         title="Our Products"
         objectPosition="center"
