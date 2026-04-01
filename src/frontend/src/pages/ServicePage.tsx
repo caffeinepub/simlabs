@@ -38,20 +38,14 @@ export default function ServicePage() {
       {/* Hero - ribbon banner */}
       <div className="relative pt-16">
         <div
-          className="relative w-full overflow-hidden"
-          style={{ height: "200px", background: "oklch(0.09 0.028 247)" }}
+          className="relative w-full overflow-hidden flex items-stretch"
+          style={{ height: "280px", background: "oklch(0.09 0.028 247)" }}
         >
-          <img
-            src={service.image}
-            alt={service.title}
-            className="absolute inset-0 w-full h-full"
-            style={{
-              objectFit: "contain",
-              objectPosition: "center",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
-          <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-5">
+          {/* Dark overlay full background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 z-10" />
+
+          {/* Left: Text content */}
+          <div className="relative z-20 flex flex-col justify-center px-8 md:px-16 w-full md:w-[60%]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -80,10 +74,21 @@ export default function ServicePage() {
               >
                 Technology Service
               </Badge>
-              <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight">
+              <h1 className="text-2xl md:text-4xl font-extrabold uppercase tracking-tight">
                 {service.title}
               </h1>
             </motion.div>
+          </div>
+
+          {/* Right: Image */}
+          <div className="hidden md:block absolute right-0 top-0 bottom-0 w-[45%]">
+            <img
+              src={service.image}
+              alt={service.title}
+              className="w-full h-full object-cover object-center"
+            />
+            {/* Fade from left to blend with text area */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
           </div>
         </div>
       </div>

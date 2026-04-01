@@ -97,7 +97,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/hero-slide-dt.dim_1200x700.jpg"
+        image="/assets/generated/banner-contacts.dim_1200x400.jpg"
         badge="Let's Talk"
         title="Get in Touch"
         objectPosition="center"

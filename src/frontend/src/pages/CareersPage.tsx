@@ -142,7 +142,7 @@ export default function CareersPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/service-ai.dim_800x500.jpg"
+        image="/assets/generated/banner-careers.dim_1200x400.jpg"
         badge="Join Us"
         title="Careers"
         objectPosition="center"

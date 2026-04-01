@@ -15,7 +15,7 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/project-su30mki.dim_600x380.jpg"
+        image="/assets/generated/banner-projects.dim_1200x400.jpg"
         badge="Reference Projects"
         title="Our Projects"
         objectPosition="center"

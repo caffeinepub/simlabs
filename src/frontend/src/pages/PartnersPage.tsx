@@ -43,7 +43,7 @@ export default function PartnersPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/service-digitaltwin.dim_800x500.jpg"
+        image="/assets/generated/banner-partners.dim_1200x400.jpg"
         badge="Partnerships"
         title="Our Partners"
         objectPosition="center"

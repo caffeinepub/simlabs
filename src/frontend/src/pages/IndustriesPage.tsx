@@ -15,7 +15,7 @@ export default function IndustriesPage() {
     <div className="min-h-screen bg-background">
       <SharedHeader />
       <PageBanner
-        image="/assets/generated/industry-aerospace.dim_600x400.jpg"
+        image="/assets/generated/banner-industries.dim_1200x400.jpg"
         badge="Sectors"
         title="Industries We Serve"
         objectPosition="center 30%"
