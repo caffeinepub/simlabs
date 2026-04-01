@@ -393,29 +393,41 @@ function CustomerLogoSection() {
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-5 gap-y-7 justify-items-center">
           {CUSTOMER_LOGOS.map((c) => (
             <div
               key={c.name}
-              className="flex flex-col items-center gap-2 group"
+              className="flex flex-col items-center gap-2 group w-full"
             >
-              {c.logo ? (
-                <div className="w-full aspect-[3/2] flex items-center justify-center bg-white border border-gray-200 rounded-lg p-3 hover:border-primary/50 transition-colors">
+              <div
+                className="flex items-center justify-center rounded-lg border border-gray-200 hover:border-primary/40 transition-colors overflow-hidden"
+                style={{
+                  width: "100%",
+                  height: "100px",
+                  background: "#ffffff",
+                  padding: "12px",
+                }}
+              >
+                {c.logo ? (
                   <img
                     src={c.logo}
                     alt={c.name}
-                    className="max-w-full max-h-full object-contain"
+                    className="object-contain"
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "76px",
+                      width: "auto",
+                      height: "auto",
+                    }}
                     loading="lazy"
                   />
-                </div>
-              ) : (
-                <div className="w-full aspect-[3/2] flex items-center justify-center bg-white border border-gray-200 rounded-lg p-3 hover:border-primary/50 transition-colors">
-                  <span className="text-xs font-bold text-foreground text-center leading-tight uppercase tracking-wide">
+                ) : (
+                  <span className="text-xs font-bold text-gray-700 text-center leading-tight uppercase tracking-wide">
                     {c.name}
                   </span>
-                </div>
-              )}
-              <p className="text-xs text-muted-foreground text-center font-medium uppercase tracking-wide leading-tight">
+                )}
+              </div>
+              <p className="text-xs font-bold text-center uppercase tracking-wide leading-tight text-foreground/80 w-full px-1">
                 {c.name}
               </p>
             </div>
