@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import {
   INDUSTRIES,
@@ -48,35 +48,30 @@ export default function IndustryPage() {
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
       <SharedHeader />
 
-      {/* Hero - fully visible image */}
+      {/* Hero - ribbon banner */}
       <div className="relative pt-16">
         <div
           className="relative w-full overflow-hidden"
-          style={{ minHeight: "300px" }}
+          style={{ height: "200px", background: "oklch(0.09 0.028 247)" }}
         >
           <img
             src={industry.image}
             alt={industry.name}
-            className="w-full"
+            className="absolute inset-0 w-full h-full"
             style={{
-              display: "block",
-              maxHeight: "550px",
               objectFit: "contain",
-              background: "oklch(0.09 0.028 247)",
+              objectPosition: "center",
             }}
           />
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-[oklch(0.09_0.028_247)] via-[oklch(0.09_0.028_247/0.5)] to-transparent"
-            style={{ position: "absolute", inset: 0 }}
-          />
-          <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 container mx-auto">
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+          <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-5">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <nav
-                className="flex items-center gap-2 text-sm text-muted-foreground mb-3"
+                className="flex items-center gap-2 text-sm text-muted-foreground mb-2"
                 aria-label="Breadcrumb"
               >
                 <a href="/" className="hover:text-primary transition-colors">
@@ -94,27 +89,16 @@ export default function IndustryPage() {
               </nav>
               <Badge
                 variant="outline"
-                className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+                className="mb-2 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
               >
                 Industry
               </Badge>
-              <h1 className="text-3xl md:text-5xl font-extrabold uppercase tracking-tight">
+              <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight">
                 {industry.name}
               </h1>
             </motion.div>
           </div>
         </div>
-      </div>
-
-      {/* Back link */}
-      <div className="container mx-auto px-6 py-4">
-        <a
-          href="/#industries"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          data-ocid="industry.link"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Industries
-        </a>
       </div>
 
       {/* Content */}

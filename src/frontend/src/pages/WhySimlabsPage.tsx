@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Shield, Users, Zap } from "lucide-react";
 import { motion } from "motion/react";
 import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 const WHY = [
@@ -27,28 +28,18 @@ export default function WhySimlabsPage() {
   return (
     <div className="min-h-screen bg-background">
       <SharedHeader />
-      <main className="pt-20">
-        <section className="py-24 bg-[oklch(0.11_0.028_247)] border-y border-border">
+      <PageBanner
+        image="/assets/generated/hero-slide-vs.dim_1200x700.jpg"
+        badge="Our Edge"
+        title="Why Choose SIMLABS?"
+        objectPosition="center"
+      />
+      <main>
+        <section className="py-14 bg-[oklch(0.11_0.028_247)] border-y border-border">
           <div className="container mx-auto px-6">
-            <div className="mb-6">
-              <Link
-                to="/"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-              >
-                ← Back to Home
-              </Link>
-            </div>
-            <div className="text-center mb-14">
-              <Badge
-                variant="outline"
-                className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-              >
-                Our Edge
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Why Choose <span className="gradient-text">SIMLABS</span>?
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+            <div className="mb-10">
+              <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+              <p className="text-muted-foreground">
                 Three pillars that define our commitment to excellence and
                 client success.
               </p>

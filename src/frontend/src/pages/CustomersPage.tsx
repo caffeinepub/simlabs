@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { useEffect } from "react";
 import { CUSTOMER_LOGOS, TESTIMONIALS } from "../appData";
 import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 export default function CustomersPage() {
@@ -15,16 +16,13 @@ export default function CustomersPage() {
   return (
     <div className="min-h-screen bg-background">
       <SharedHeader />
-      <main className="container mx-auto px-6 py-20">
-        <div className="mb-10">
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
+      <PageBanner
+        image="/assets/generated/hero-slide-vr.dim_1200x700.jpg"
+        badge="Our Clients"
+        title="Customers & Testimonials"
+        objectPosition="center"
+      />
+      <main className="container mx-auto px-6 py-12">
         {/* Testimonials first */}
         <motion.section
           initial={{ opacity: 0, y: 24 }}
@@ -32,7 +30,7 @@ export default function CustomersPage() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <div className="text-center mb-8">
+          <div className="mb-8">
             <Badge
               variant="outline"
               className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
@@ -42,7 +40,7 @@ export default function CustomersPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Testimonials
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
+            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -84,7 +82,7 @@ export default function CustomersPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          <div className="text-center mb-10">
+          <div className="mb-10">
             <Badge
               variant="outline"
               className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
@@ -94,8 +92,8 @@ export default function CustomersPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Our Customers
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
-            <p className="text-muted-foreground max-w-3xl mx-auto mb-3">
+            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+            <p className="text-muted-foreground mb-3">
               We are proud to serve a diverse set of customers across
               industries, including aerospace, defense, engineering,
               manufacturing, and research organizations. Our clients range from
@@ -103,7 +101,7 @@ export default function CustomersPage() {
               institutions and training organizations, who rely on our expertise
               in visual simulation, XR technologies.
             </p>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-muted-foreground">
               We work closely with our customers as trusted partners, delivering
               high-quality, cost-effective, and scalable solutions tailored to
               their specific requirements. Our focus on quality, technical

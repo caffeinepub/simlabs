@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge";
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { useEffect } from "react";
 import { SERVICES, slugify } from "../data";
 import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 export default function ServicesPage() {
@@ -14,33 +14,21 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       <SharedHeader />
-      <main className="container mx-auto px-6 py-20">
-        <div className="mb-10">
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
+      <PageBanner
+        image="/assets/generated/service-vr.dim_800x500.jpg"
+        badge="What We Do"
+        title="Our Technology Services"
+        objectPosition="center 30%"
+      />
+      <main className="container mx-auto px-6 py-12">
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="text-center mb-14">
-            <Badge
-              variant="outline"
-              className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-            >
-              What We Do
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Our Technology Services
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+          <div className="mb-10">
+            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+            <p className="text-muted-foreground">
               We provide end-to-end visual technology solutions tailored to meet
               advanced industry requirements across global markets. Our services
               span AR, VR, MR, Visual Simulation, and AI-driven application

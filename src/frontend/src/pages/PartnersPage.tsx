@@ -4,6 +4,7 @@ import { ExternalLink } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect } from "react";
 import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 const TECHNOLOGY_PARTNERS = [
@@ -41,18 +42,15 @@ export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-background">
       <SharedHeader />
+      <PageBanner
+        image="/assets/generated/service-digitaltwin.dim_800x500.jpg"
+        badge="Partnerships"
+        title="Our Partners"
+        objectPosition="center"
+      />
 
-      <main className="container mx-auto px-6 py-20">
+      <main className="container mx-auto px-6 py-12">
         {/* Back link */}
-        <div className="mb-10">
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
         {/* Development Partners */}
         <motion.section
           initial={{ opacity: 0, y: 24 }}

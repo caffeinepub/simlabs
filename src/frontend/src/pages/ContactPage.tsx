@@ -14,6 +14,7 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 export default function ContactPage() {
@@ -95,33 +96,21 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       <SharedHeader />
-      <main className="container mx-auto px-6 py-20">
-        <div className="mb-10">
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
+      <PageBanner
+        image="/assets/generated/hero-slide-dt.dim_1200x700.jpg"
+        badge="Let's Talk"
+        title="Get in Touch"
+        objectPosition="center"
+      />
+      <main className="container mx-auto px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="text-center mb-14">
-            <Badge
-              variant="outline"
-              className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-            >
-              Let&apos;s Talk
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Get in Touch
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
-            <p className="text-muted-foreground max-w-xl mx-auto">
+          <div className="mb-10">
+            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+            <p className="text-muted-foreground">
               Ready to transform your simulation, training, visualization,
               design, technical assistance, and marketing capabilities? Connect
               with the <span className="gradient-text">SIMLABS</span>
