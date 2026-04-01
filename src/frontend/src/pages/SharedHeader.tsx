@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { label: "Projects", to: "/projects" },
   { label: "Partners", to: "/partners" },
   { label: "Careers", to: "/careers" },
-  { label: "Contact", to: "/contact" },
+  { label: "Contacts", to: "/contact" },
 ];
 
 export default function SharedHeader() {

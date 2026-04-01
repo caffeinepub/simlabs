@@ -20,8 +20,8 @@ import {
   Zap,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-// appData imports no longer needed in App.tsx
+import { useEffect, useState } from "react";
+import { CUSTOMER_LOGOS } from "./appData";
 import CookieBanner from "./components/CookieBanner";
 import { INDUSTRIES, PRODUCTS, SERVICES, slugify } from "./data";
 import CareersPage from "./pages/CareersPage";
@@ -49,7 +49,7 @@ const NAV_LINKS = [
   { label: "Projects", to: "/projects" },
   { label: "Partners", to: "/partners" },
   { label: "Careers", to: "/careers" },
-  { label: "Contact", to: "/contact" },
+  { label: "Contacts", to: "/contact" },
 ];
 
 // ─── Hero slides ─────────────────────────────────────────────────────────────
@@ -191,21 +191,14 @@ function Header() {
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [prevIdx, setPrevIdx] = useState<number | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setPrevIdx(currentIdx);
-      setCurrentIdx((i) => (i + 1) % HERO_SLIDES.length);
-      setTransitioning(true);
-      setTimeout(() => {
-        setPrevIdx(null);
-        setTransitioning(false);
-      }, 700);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [currentIdx]);
+    const t = setInterval(
+      () => setCurrentIdx((i) => (i + 1) % HERO_SLIDES.length),
+      5000,
+    );
+    return () => clearInterval(t);
+  }, []);
 
   return (
     <section
@@ -223,7 +216,7 @@ function Hero() {
       </div>
 
       <div className="container mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-[2fr_3fr] gap-8 items-center">
           {/* Left text */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -236,7 +229,7 @@ function Hero() {
             >
               A TRUSTED VISUAL TECHNOLOGY PARTNER
             </Badge>
-            <h1 className="text-3xl md:text-4xl xl:text-5xl font-extrabold leading-tight uppercase tracking-tight mb-6">
+            <h1 className="text-2xl md:text-3xl xl:text-4xl font-extrabold leading-tight uppercase tracking-tight mb-6">
               <span className="text-foreground">YOU GOT THE </span>
               <span className="gradient-text">VISION</span>
               <br />
@@ -247,12 +240,15 @@ function Hero() {
               <br />
               <span className="text-foreground">TO VISUALIZE.</span>
             </h1>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-xl">
+            <p className="text-sm text-muted-foreground mb-8 leading-relaxed max-w-xl">
               Delivering advanced Virtual Reality (VR), Augmented Reality (AR),
-              Mixed Reality (MR), Visual Simulation (VS), Digital Twins (DT) and
-              Artificial Intelligence (AI) solutions across industries including
-              aerospace, defence, automotive, engineering, mining, healthcare,
-              manufacturing, transport, and beyond.
+              Mixed Reality (MR), Visual Simulation (VS), Digital Twins (DT),
+              and Artificial Intelligence (AI) solutions across industries such
+              as aerospace, defence, automotive, engineering, energy / oil &amp;
+              gas / mining, healthcare / pharmaceuticals, manufacturing, and
+              transport. Our solutions empower organizations with cutting-edge,
+              visual technologies for training, technical assistance, product
+              experience, design studies, sales and marketing, and beyond.
             </p>
             <div className="flex flex-wrap gap-4">
               <button
@@ -308,29 +304,20 @@ function Hero() {
               className="relative rounded-2xl overflow-hidden border border-primary/30 shadow-2xl"
               style={{ aspectRatio: "16/9" }}
             >
-              {/* Previous image fading out */}
-              {prevIdx !== null && (
+              {/* All slides stacked, show/hide via opacity */}
+              {HERO_SLIDES.map((slide, i) => (
                 <img
-                  src={HERO_SLIDES[prevIdx].src}
-                  alt={HERO_SLIDES[prevIdx].label}
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                  style={{
-                    opacity: transitioning ? 0 : 1,
-                  }}
+                  key={slide.abbr}
+                  src={slide.src}
+                  alt={slide.label}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                    i === currentIdx ? "opacity-100" : "opacity-0"
+                  }`}
+                  loading={i === 0 ? "eager" : "lazy"}
                 />
-              )}
-              {/* Current image fading in */}
-              <img
-                src={HERO_SLIDES[currentIdx].src}
-                alt={HERO_SLIDES[currentIdx].label}
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                style={{
-                  opacity: transitioning && prevIdx !== null ? 0 : 1,
-                }}
-                loading="eager"
-              />
+              ))}
               {/* Dots and label */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-10">
                 <div className="flex gap-2">
                   {HERO_SLIDES.map((s, i) => (
                     <button
@@ -376,11 +363,17 @@ function AboutBanner() {
             <sup className="text-xs text-muted-foreground">®</sup>
             <span className="text-muted-foreground font-semibold">)</span> is a
             visual technology firm with over 13 years of experience, delivering
-            reliable, high-quality, and cost-effective solutions. Led by a
-            management team with over 21 years of experience in visual
-            technology. We specialize in VR, AR, MR, Visual Simulation, Digital
-            Twins, and AI, serving a wide range of industries with advanced,
-            practical, and scalable solutions.
+            reliable, high-quality, and cost-effective solutions. The company is
+            led by a management team with over 21 years of experience in visual
+            technologies. We specialize in VR, AR, MR, Visual Simulation,
+            Digital Twins, and AI, serving a wide range of industries with
+            advanced and scalable solutions for operational, maintenance, and
+            safety training; field and remote technical assistance; product
+            visualization and experience; design and ergonomics studies; and
+            sales and marketing, and numerous other evolving application areas.
+            By transforming complex processes into intuitive visual experiences,
+            we help teams enhance skills, improve efficiency, boost
+            productivity, and achieve higher levels of accuracy and safety.
           </p>
         </div>
       </div>
@@ -388,152 +381,43 @@ function AboutBanner() {
   );
 }
 
-// ─── Summary: Services ───────────────────────────────────────────────────
-function ServicesSummary() {
+// ─── Customer Logo Section ──────────────────────────────────────────────────
+function CustomerLogoSection() {
   return (
-    <section id="services-section" className="py-24 section-fade">
+    <section className="py-14 section-fade">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-14">
-          <Badge
-            variant="outline"
-            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-          >
-            What We Do
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Our Technology Services
+        <div className="text-center mb-10">
+          <h2 className="text-xl md:text-2xl font-bold mb-4 max-w-3xl mx-auto">
+            SIMLABS helps organizations harness the power of VR, AR, MR, and
+            Visual Simulation technologies.
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            End-to-end visual technology solutions tailored for industry
-            requirements across the world.
-          </p>
+          <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((s) => (
-            <Link
-              key={s.title}
-              to="/services/$slug"
-              params={{ slug: slugify(s.title) }}
-              search={(() => ({ from: "home" })) as any}
-              className="flex-shrink-0 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
-            >
-              <img
-                src={s.image}
-                alt={s.title}
-                className="w-full h-32 object-cover"
-                loading="lazy"
-              />
-              <div className="p-4">
-                <div className="w-9 h-9 rounded-lg btn-gradient flex items-center justify-center mb-3 text-white">
-                  {s.icon}
-                </div>
-                <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-tight">
-                  {s.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                  {s.desc}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Summary: Products ───────────────────────────────────────────────────
-function ProductsSummary() {
-  return (
-    <section className="py-24 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-14">
-          <Badge
-            variant="outline"
-            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-          >
-            PRODUCTS
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Products</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Professional visual technology solutions built with world-class
-            technology.
-          </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {PRODUCTS.map((p) => (
-            <Link
-              key={p.name}
-              to="/products/$slug"
-              params={{ slug: slugify(p.name) }}
-              search={(() => ({ from: "home" })) as any}
-              className="flex-shrink-0 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
-            >
-              <img
-                src={p.image}
-                alt={p.name}
-                className="w-full h-32 object-cover"
-                loading="lazy"
-              />
-              <div className="p-4 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center flex-shrink-0 text-white">
-                  {p.icon}
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">
-                    {p.name}
-                  </h3>
-                  <p className="text-xs text-muted-foreground line-clamp-2">
-                    {p.desc}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Summary: Industries ────────────────────────────────────────────────
-function IndustriesSummary() {
-  return (
-    <section className="py-24 section-fade">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-14">
-          <Badge
-            variant="outline"
-            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-          >
-            Sectors
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Industries We Serve
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Our visual technology solutions serve a wide range of industries
-            worldwide.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {INDUSTRIES.map((ind) => (
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6">
+          {CUSTOMER_LOGOS.map((c) => (
             <div
-              key={ind.name}
-              className="flex-shrink-0 bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
+              key={c.name}
+              className="flex flex-col items-center gap-2 group"
             >
-              <img
-                src={ind.image}
-                alt={ind.name}
-                className="w-full h-28 object-cover"
-                loading="lazy"
-              />
-              <div className="p-3 text-center">
-                <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center mb-2 text-white mx-auto">
-                  {ind.icon}
+              {c.logo ? (
+                <div className="w-full aspect-[3/2] flex items-center justify-center bg-white border border-gray-200 rounded-lg p-3 hover:border-primary/50 transition-colors">
+                  <img
+                    src={c.logo}
+                    alt={c.name}
+                    className="max-w-full max-h-full object-contain"
+                    loading="lazy"
+                  />
                 </div>
-                <h3 className="font-bold text-xs">{ind.name}</h3>
-              </div>
+              ) : (
+                <div className="w-full aspect-[3/2] flex items-center justify-center bg-white border border-gray-200 rounded-lg p-3 hover:border-primary/50 transition-colors">
+                  <span className="text-xs font-bold text-foreground text-center leading-tight uppercase tracking-wide">
+                    {c.name}
+                  </span>
+                </div>
+              )}
+              <p className="text-xs text-muted-foreground text-center font-medium uppercase tracking-wide leading-tight">
+                {c.name}
+              </p>
             </div>
           ))}
         </div>
@@ -563,9 +447,9 @@ const WHY = [
 
 function WhySimlabsSummary() {
   return (
-    <section className="py-24 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
+    <section className="py-14 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-14">
+        <div className="text-center mb-8">
           <Badge
             variant="outline"
             className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
@@ -611,7 +495,7 @@ function WhySimlabsSummary() {
 // ─── Contact CTA ──────────────────────────────────────────────────────────
 function ContactCTA() {
   return (
-    <section className="py-24 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
+    <section className="py-14 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
       <div className="container mx-auto px-6 text-center">
         <Badge
           variant="outline"
@@ -650,9 +534,7 @@ function AppHome() {
       <main>
         <Hero />
         <AboutBanner />
-        <ServicesSummary />
-        <ProductsSummary />
-        <IndustriesSummary />
+        <CustomerLogoSection />
         <WhySimlabsSummary />
         <ContactCTA />
       </main>
@@ -661,8 +543,6 @@ function AppHome() {
     </div>
   );
 }
-
-// unused import fix
 
 // Router setup
 

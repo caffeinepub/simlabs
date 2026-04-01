@@ -162,7 +162,7 @@ export default function IndustryPage() {
                         <img
                           src={s.image}
                           alt={s.title}
-                          className="absolute inset-0 w-full h-full object-contain bg-[oklch(0.08_0.02_247)]"
+                          className="absolute inset-0 w-full h-full object-cover"
                         />
                       </div>
                       <div className="p-4">

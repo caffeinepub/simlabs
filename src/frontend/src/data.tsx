@@ -8,6 +8,7 @@ import {
   Eye,
   Factory,
   FileText,
+  Gamepad2,
   Glasses,
   HardHat,
   HeartPulse,
@@ -25,6 +26,7 @@ import {
   ShieldEllipsis,
   Sofa,
   Train,
+  Users,
   Waves,
   Wrench,
 } from "lucide-react";
@@ -138,7 +140,7 @@ export const PRODUCTS: Product[] = [
   {
     icon: <MapIcon className="w-5 h-5" />,
     name: "TRIAN3DBUILDER",
-    desc: "Advanced 3D Terrain Development software",
+    desc: "3D Terrain Development software",
     image: "/assets/generated/product-trian3dbuilder.dim_600x380.jpg",
   },
   {
@@ -192,19 +194,19 @@ export const PRODUCTS: Product[] = [
   {
     icon: <FileText className="w-5 h-5" />,
     name: "PRODOC",
-    desc: "Interactive product document creator tool",
+    desc: "Interactive product document creator",
     image: "/assets/generated/product-prodoc.dim_600x380.jpg",
   },
   {
     icon: <ScanSearch className="w-5 h-5" />,
     name: "LAYAR",
-    desc: "Intelligent AR tool with ML-based object recognition and virtual content augmentation",
+    desc: "ML based AR tool",
     image: "/assets/generated/product-layar.dim_600x380.jpg",
   },
   {
     icon: <Bot className="w-5 h-5" />,
     name: "INTBOT",
-    desc: "AI-based Chatbot to assist users about products, spare parts, and services",
+    desc: "AI based Chatbot to assist users",
     image: "/assets/generated/product-intbot.dim_600x380.jpg",
   },
   {
@@ -212,6 +214,18 @@ export const PRODUCTS: Product[] = [
     name: "PAINTX",
     desc: "VR based training tool for painters",
     image: "/assets/generated/product-paintx-car.dim_600x380.jpg",
+  },
+  {
+    icon: <Gamepad2 className="w-5 h-5" />,
+    name: "TORQUE",
+    desc: "Multiplayer car stunt racing game",
+    image: "/assets/generated/product-torque.dim_600x380.jpg",
+  },
+  {
+    icon: <Users className="w-5 h-5" />,
+    name: "COLLAB",
+    desc: "Solution for collaborative virtual reality",
+    image: "/assets/generated/product-collab.dim_600x380.jpg",
   },
 ];
 
@@ -269,6 +283,12 @@ export const INDUSTRIES: Industry[] = [
     name: "Manufacturing",
     desc: "AR-guided assembly, quality inspection simulation, and smart factory training",
     image: "/assets/generated/industry-manufacturing.dim_600x400.jpg",
+  },
+  {
+    icon: <Gamepad2 className="w-7 h-7" />,
+    name: "Gaming",
+    desc: "Immersive game development, VR/AR gaming experiences, and multiplayer simulation",
+    image: "/assets/generated/industry-gaming.dim_600x400.jpg",
   },
 ];
 
@@ -594,6 +614,38 @@ export const PRODUCT_DETAILS: Record<
       "Real-time feedback",
       "Performance scoring",
       "Multi-vehicle support",
+    ],
+  },
+  torque: {
+    features: [
+      "Multiplayer online racing with real-time physics-based car dynamics",
+      "Stunt tracks with ramps, loops, obstacles, and aerial challenges",
+      "Multiple car classes with customizable performance and visual tuning",
+      "Real-time leaderboards and competitive match-making",
+      "Cross-platform support for PC, mobile, and VR headsets",
+      "Replay system for reviewing and sharing race highlights",
+    ],
+    highlights: [
+      "Multiplayer racing",
+      "Stunt physics engine",
+      "Car customization",
+      "Cross-platform play",
+    ],
+  },
+  collab: {
+    features: [
+      "Multi-user shared virtual reality environments for remote collaboration",
+      "Real-time voice communication and spatial audio within VR sessions",
+      "3D model import and shared review with annotation tools",
+      "Role-based access for presenters, reviewers, and observers",
+      "Session recording and playback for asynchronous review",
+      "Integration with popular CAD and design tool formats",
+    ],
+    highlights: [
+      "Multi-user VR sessions",
+      "Spatial audio",
+      "3D annotation tools",
+      "Session recording",
     ],
   },
 };

@@ -19,7 +19,7 @@ export const TESTIMONIALS = [
   {
     quote:
       "SIMLABS delivered an impressive VR solution with excellent visual quality, performance, and intuitive navigation. Despite tight timelines, the team demonstrated strong expertise, clear understanding of requirements, and timely delivery. We look forward to continuing our collaboration on future projects.",
-    org: "L&T",
+    org: "LARSEN & TOUBRO",
   },
   {
     quote:
@@ -49,26 +49,26 @@ export const TESTIMONIALS = [
 ];
 
 export const CUSTOMER_LOGOS = [
-  { name: "INDIAN AIR FORCE, PUNE" },
-  { name: "DRDO" },
-  { name: "ISRO" },
-  { name: "NAL" },
-  { name: "ECIL" },
-  { name: "AXISCADES" },
-  { name: "VOLVO" },
-  { name: "GOOGLE" },
-  { name: "ALSTOM" },
-  { name: "EPIROC" },
-  { name: "Atlas Copco" },
-  { name: "L&T Defence" },
-  { name: "CAE" },
-  { name: "ABB" },
-  { name: "Cyient" },
-  { name: "Alpha Design Technologies" },
-  { name: "Applied Materials" },
-  { name: "Indian Army" },
-  { name: "INDIAN AIR FORCE, BANGALORE" },
-  { name: "ANIMEDIA" },
+  { name: "INDIAN AIR FORCE, PUNE", logo: "/assets/logos/iaf.png" },
+  { name: "DRDO", logo: "/assets/logos/drdo.jpg" },
+  { name: "ISRO", logo: "/assets/logos/isro.png" },
+  { name: "NAL", logo: "/assets/logos/nal.png" },
+  { name: "ECIL", logo: "/assets/logos/ecil.png" },
+  { name: "AXISCADES", logo: "/assets/logos/axiscades.jpg" },
+  { name: "VOLVO", logo: "/assets/logos/volvo.png" },
+  { name: "GOOGLE", logo: "/assets/logos/google.png" },
+  { name: "ALSTOM", logo: "/assets/logos/alstom.jpg" },
+  { name: "EPIROC", logo: "/assets/logos/epiroc.png" },
+  { name: "Atlas Copco", logo: "/assets/logos/atlascopco.png" },
+  { name: "LARSEN & TOUBRO", logo: "/assets/logos/lnt.png" },
+  { name: "CAE", logo: "/assets/logos/cae.png" },
+  { name: "ABB", logo: "/assets/logos/abb.png" },
+  { name: "Cyient", logo: "/assets/logos/cyient.png" },
+  { name: "Alpha Design Technologies", logo: "/assets/logos/adt.png" },
+  { name: "Applied Materials", logo: "/assets/logos/amat.png" },
+  { name: "Indian Army", logo: "/assets/logos/army.jpg" },
+  { name: "INDIAN AIR FORCE, BANGALORE", logo: "/assets/logos/iaf.png" },
+  { name: "ANIMEDIA", logo: "/assets/logos/animedia.jpg" },
 ];
 
 export const REFERENCE_PROJECTS = [
@@ -135,7 +135,7 @@ export const REFERENCE_PROJECTS = [
   {
     name: "CYCERO",
     desc: "VR based training application for assembly and disassembly of cab event response device used in railways",
-    image: "/assets/generated/cycero-dark.dim_800x600.jpg",
+    image: "/assets/generated/cycero-tuned.dim_800x450.jpg",
   },
   {
     name: "Airfields",

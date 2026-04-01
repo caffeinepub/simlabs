@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { Briefcase, Clock, Mail, MapPin } from "lucide-react";
 import { motion } from "motion/react";
+import { useEffect } from "react";
 import Footer from "./Footer";
 import SharedHeader from "./SharedHeader";
 
@@ -132,208 +133,213 @@ const JOB_LISTINGS = [
 ];
 
 export default function CareersPage() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <SharedHeader />
-      <main className="pt-20">
-        <section className="py-10 bg-[oklch(0.11_0.028_247)] border-y border-border">
-          <div className="container mx-auto px-6">
-            <div className="mb-6">
-              <Link
-                to="/"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-              >
-                ← Back to Home
-              </Link>
-            </div>
-            <div className="text-center mb-10">
-              <Badge
-                variant="outline"
-                className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-              >
-                Join Us
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Careers</h2>
-            </div>
+      <main className="container mx-auto px-6 py-20">
+        <div className="mb-10">
+          <Link
+            to="/"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+          >
+            ← Back to Home
+          </Link>
+        </div>
 
-            <div className="max-w-4xl mx-auto">
-              <p className="text-muted-foreground mb-10 leading-relaxed text-center">
-                We&apos;re always looking for talented individuals passionate
-                about VR, AR, MR, Visual Simulation, Digital Twin, and AI/ML
-                technologies, as well as developing electronic interfaces for
-                simulators. Join a team building cutting-edge solutions across
-                defence, aerospace, engineering, mining, healthcare, transport,
-                and other advanced industries.
-              </p>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="text-center mb-10">
+            <Badge
+              variant="outline"
+              className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+            >
+              Join Us
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Careers</h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6 mx-auto" />
+          </div>
 
-              {/* Open Positions */}
-              <h3 className="text-xl font-bold mb-6 text-foreground">
-                Open Positions
-              </h3>
-              <div className="grid grid-cols-1 gap-6 mb-10">
-                {JOB_LISTINGS.map((job, i) => (
-                  <motion.div
-                    key={job.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.05 }}
-                    className="bg-card border border-border rounded-xl p-6 card-glow"
-                    data-ocid={`careers.item.${i + 1}`}
-                  >
-                    {/* Header */}
-                    <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                      <div>
-                        <h4 className="text-lg font-bold text-foreground mb-1">
-                          {job.title}
-                        </h4>
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-muted-foreground mb-10 leading-relaxed text-center">
+              We&apos;re always looking for talented individuals passionate
+              about VR, AR, MR, Visual Simulation, Digital Twin, and AI/ML
+              technologies, as well as developing electronic interfaces for
+              simulators. Join a team building cutting-edge solutions across
+              defence, aerospace, engineering, mining, healthcare, transport,
+              and other advanced industries.
+            </p>
+
+            {/* Open Positions */}
+            <h3 className="text-xl font-bold mb-6 text-foreground">
+              Open Positions
+            </h3>
+            <div className="grid grid-cols-1 gap-6 mb-10">
+              {JOB_LISTINGS.map((job, i) => (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className="bg-card border border-border rounded-xl p-6 card-glow"
+                  data-ocid={`careers.item.${i + 1}`}
+                >
+                  {/* Header */}
+                  <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+                    <div>
+                      <h4 className="text-lg font-bold text-foreground mb-1">
+                        {job.title}
+                      </h4>
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5" />
+                          {job.location}
+                        </span>
+                        {(job as any).duration && (
                           <span className="flex items-center gap-1">
-                            <MapPin className="w-3.5 h-3.5" />
-                            {job.location}
+                            <Clock className="w-3.5 h-3.5" />
+                            {(job as any).duration}
                           </span>
-                          {(job as any).duration && (
-                            <span className="flex items-center gap-1">
-                              <Clock className="w-3.5 h-3.5" />
-                              {(job as any).duration}
-                            </span>
-                          )}
-                          {(job as any).experience && (
-                            <span className="flex items-center gap-1">
-                              <Briefcase className="w-3.5 h-3.5" />
-                              {(job as any).experience}
-                            </span>
-                          )}
-                        </div>
+                        )}
+                        {(job as any).experience && (
+                          <span className="flex items-center gap-1">
+                            <Briefcase className="w-3.5 h-3.5" />
+                            {(job as any).experience}
+                          </span>
+                        )}
                       </div>
-                      <Badge
-                        className={`shrink-0 text-xs font-semibold uppercase tracking-wide ${
-                          job.type === "Internship"
-                            ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
-                            : "bg-orange-500/15 text-orange-400 border-orange-500/30"
-                        }`}
-                        variant="outline"
-                      >
-                        {job.type}
-                      </Badge>
                     </div>
+                    <Badge
+                      className={`shrink-0 text-xs font-semibold uppercase tracking-wide ${
+                        job.type === "Internship"
+                          ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
+                          : "bg-orange-500/15 text-orange-400 border-orange-500/30"
+                      }`}
+                      variant="outline"
+                    >
+                      {job.type}
+                    </Badge>
+                  </div>
 
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                      {job.description}
-                    </p>
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    {job.description}
+                  </p>
 
-                    {/* Key Responsibilities (BD intern only) */}
-                    {(job as any).responsibilities && (
-                      <div className="mb-4">
-                        <p className="text-sm font-semibold text-foreground mb-2">
-                          Key Responsibilities
-                        </p>
-                        <ul className="space-y-1">
-                          {(job as any).responsibilities.map((r: string) => (
-                            <li
-                              key={r}
-                              className="flex items-start gap-2 text-sm text-muted-foreground"
-                            >
-                              <span className="text-primary mt-1">•</span>
-                              <span>{r}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Skills Required */}
+                  {/* Key Responsibilities (BD intern only) */}
+                  {(job as any).responsibilities && (
                     <div className="mb-4">
                       <p className="text-sm font-semibold text-foreground mb-2">
-                        Skills Required
+                        Key Responsibilities
                       </p>
                       <ul className="space-y-1">
-                        {job.skills.map((s) => (
+                        {(job as any).responsibilities.map((r: string) => (
                           <li
-                            key={s}
+                            key={r}
                             className="flex items-start gap-2 text-sm text-muted-foreground"
                           >
                             <span className="text-primary mt-1">•</span>
-                            <span>{s}</span>
+                            <span>{r}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
+                  )}
 
-                    {/* Good to Have */}
-                    {job.goodToHave.length > 0 && (
-                      <div className="mb-4">
-                        <p className="text-sm font-semibold text-foreground mb-2">
-                          Good to Have
-                        </p>
-                        <ul className="space-y-1">
-                          {job.goodToHave.map((g) => (
-                            <li
-                              key={g}
-                              className="flex items-start gap-2 text-sm text-muted-foreground"
-                            >
-                              <span className="text-primary mt-1">•</span>
-                              <span>{g}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <p className="text-xs text-muted-foreground/70 border-t border-border pt-4 mt-2">
-                      Visit{" "}
-                      <a
-                        href="https://www.simlabs.in"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-primary hover:underline"
-                      >
-                        www.simlabs.in
-                      </a>{" "}
-                      to learn more about SIMLABS and our work in immersive
-                      technologies.
+                  {/* Skills Required */}
+                  <div className="mb-4">
+                    <p className="text-sm font-semibold text-foreground mb-2">
+                      Skills Required
                     </p>
-                  </motion.div>
-                ))}
-              </div>
+                    <ul className="space-y-1">
+                      {job.skills.map((s) => (
+                        <li
+                          key={s}
+                          className="flex items-start gap-2 text-sm text-muted-foreground"
+                        >
+                          <span className="text-primary mt-1">•</span>
+                          <span>{s}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              {/* CTA */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="bg-card border border-border rounded-xl p-10 card-glow text-center"
-                data-ocid="jobs.card"
-              >
-                <div className="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mx-auto mb-6 text-white">
-                  <Mail className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">
-                  Want to apply? Send us your resume.
-                </h3>
-                <p className="text-muted-foreground mb-8 leading-relaxed">
-                  Send your resume to{" "}
-                  <span className="text-orange-500">
-                    jobs at simlabs dot in
-                  </span>
-                  . We will reach out if a suitable opportunity becomes
-                  available.
-                </p>
-                <a href="mailto:jobs@simlabs.in">
-                  <Button
-                    className="btn-gradient text-white gap-2"
-                    data-ocid="jobs.submit_button"
-                  >
-                    <Mail className="w-4 h-4" />
-                    Send Us Your Resume
-                  </Button>
-                </a>
-              </motion.div>
+                  {/* Good to Have */}
+                  {job.goodToHave.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-sm font-semibold text-foreground mb-2">
+                        Good to Have
+                      </p>
+                      <ul className="space-y-1">
+                        {job.goodToHave.map((g) => (
+                          <li
+                            key={g}
+                            className="flex items-start gap-2 text-sm text-muted-foreground"
+                          >
+                            <span className="text-primary mt-1">•</span>
+                            <span>{g}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <p className="text-xs text-muted-foreground/70 border-t border-border pt-4 mt-2">
+                    Visit{" "}
+                    <a
+                      href="https://www.simlabs.in"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      www.simlabs.in
+                    </a>{" "}
+                    to learn more about SIMLABS and our work in immersive
+                    technologies.
+                  </p>
+                </motion.div>
+              ))}
             </div>
+
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="bg-card border border-border rounded-xl p-10 card-glow text-center"
+              data-ocid="jobs.card"
+            >
+              <div className="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mx-auto mb-6 text-white">
+                <Mail className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">
+                Want to apply? Send us your resume.
+              </h3>
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                Send your resume to{" "}
+                <span className="text-orange-500">jobs at simlabs dot in</span>.
+                We will reach out if a suitable opportunity becomes available.
+              </p>
+              <a href="mailto:jobs@simlabs.in">
+                <Button
+                  className="btn-gradient text-white gap-2"
+                  data-ocid="jobs.submit_button"
+                >
+                  <Mail className="w-4 h-4" />
+                  Send Us Your Resume
+                </Button>
+              </a>
+            </motion.div>
           </div>
-        </section>
+        </motion.div>
       </main>
       <Footer />
     </div>

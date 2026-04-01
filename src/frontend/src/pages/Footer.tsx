@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: "Projects", to: "/projects" },
   { label: "Partners", to: "/partners" },
   { label: "Careers", to: "/careers" },
-  { label: "Contact", to: "/contact" },
+  { label: "Contacts", to: "/contact" },
 ];
 
 export default function Footer() {
@@ -25,7 +25,7 @@ export default function Footer() {
               <img
                 src="/assets/uploads/01_1-1.png"
                 alt="SIMLABS"
-                className="h-8 w-auto"
+                className="h-11 w-auto"
               />
             </div>
             <p className="text-sm leading-relaxed">

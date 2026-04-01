@@ -50,15 +50,14 @@ export default function ProductPage() {
             alt={product.name}
             className="absolute inset-0 w-full h-full"
             style={{
-              objectFit: "contain",
-              background: "oklch(0.09 0.028 247)",
+              objectFit: "cover",
             }}
           />
           <div
             className="absolute inset-0 bg-gradient-to-t from-[oklch(0.09_0.028_247)] via-[oklch(0.09_0.028_247/0.5)] to-transparent"
             style={{ position: "absolute", inset: 0 }}
           />
-          <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 container mx-auto">
+          <div className="absolute bottom-0 left-1/2 right-0 px-8 pb-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
