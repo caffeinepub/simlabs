@@ -17,7 +17,7 @@ export default function ServicesPage() {
       <PageBanner
         image="/assets/generated/banner-services-new.dim_1200x400.jpg"
         badge="What We Do"
-        title="Our Technology Services"
+        title="Services We Offer"
         objectPosition="center 30%"
       />
       <main className="container mx-auto px-6 py-12">
@@ -31,13 +31,16 @@ export default function ServicesPage() {
             <p className="text-muted-foreground">
               We provide end-to-end visual technology solutions tailored to meet
               advanced industry requirements across global markets. Our services
-              span AR, VR, MR, Visual Simulation, and AI-driven application
-              development, along with high-quality 3D content creation. From
-              concept design to deployment and support, we deliver scalable,
-              reliable, and high-performance solutions. Designed to address
-              complex real-world challenges, our offerings enable immersive
-              experiences for training, engineering, product visualization, and
-              decision-making.
+              span AR, VR, MR, Visual Simulation, Digital Twins, and AI-driven
+              application development, along with high-quality 3D content
+              creation. From concept design to deployment and support, we
+              deliver scalable, reliable, and high-performance solutions.
+              Designed to address complex real-world challenges, our offerings
+              enable immersive experiences for operational, maintenance, and
+              safety training; field and remote technical assistance; product
+              visualization and experience; design and ergonomics studies; and
+              sales and marketing, along with numerous other evolving
+              application areas.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

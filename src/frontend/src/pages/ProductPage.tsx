@@ -30,6 +30,8 @@ export default function ProductPage() {
   }
 
   const currentYear = new Date().getFullYear();
+  // Normalise details: it might be an array (collab) or object
+  const detailsObj = Array.isArray(details) ? details[0] : details;
 
   return (
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
@@ -116,7 +118,7 @@ export default function ProductPage() {
               </div>
             </motion.section>
 
-            {details && (
+            {detailsObj && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -124,7 +126,7 @@ export default function ProductPage() {
               >
                 <h2 className="text-2xl font-bold mb-6">Key Features</h2>
                 <ul className="space-y-3">
-                  {details.features.map((f) => (
+                  {detailsObj.features.map((f) => (
                     <li key={f} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground leading-relaxed">
@@ -136,7 +138,7 @@ export default function ProductPage() {
               </motion.section>
             )}
 
-            {details && (
+            {detailsObj && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -146,7 +148,7 @@ export default function ProductPage() {
                   Technical Highlights
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {details.highlights.map((h) => (
+                  {detailsObj.highlights.map((h) => (
                     <div
                       key={h}
                       className="bg-card border border-border rounded-lg p-4 flex items-center gap-3"
@@ -188,21 +190,19 @@ export default function ProductPage() {
             >
               <h3 className="font-bold text-base mb-4">Other Products</h3>
               <ul className="space-y-2">
-                {PRODUCTS.filter((p) => p.name !== product.name)
-                  .slice(0, 6)
-                  .map((p) => (
-                    <li key={p.name}>
-                      <Link
-                        to="/products/$slug"
-                        params={{ slug: slugify(p.name) }}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                        data-ocid="product.link"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                        {p.name}
-                      </Link>
-                    </li>
-                  ))}
+                {PRODUCTS.filter((p) => p.name !== product.name).map((p) => (
+                  <li key={p.name}>
+                    <Link
+                      to="/products/$slug"
+                      params={{ slug: slugify(p.name) }}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                      data-ocid="product.link"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                      {p.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </motion.div>
           </div>

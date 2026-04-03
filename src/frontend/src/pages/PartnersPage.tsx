@@ -69,7 +69,7 @@ export default function PartnersPage() {
               Development Partners
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
-            <p className="text-muted-foreground leading-relaxed max-w-4xl mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               We collaborate with enterprises, system integrators, and service
               providers in visual content, visual application, and simulator
               development to deliver scalable, high-quality, and domain-specific
@@ -79,7 +79,7 @@ export default function PartnersPage() {
               solutions for a wider customer base, while reducing development
               time and leveraging cost-effective offshore execution.
             </p>
-            <p className="text-muted-foreground leading-relaxed max-w-4xl">
+            <p className="text-muted-foreground leading-relaxed">
               We are currently exploring structured partnerships with firms
               where we can operate as a white-label offshore execution partner,
               extending delivery capacity without adding internal headcount.
@@ -115,7 +115,7 @@ export default function PartnersPage() {
               Technology Partners
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
-            <p className="text-muted-foreground leading-relaxed max-w-4xl">
+            <p className="text-muted-foreground leading-relaxed">
               We collaborate with leading global technology providers as an
               authorized distributor / reseller and technical support partner in
               India. We bring advanced visual simulation technologies to

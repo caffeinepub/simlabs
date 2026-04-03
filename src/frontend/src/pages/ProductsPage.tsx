@@ -17,7 +17,7 @@ export default function ProductsPage() {
       <PageBanner
         image="/assets/generated/banner-products-new.dim_1200x400.jpg"
         badge="PRODUCTS"
-        title="Our Products"
+        title="Products We Offer"
         objectPosition="center"
       />
       <main className="container mx-auto px-6 py-12">

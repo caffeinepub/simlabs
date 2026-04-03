@@ -14,7 +14,6 @@ import {
   Download,
   Menu,
   Shield,
-  Star,
   Users,
   X,
   Zap,
@@ -23,7 +22,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { CUSTOMER_LOGOS } from "./appData";
 import CookieBanner from "./components/CookieBanner";
-import { INDUSTRIES, PRODUCTS, SERVICES, slugify } from "./data";
+import { INDUSTRIES, PRODUCTS, SERVICES } from "./data";
 import CareersPage from "./pages/CareersPage";
 import ContactPage from "./pages/ContactPage";
 import CustomersPage from "./pages/CustomersPage";
@@ -45,8 +44,8 @@ const NAV_LINKS = [
   { label: "Services", to: "/services" },
   { label: "Products", to: "/products" },
   { label: "Industries", to: "/industries" },
-  { label: "Customers", to: "/customers" },
   { label: "Projects", to: "/projects" },
+  { label: "Customers", to: "/customers" },
   { label: "Partners", to: "/partners" },
   { label: "Careers", to: "/careers" },
   { label: "Contacts", to: "/contact" },
@@ -240,7 +239,7 @@ function Hero() {
               <br />
               <span className="text-foreground">TO VISUALIZE.</span>
             </h1>
-            <p className="text-sm text-muted-foreground mb-8 leading-relaxed max-w-xl">
+            <p className="text-muted-foreground mb-8 leading-relaxed">
               Delivering advanced Virtual Reality (VR), Augmented Reality (AR),
               Mixed Reality (MR), Visual Simulation (VS), Digital Twins (DT),
               and Artificial Intelligence (AI) solutions across industries such
@@ -255,7 +254,7 @@ function Hero() {
                 type="button"
                 data-ocid="hero.primary_button"
                 onClick={() => {
-                  const el = document.getElementById("services-section");
+                  const el = document.getElementById("what-we-offer");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
               >
@@ -348,13 +347,21 @@ function Hero() {
   );
 }
 
-// ─── About banner ─────────────────────────────────────────────────────────
-function AboutBanner() {
+// ─── What We Offer Section ───────────────────────────────────────────────────
+function WhatWeOffer() {
   return (
-    <section className="py-16 bg-[oklch(0.11_0.028_247)] border-y border-border section-fade">
+    <section id="what-we-offer" className="py-14 section-fade">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl">
-          <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
+        <div className="mb-10">
+          <Badge
+            variant="outline"
+            className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
+          >
+            Our Offerings
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">What We Offer</h2>
+          <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
+          <p className="text-muted-foreground mb-8 leading-relaxed">
             <span className="text-foreground font-semibold">
               Simlabs Software LLP
             </span>
@@ -376,63 +383,145 @@ function AboutBanner() {
             productivity, and achieve higher levels of accuracy and safety.
           </p>
         </div>
+        <div className="grid md:grid-cols-3 gap-8 items-stretch">
+          {/* Technology Services Column */}
+          <Link
+            to="/services"
+            className="group bg-card border-2 border-border rounded-xl p-6 flex flex-col cursor-pointer transition-all duration-300 hover:border-primary no-underline"
+            style={{ textDecoration: "none" }}
+          >
+            <h3 className="text-base font-bold mb-4 text-foreground uppercase tracking-wide">
+              SERVICES WE OFFER
+            </h3>
+            <div className="flex-1">
+              {SERVICES.map((s) => (
+                <WhatWeOfferTile key={s.title} label={s.title} desc={s.desc} />
+              ))}
+            </div>
+          </Link>
+
+          {/* Products Column */}
+          <Link
+            to="/products"
+            className="group bg-card border-2 border-border rounded-xl p-6 flex flex-col cursor-pointer transition-all duration-300 hover:border-primary no-underline"
+            style={{ textDecoration: "none" }}
+          >
+            <h3 className="text-base font-bold mb-4 text-foreground uppercase tracking-wide">
+              PRODUCTS WE OFFER
+            </h3>
+            <div className="flex-1">
+              <div className="grid grid-cols-2 gap-x-3">
+                {PRODUCTS.map((p) => (
+                  <WhatWeOfferTile key={p.name} label={p.name} desc={p.desc} />
+                ))}
+              </div>
+            </div>
+          </Link>
+
+          {/* Industries Column */}
+          <Link
+            to="/industries"
+            className="group bg-card border-2 border-border rounded-xl p-6 flex flex-col cursor-pointer transition-all duration-300 hover:border-primary no-underline"
+            style={{ textDecoration: "none" }}
+          >
+            <h3 className="text-base font-bold mb-4 text-foreground uppercase tracking-wide">
+              Industries We Serve
+            </h3>
+            <div className="flex-1">
+              <div className="grid grid-cols-2 gap-x-3">
+                {INDUSTRIES.map((ind) => (
+                  <WhatWeOfferTile key={ind.name} label={ind.name} desc="" />
+                ))}
+              </div>
+            </div>
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
 
-// ─── Customer Logo Section ──────────────────────────────────────────────────
+function WhatWeOfferTile({ label, desc }: { label: string; desc: string }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="relative mb-2"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+    >
+      <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-background/40 border border-border/60 hover:border-primary/60 hover:bg-primary/5 transition-all duration-200 cursor-default">
+        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+        <span className="text-xs font-semibold uppercase tracking-wide text-foreground/85 leading-tight">
+          {label}
+        </span>
+      </div>
+      {hovered && desc && (
+        <div
+          className="absolute z-50 left-0 top-full mt-1 w-64 bg-popover border border-border rounded-lg p-3 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none"
+          style={{ minWidth: "220px" }}
+        >
+          {desc}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Customer Logo Section ─────────────────────────────────────────────────
 function CustomerLogoSection() {
   return (
-    <section className="py-14 section-fade">
+    <section className="py-14 section-fade bg-[oklch(0.11_0.028_247)] border-y border-border">
       <div className="container mx-auto px-6">
-        <div className="mb-10">
-          <h2 className="text-xl md:text-2xl font-bold mb-4 max-w-3xl">
+        <div className="mb-8">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">
             SIMLABS helps organizations harness the power of VR, AR, MR, and
             Visual Simulation technologies.
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-5 gap-y-7 justify-items-center">
-          {CUSTOMER_LOGOS.map((c) => (
-            <div
-              key={c.name}
-              className="flex flex-col items-center gap-2 group w-full"
-            >
+        {/* Logo grid — full-width scrolling marquee */}
+        <div className="overflow-hidden mb-6">
+          <div
+            className="flex animate-marquee gap-4"
+            style={{ width: "max-content" }}
+          >
+            {[...CUSTOMER_LOGOS, ...CUSTOMER_LOGOS].map((c, i) => (
               <div
-                className="flex items-center justify-center rounded-lg border border-gray-200 hover:border-primary/40 transition-colors overflow-hidden"
-                style={{
-                  width: "100%",
-                  height: "100px",
-                  background: "#ffffff",
-                  padding: "12px",
-                }}
+                key={`${c.name}-${i}`}
+                className="flex-shrink-0 flex flex-col items-center gap-2"
+                style={{ width: "120px" }}
               >
-                {c.logo ? (
+                <div
+                  className="w-full flex items-center justify-center rounded-lg border border-gray-200 overflow-hidden"
+                  style={{
+                    height: "80px",
+                    padding: "8px",
+                    backgroundColor: "#ffffff",
+                  }}
+                >
                   <img
                     src={c.logo}
                     alt={c.name}
-                    className="object-contain"
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "76px",
-                      width: "auto",
-                      height: "auto",
-                    }}
+                    className="object-contain max-h-full max-w-full"
                     loading="lazy"
                   />
-                ) : (
-                  <span className="text-xs font-bold text-gray-700 text-center leading-tight uppercase tracking-wide">
-                    {c.name}
-                  </span>
-                )}
+                </div>
+                <p
+                  className="text-xs font-bold text-center uppercase tracking-wide text-foreground/80 leading-tight"
+                  style={{ fontSize: "10px" }}
+                >
+                  {c.name}
+                </p>
               </div>
-              <p className="text-xs font-bold text-center uppercase tracking-wide leading-tight text-foreground/80 w-full px-1">
-                {c.name}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+        <p className="text-xs text-muted-foreground/60 italic mt-2">
+          All logos and trademarks displayed are the property of their
+          respective owners and are used for identification purposes only.
+        </p>
       </div>
     </section>
   );
@@ -472,7 +561,7 @@ function WhySimlabsSummary() {
             Why Choose <span className="gradient-text">SIMLABS</span>?
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
-          <p className="text-muted-foreground max-w-2xl">
+          <p className="text-muted-foreground">
             Three pillars that define our commitment to excellence and client
             success.
           </p>
@@ -518,7 +607,7 @@ function ContactCTA() {
         </Badge>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
         <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
-        <p className="text-muted-foreground max-w-xl mb-8">
+        <p className="text-muted-foreground mb-8">
           Ready to transform your simulation, training, visualization, design,
           technical assistance, and marketing capabilities? Connect with the{" "}
           <span className="gradient-text">SIMLABS</span>
@@ -547,7 +636,7 @@ function AppHome() {
       <Header />
       <main>
         <Hero />
-        <AboutBanner />
+        <WhatWeOffer />
         <CustomerLogoSection />
         <WhySimlabsSummary />
         <ContactCTA />

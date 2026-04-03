@@ -7,15 +7,14 @@ const NAV_LINKS = [
   { label: "Services", to: "/services" },
   { label: "Products", to: "/products" },
   { label: "Industries", to: "/industries" },
-  { label: "Customers", to: "/customers" },
   { label: "Projects", to: "/projects" },
+  { label: "Customers", to: "/customers" },
   { label: "Partners", to: "/partners" },
   { label: "Careers", to: "/careers" },
   { label: "Contacts", to: "/contact" },
 ];
 
 export default function Footer() {
-  const year = new Date().getFullYear();
   return (
     <footer className="bg-[oklch(0.11_0.028_247)] border-t border-border py-12">
       <div className="container mx-auto px-6">
@@ -108,11 +107,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">
-            © {year} Simlabs Software LLP. All rights reserved.
+        <div className="border-t border-border pt-6 grid grid-cols-1 md:grid-cols-3 items-center gap-2 md:gap-4">
+          <p className="text-xs text-muted-foreground text-center md:text-left">
+            © 2026 Simlabs Software LLP.
           </p>
-          <div className="flex items-center gap-4">
+          <p className="text-xs text-muted-foreground text-center">
+            All rights reserved.
+          </p>
+          <div className="flex justify-center md:justify-end">
             <Link
               to="/privacy-policy"
               className="text-xs text-muted-foreground hover:text-primary transition-colors"
@@ -120,17 +122,6 @@ export default function Footer() {
               Privacy Policy
             </Link>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Built with ❤️ using{" "}
-            <a
-              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-            >
-              caffeine.ai
-            </a>
-          </p>
         </div>
       </div>
     </footer>

@@ -4,6 +4,7 @@ import { Link, useParams } from "@tanstack/react-router";
 import { CheckCircle2, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import { SERVICES, SERVICE_DETAILS, slugify } from "../data";
+import Footer from "./Footer";
 import SharedHeader from "./SharedHeader";
 
 export default function ServicePage() {
@@ -28,8 +29,6 @@ export default function ServicePage() {
       </div>
     );
   }
-
-  const currentYear = new Date().getFullYear();
 
   return (
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
@@ -127,7 +126,7 @@ export default function ServicePage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <h2 className="text-2xl font-bold mb-6">
-                  Key Features & Capabilities
+                  Key Features &amp; Capabilities
                 </h2>
                 <ul className="space-y-3">
                   {details.features.map((f) => (
@@ -141,6 +140,27 @@ export default function ServicePage() {
                 </ul>
               </motion.section>
             )}
+
+            {details?.applicationAreas &&
+              details.applicationAreas.length > 0 && (
+                <motion.section
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.25 }}
+                >
+                  <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
+                  <ul className="space-y-3">
+                    {details.applicationAreas.map((area) => (
+                      <li key={area} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground leading-relaxed">
+                          {area}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.section>
+              )}
 
             {details && (
               <motion.section
@@ -212,19 +232,7 @@ export default function ServicePage() {
         </div>
       </main>
 
-      <footer className="border-t border-border py-8 mt-10">
-        <div className="container mx-auto px-6 text-center text-sm text-muted-foreground">
-          © {currentYear}.{" "}
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
-          >
-            Built with love using caffeine.ai
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

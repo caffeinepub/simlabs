@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
-import { ChevronRight } from "lucide-react";
+import { CheckCircle2, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import {
   INDUSTRIES,
@@ -10,6 +10,7 @@ import {
   SERVICES,
   slugify,
 } from "../data";
+import Footer from "./Footer";
 import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
@@ -43,14 +44,12 @@ export default function IndustryPage() {
     ? PRODUCTS.filter((p) => solutions.products.includes(p.name))
     : [];
 
-  const currentYear = new Date().getFullYear();
-
   return (
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
       <SharedHeader />
 
       <PageBanner
-        image={industry.image}
+        image={industry.bannerImage ?? industry.image}
         badge="Industry"
         title={industry.name}
         objectPosition="center"
@@ -76,15 +75,34 @@ export default function IndustryPage() {
               </div>
             </motion.section>
 
+            {solutions?.applicationAreas &&
+              solutions.applicationAreas.length > 0 && (
+                <motion.section
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                >
+                  <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
+                  <ul className="space-y-3">
+                    {solutions.applicationAreas.map((area) => (
+                      <li key={area} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground leading-relaxed">
+                          {area}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.section>
+              )}
+
             {applicableServices.length > 0 && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h2 className="text-2xl font-bold mb-6">
-                  Applicable SIMLABS Services
-                </h2>
+                <h2 className="text-2xl font-bold mb-6">Relevant Services</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {applicableServices.map((s) => (
                     <Link
@@ -206,19 +224,7 @@ export default function IndustryPage() {
         </div>
       </main>
 
-      <footer className="border-t border-border py-8 mt-10">
-        <div className="container mx-auto px-6 text-center text-sm text-muted-foreground">
-          © {currentYear}.{" "}
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
-          >
-            Built with love using caffeine.ai
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
