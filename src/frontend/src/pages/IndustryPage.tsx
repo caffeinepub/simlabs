@@ -102,7 +102,7 @@ export default function IndustryPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h2 className="text-2xl font-bold mb-6">Relevant Services</h2>
+                <h2 className="text-2xl font-bold mb-6">Applicable Services</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {applicableServices.map((s) => (
                     <Link

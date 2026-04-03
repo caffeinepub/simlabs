@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
 import { CheckCircle2, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import { SERVICES, SERVICE_DETAILS, slugify } from "../data";
+import { INDUSTRIES, SERVICES, SERVICE_DETAILS, slugify } from "../data";
 import Footer from "./Footer";
 import SharedHeader from "./SharedHeader";
 
@@ -93,7 +93,7 @@ export default function ServicePage() {
       </div>
 
       {/* Content */}
-      <main className="container mx-auto px-6 py-12">
+      <main className="container mx-auto px-6 py-6">
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Main */}
           <div className="lg:col-span-2 space-y-10">
@@ -106,17 +106,6 @@ export default function ServicePage() {
               <p className="text-muted-foreground leading-relaxed text-lg">
                 {service.desc}
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {service.tag.split(" · ").map((t) => (
-                  <Badge
-                    key={t}
-                    variant="outline"
-                    className="border-primary/30 text-primary/80 bg-primary/5 text-xs"
-                  >
-                    {t}
-                  </Badge>
-                ))}
-              </div>
             </motion.section>
 
             {details && (
@@ -173,12 +162,35 @@ export default function ServicePage() {
                 </h2>
                 <div className="flex flex-wrap gap-3">
                   {details.industries.map((ind) => (
-                    <span
+                    <Link
                       key={ind}
-                      className="px-4 py-2 rounded-full bg-card border border-border text-sm font-medium text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors"
+                      to="/industries/$slug"
+                      params={{ slug: slugify(ind) }}
+                      onClick={() => window.scrollTo(0, 0)}
+                      className="px-4 py-2 rounded-full bg-card border border-border text-sm font-medium text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors cursor-pointer"
                     >
                       {ind}
-                    </span>
+                    </Link>
+                  ))}
+                </div>
+              </motion.section>
+            )}
+
+            {service.tag && (
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+              >
+                <div className="flex flex-wrap gap-2">
+                  {service.tag.split(" · ").map((t) => (
+                    <Badge
+                      key={t}
+                      variant="outline"
+                      className="border-primary/30 text-primary/80 bg-primary/5 text-xs"
+                    >
+                      {t}
+                    </Badge>
                   ))}
                 </div>
               </motion.section>
