@@ -1,10 +1,24 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
 import { CheckCircle2, ChevronRight, Zap } from "lucide-react";
 import { motion } from "motion/react";
 import { PRODUCTS, PRODUCT_DETAILS, slugify } from "../data";
+import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
+
+const PRODUCT_BANNERS: Record<string, string> = {
+  ssg: "/assets/generated/product-ssg-banner.dim_1200x400.jpg",
+  trian3dbuilder:
+    "/assets/generated/product-trian3dbuilder-banner.dim_1200x400.jpg",
+  layar: "/assets/generated/product-layar-banner.dim_1200x400.jpg",
+  intbot: "/assets/generated/product-intbot-banner.dim_1200x400.jpg",
+  collab: "/assets/generated/product-collab-banner.dim_1200x400.jpg",
+  torque: "/assets/generated/product-torque-banner.dim_1200x400.jpg",
+  paintx: "/assets/generated/product-paintx-banner.dim_1200x400.jpg",
+  prodoc: "/assets/generated/product-prodoc-banner.dim_1200x400.jpg",
+  remoscape: "/assets/generated/product-remoscape-banner.dim_1200x400.jpg",
+};
 
 export default function ProductPage() {
   const { slug } = useParams({ from: "/products/$slug" });
@@ -22,14 +36,16 @@ export default function ProductPage() {
         </p>
         <Link to="/" data-ocid="not_found.link">
           <Button className="btn-gradient border-0 text-white">
-            ← Back to Home
+            \u2190 Back to Home
           </Button>
         </Link>
       </div>
     );
   }
 
-  const currentYear = new Date().getFullYear();
+  const bannerImage =
+    slug && PRODUCT_BANNERS[slug] ? PRODUCT_BANNERS[slug] : product.image;
+
   // Normalise details: it might be an array (collab) or object
   const detailsObj = Array.isArray(details) ? details[0] : details;
 
@@ -37,63 +53,12 @@ export default function ProductPage() {
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
       <SharedHeader />
 
-      {/* Hero - ribbon banner */}
-      <div className="relative pt-16">
-        <div
-          className="relative w-full overflow-hidden flex items-stretch"
-          style={{ height: "280px", background: "oklch(0.09 0.028 247)" }}
-        >
-          {/* Dark overlay full background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 z-10" />
-
-          {/* Left: Text content */}
-          <div className="relative z-20 flex flex-col justify-center px-8 md:px-16 w-full md:w-[60%]">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <nav
-                className="flex items-center gap-2 text-sm text-muted-foreground mb-2"
-                aria-label="Breadcrumb"
-              >
-                <a href="/" className="hover:text-primary transition-colors">
-                  Home
-                </a>
-                <ChevronRight className="w-4 h-4" />
-                <a
-                  href="/products"
-                  className="hover:text-primary transition-colors"
-                >
-                  Products
-                </a>
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-foreground">{product.name}</span>
-              </nav>
-              <Badge
-                variant="outline"
-                className="mb-2 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-              >
-                Product
-              </Badge>
-              <h1 className="text-2xl md:text-4xl font-extrabold uppercase tracking-tight gradient-text">
-                {product.name}
-              </h1>
-            </motion.div>
-          </div>
-
-          {/* Right: Image */}
-          <div className="hidden md:block absolute right-0 top-0 bottom-0 w-[45%]">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Fade from left to blend with text area */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
-          </div>
-        </div>
-      </div>
+      <PageBanner
+        image={bannerImage}
+        badge="Product"
+        title={product.name}
+        objectPosition="center"
+      />
 
       {/* Content */}
       <main className="container mx-auto px-6 py-12">
@@ -125,7 +90,7 @@ export default function ProductPage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <h2 className="text-2xl font-bold mb-6">Key Features</h2>
-                <ul className="space-y-3">
+                <ul className="space-y-1.5">
                   {detailsObj.features.map((f) => (
                     <li key={f} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
@@ -137,6 +102,29 @@ export default function ProductPage() {
                 </ul>
               </motion.section>
             )}
+
+            {detailsObj?.applicationAreas &&
+              detailsObj.applicationAreas.length > 0 && (
+                <motion.section
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.25 }}
+                >
+                  <h2 className="text-2xl font-bold mb-6">
+                    Typical Application Areas
+                  </h2>
+                  <ul className="space-y-1.5">
+                    {detailsObj.applicationAreas.map((area) => (
+                      <li key={area} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground leading-relaxed">
+                          {area}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.section>
+              )}
 
             {detailsObj && (
               <motion.section
@@ -209,19 +197,7 @@ export default function ProductPage() {
         </div>
       </main>
 
-      <footer className="border-t border-border py-8 mt-10">
-        <div className="container mx-auto px-6 text-center text-sm text-muted-foreground">
-          © {currentYear}.{" "}
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
-          >
-            Built with love using caffeine.ai
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

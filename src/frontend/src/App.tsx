@@ -12,13 +12,17 @@ import {
 import {
   ArrowRight,
   Download,
+  Factory,
+  Layers,
   Menu,
+  Monitor,
   Shield,
   Users,
   X,
   Zap,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import type React from "react";
 import { useEffect, useState } from "react";
 import { CUSTOMER_LOGOS } from "./appData";
 import CookieBanner from "./components/CookieBanner";
@@ -349,10 +353,37 @@ function Hero() {
 
 // ─── What We Offer Section ───────────────────────────────────────────────────
 function WhatWeOffer() {
+  const [activeTab, setActiveTab] = useState<
+    "services" | "products" | "industries"
+  >("services");
+
+  const tabs = [
+    {
+      key: "services",
+      label: "SERVICES WE OFFER",
+      icon: <Monitor className="w-4 h-4" />,
+      to: "/services",
+    },
+    {
+      key: "products",
+      label: "PRODUCTS WE OFFER",
+      icon: <Layers className="w-4 h-4" />,
+      to: "/products",
+    },
+    {
+      key: "industries",
+      label: "INDUSTRIES WE SERVE",
+      icon: <Factory className="w-4 h-4" />,
+      to: "/industries",
+    },
+  ];
+
+  const activeTabConfig = tabs.find((t) => t.key === activeTab)!;
+
   return (
     <section id="what-we-offer" className="py-14 section-fade">
       <div className="container mx-auto px-6">
-        <div className="mb-10">
+        <div className="mb-8">
           <Badge
             variant="outline"
             className="mb-3 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
@@ -361,7 +392,7 @@ function WhatWeOffer() {
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What We Offer</h2>
           <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-6" />
-          <p className="text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-muted-foreground mb-8 leading-relaxed text-sm">
             <span className="text-foreground font-semibold">
               Simlabs Software LLP
             </span>
@@ -383,65 +414,82 @@ function WhatWeOffer() {
             productivity, and achieve higher levels of accuracy and safety.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 items-stretch">
-          {/* Technology Services Column */}
-          <Link
-            to="/services"
-            className="group bg-card border-2 border-border rounded-xl p-6 flex flex-col cursor-pointer transition-all duration-300 hover:border-primary no-underline"
-            style={{ textDecoration: "none" }}
-          >
-            <h3 className="text-base font-bold mb-4 text-foreground uppercase tracking-wide">
-              SERVICES WE OFFER
-            </h3>
-            <div className="flex-1">
+
+        {/* Tab buttons */}
+        <div className="flex flex-wrap gap-0 mb-0 border-b border-border">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() =>
+                setActiveTab(tab.key as "services" | "products" | "industries")
+              }
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-200 border-b-2 -mb-px ${
+                activeTab === tab.key
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+              }`}
+              data-ocid={`what-we-offer.${tab.key}.tab`}
+            >
+              {tab.icon}
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Panel: entire area is clickable, navigates to respective page */}
+        <Link
+          to={activeTabConfig.to as "/services" | "/products" | "/industries"}
+          className="group block bg-card border-2 border-border rounded-b-xl rounded-tr-xl p-6 cursor-pointer transition-all duration-300 hover:border-primary mt-0"
+          style={{ textDecoration: "none" }}
+          data-ocid={`what-we-offer.${activeTab}.panel`}
+        >
+          {activeTab === "services" && (
+            <div>
               {SERVICES.map((s) => (
-                <WhatWeOfferTile key={s.title} label={s.title} desc={s.desc} />
+                <WhatWeOfferTile
+                  key={s.title}
+                  label={s.title}
+                  desc={s.desc}
+                  icon={s.icon}
+                />
               ))}
             </div>
-          </Link>
-
-          {/* Products Column */}
-          <Link
-            to="/products"
-            className="group bg-card border-2 border-border rounded-xl p-6 flex flex-col cursor-pointer transition-all duration-300 hover:border-primary no-underline"
-            style={{ textDecoration: "none" }}
-          >
-            <h3 className="text-base font-bold mb-4 text-foreground uppercase tracking-wide">
-              PRODUCTS WE OFFER
-            </h3>
-            <div className="flex-1">
-              <div className="grid grid-cols-2 gap-x-3">
-                {PRODUCTS.map((p) => (
-                  <WhatWeOfferTile key={p.name} label={p.name} desc={p.desc} />
-                ))}
-              </div>
+          )}
+          {activeTab === "products" && (
+            <div className="grid grid-cols-2 gap-x-3">
+              {PRODUCTS.map((p) => (
+                <WhatWeOfferTile
+                  key={p.name}
+                  label={p.name}
+                  desc={p.desc}
+                  icon={p.icon}
+                />
+              ))}
             </div>
-          </Link>
-
-          {/* Industries Column */}
-          <Link
-            to="/industries"
-            className="group bg-card border-2 border-border rounded-xl p-6 flex flex-col cursor-pointer transition-all duration-300 hover:border-primary no-underline"
-            style={{ textDecoration: "none" }}
-          >
-            <h3 className="text-base font-bold mb-4 text-foreground uppercase tracking-wide">
-              Industries We Serve
-            </h3>
-            <div className="flex-1">
-              <div className="grid grid-cols-2 gap-x-3">
-                {INDUSTRIES.map((ind) => (
-                  <WhatWeOfferTile key={ind.name} label={ind.name} desc="" />
-                ))}
-              </div>
+          )}
+          {activeTab === "industries" && (
+            <div className="grid grid-cols-2 gap-x-3">
+              {INDUSTRIES.map((ind) => (
+                <WhatWeOfferTile
+                  key={ind.name}
+                  label={ind.name}
+                  desc=""
+                  icon={ind.icon}
+                />
+              ))}
             </div>
-          </Link>
-        </div>
+          )}
+        </Link>
       </div>
     </section>
   );
 }
-
-function WhatWeOfferTile({ label, desc }: { label: string; desc: string }) {
+function WhatWeOfferTile({
+  label,
+  desc,
+  icon,
+}: { label: string; desc: string; icon?: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -452,7 +500,13 @@ function WhatWeOfferTile({ label, desc }: { label: string; desc: string }) {
       onBlur={() => setHovered(false)}
     >
       <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-background/40 border border-border/60 hover:border-primary/60 hover:bg-primary/5 transition-all duration-200 cursor-default">
-        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+        {icon ? (
+          <span className="w-4 h-4 [&>svg]:w-4 [&>svg]:h-4 text-primary flex-shrink-0">
+            {icon}
+          </span>
+        ) : (
+          <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+        )}
         <span className="text-xs font-semibold uppercase tracking-wide text-foreground/85 leading-tight">
           {label}
         </span>

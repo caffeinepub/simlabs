@@ -1,57 +1,58 @@
-# SIMLABS Website
+# SIMLABS Website Updates
 
 ## Current State
-- Multi-page dark-tech website with homepage, Services, Products, Industries, Customers, Projects, Partners, Careers, Contacts pages
-- SERVICE_DETAILS in data.tsx has `features` and `industries` arrays for each service slug
-- INDUSTRY_SOLUTIONS in data.tsx has `services` and `products` arrays for each industry slug
-- IndustryPage.tsx renders "Applicable SIMLABS Services" and "Relevant Products" sections from INDUSTRY_SOLUTIONS
-- ServicePage.tsx renders Key Features, Industries Applicable, and Other Services sidebar
-- CustomersPage.tsx currently shows Testimonials FIRST, then Our Customers
-- Homepage What We Offer section has column titles "Technology Services" and "Our Products"
-- ServicesPage.tsx has title "Our Technology Services" and old description
-- ProductsPage.tsx has title "Our Products"
-- Font sizes: hero description = text-sm, What We Offer intro = text-sm, Why Choose intro = text-sm with max-w-2xl, Get in Touch description = text-muted-foreground (default/base)
-- SERVICE_DETAILS type is `{ features: string[]; industries: string[] }`
-- IndustryPage.tsx has no Application Areas section
-- There is no `applicationAreas` field in SERVICE_DETAILS or INDUSTRY_SOLUTIONS
+- PRODUCTS array in data.tsx has REMO3D (not "Remo 3D"), no REMOSCAPE entry
+- No dedicated Remoscape product page or PRODUCT_DETAILS entry
+- PageBanner shows icon in the banner itself for products and services (via `icon` prop)
+- After the banner, product/service pages show icon again in the content section below
+- WhatWeOffer section uses a tabbed layout with WhatWeOfferTile (dot bullet + uppercase text + hover tooltip)
+- Tiles currently don't show icons — just a small dot bullet
+- Customer logos in appData.tsx and /assets/logos/ — need to be updated from alllogos zip (already extracted to /assets/logos/)
+- PRODUCT_DETAILS for trian3dbuilder and remo3d have basic features/highlights; need to be replaced with comprehensive content from user
+- PRODUCT_DETAILS for prodoc needs to be updated with full content from user
+- No "Typical Application Areas" section in ProductPage rendering
 
 ## Requested Changes (Diff)
 
 ### Add
-- `applicationAreas` array to SERVICE_DETAILS type and all 6 service entries (VR, AR, MR, VS, DT, AI)
-- Application Areas section in ServicePage.tsx rendered between Key Features and Industries Applicable
-- Application Areas section in IndustryPage.tsx (using new field from INDUSTRY_SOLUTIONS)
-- `applicationAreas` array to INDUSTRY_SOLUTIONS for all 10 industries
-- All industries list to each service's `industries` array in SERVICE_DETAILS (all 10 industries)
-- New VR tags string derived from VR key features, application areas, and industries
+- REMOSCAPE product to PRODUCTS array (next to Remo 3D), with appropriate icon, desc, image
+- Dedicated PRODUCT_DETAILS entry for remoscape with full description/features/application areas
+- Remoscape banner image
+- "Typical Application Areas" / applicationAreas rendering in ProductPage component
+- PRODUCT_BANNERS entry for remoscape
 
 ### Modify
-- CustomersPage.tsx: swap order so "Our Customers" section comes BEFORE "Testimonials" section
-- Homepage WhatWeOffer component: rename column "Technology Services" → "SERVICES WE OFFER", "Our Products" → "PRODUCTS WE OFFER"
-- ServicesPage.tsx: title banner from "Our Technology Services" → "Services We Offer"; update description text
-- ProductsPage.tsx: title in PageBanner from "Our Products" → "Products We Offer"
-- Homepage hero description font: keep text-sm (it already matches Get in Touch which uses text-base/default; user wants them SAME — actually user wants hero desc same as Get in Touch desc. Get in Touch `<p className="text-muted-foreground">` which is text-base default. Hero desc is `text-sm`. Change hero to remove text-sm → use default text-base)
-- Homepage What We Offer intro: currently text-sm → change to match Get in Touch (remove text-sm, use default)
-- Homepage Why Choose intro: currently text-sm → change to match Get in Touch (remove text-sm)
-- SERVICE_DETAILS: replace features array for VR, AR, MR, VS, DT, AI with new points provided
-- SERVICE_DETAILS: replace industries array for all 6 services with full 10-industry list
-- SERVICES[0].tag: update VR tag string with keywords from features/application areas/industries
-- INDUSTRY_SOLUTIONS: add `applicationAreas` arrays
-- IndustryPage.tsx: show Application Areas first, then Relevant Services, then Relevant Products
+- Rename REMO3D → "Remo 3D" everywhere in data.tsx and all references (INDUSTRY_SOLUTIONS products arrays)
+- Rename TRIAN3DBUILDER → "Trian3DBuilder" in display name (keep slug trian3dbuilder)
+- Update PRODUCT_DETAILS.trian3dbuilder with full features from user (comprehensive list)
+- Update PRODUCT_DETAILS.remo3d with full features from user + add applicationAreas
+- Update PRODUCT_DETAILS.prodoc with full features from user (comprehensive list)
+- PageBanner: remove `icon` prop usage in ProductPage and ServicePage (icon should NOT appear in banner)
+- ProductPage and ServicePage: ensure icon appears in the content section below banner (already there, just need to remove from banner)
+- WhatWeOffer tiles: add respective icon before the label text (SERVICES use service icons, PRODUCTS use product icons, INDUSTRIES use industry icons)
+- Customer logos in appData.tsx: update paths to use newer files from alllogos zip where better versions exist
 
 ### Remove
-- Nothing removed
+- Icon from PageBanner call in ProductPage (remove `icon` prop)
+- Icon from PageBanner call in ServicePage (remove `icon` prop)
 
 ## Implementation Plan
-1. Update SERVICE_DETAILS type in data.tsx to include `applicationAreas?: string[]`
-2. Replace VR, AR, MR, VS, DT, AI features in SERVICE_DETAILS with new lists from user
-3. Replace all service industries arrays with full 10-industry list
-4. Add applicationAreas arrays to all 6 services in SERVICE_DETAILS
-5. Add applicationAreas arrays to all 10 industries in INDUSTRY_SOLUTIONS
-6. Update VR tag in SERVICES array
-7. Update ServicePage.tsx to render Application Areas section
-8. Update IndustryPage.tsx to show Application Areas first, then Services, then Products
-9. Update CustomersPage.tsx: Our Customers section FIRST, Testimonials SECOND
-10. Update App.tsx: rename column headers in WhatWeOffer; fix font sizes on hero desc, What We Offer intro, Why Choose intro
-11. Update ServicesPage.tsx: banner title → "Services We Offer", new description
-12. Update ProductsPage.tsx: banner title → "Products We Offer"
+1. Update data.tsx:
+   - Rename REMO3D → "Remo 3D" in PRODUCTS array and all INDUSTRY_SOLUTIONS.products references
+   - Add REMOSCAPE entry to PRODUCTS array right after Remo 3D
+   - Update PRODUCT_DETAILS.trian3dbuilder with full feature list + application areas
+   - Update PRODUCT_DETAILS.remo3d with full feature list + application areas  
+   - Update PRODUCT_DETAILS.prodoc with full feature list + application areas
+   - Add PRODUCT_DETAILS.remoscape with full content
+2. Update ProductPage.tsx:
+   - Remove `icon` prop from PageBanner call
+   - Add PRODUCT_BANNERS entry for remoscape
+   - Add applicationAreas rendering (after Key Features section)
+3. Update ServicePage.tsx:
+   - Remove `icon` prop from PageBanner call (icon shown in Overview section below)
+4. Update App.tsx WhatWeOffer:
+   - WhatWeOfferTile: replace dot bullet with the item's actual icon
+   - Update tile component to accept and display an icon node
+5. Update appData.tsx CUSTOMER_LOGOS:
+   - Use better/updated logo files from the extracted alllogos zip
+6. Generate Remoscape product images (banner + card)

@@ -1,11 +1,23 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
 import { CheckCircle2, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import { INDUSTRIES, SERVICES, SERVICE_DETAILS, slugify } from "../data";
 import Footer from "./Footer";
+import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
+
+const SERVICE_BANNERS: Record<string, string> = {
+  "virtual-reality-vr": "/assets/generated/service-vr-banner.dim_1200x400.jpg",
+  "augmented-reality-ar":
+    "/assets/generated/service-ar-banner.dim_1200x400.jpg",
+  "mixed-reality-mr": "/assets/generated/service-mr-banner.dim_1200x400.jpg",
+  "visual-simulation-vs":
+    "/assets/generated/service-vs-banner.dim_1200x400.jpg",
+  "digital-twins-dt": "/assets/generated/service-dt-banner.dim_1200x400.jpg",
+  "artificial-intelligence-ai":
+    "/assets/generated/service-ai-banner.dim_1200x400.jpg",
+};
 
 export default function ServicePage() {
   const { slug } = useParams({ from: "/services/$slug" });
@@ -23,74 +35,26 @@ export default function ServicePage() {
         </p>
         <Link to="/" data-ocid="not_found.link">
           <Button className="btn-gradient border-0 text-white">
-            ← Back to Home
+            \u2190 Back to Home
           </Button>
         </Link>
       </div>
     );
   }
 
+  const bannerImage =
+    slug && SERVICE_BANNERS[slug] ? SERVICE_BANNERS[slug] : service.image;
+
   return (
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
       <SharedHeader />
 
-      {/* Hero - ribbon banner */}
-      <div className="relative pt-16">
-        <div
-          className="relative w-full overflow-hidden flex items-stretch"
-          style={{ height: "280px", background: "oklch(0.09 0.028 247)" }}
-        >
-          {/* Dark overlay full background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 z-10" />
-
-          {/* Left: Text content */}
-          <div className="relative z-20 flex flex-col justify-center px-8 md:px-16 w-full md:w-[60%]">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <nav
-                className="flex items-center gap-2 text-sm text-muted-foreground mb-2"
-                aria-label="Breadcrumb"
-              >
-                <a href="/" className="hover:text-primary transition-colors">
-                  Home
-                </a>
-                <ChevronRight className="w-4 h-4" />
-                <a
-                  href="/services"
-                  className="hover:text-primary transition-colors"
-                >
-                  Services
-                </a>
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-foreground">{service.title}</span>
-              </nav>
-              <Badge
-                variant="outline"
-                className="mb-2 border-primary/40 text-primary bg-primary/10 text-xs tracking-widest uppercase"
-              >
-                Technology Service
-              </Badge>
-              <h1 className="text-2xl md:text-4xl font-extrabold uppercase tracking-tight">
-                {service.title}
-              </h1>
-            </motion.div>
-          </div>
-
-          {/* Right: Image */}
-          <div className="hidden md:block absolute right-0 top-0 bottom-0 w-[45%]">
-            <img
-              src={service.image}
-              alt={service.title}
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Fade from left to blend with text area */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
-          </div>
-        </div>
-      </div>
+      <PageBanner
+        image={bannerImage}
+        badge="Technology Service"
+        title={service.title}
+        objectPosition="center"
+      />
 
       {/* Content */}
       <main className="container mx-auto px-6 py-6">
@@ -102,10 +66,17 @@ export default function ServicePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <h2 className="text-2xl font-bold mb-4">Overview</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                {service.desc}
-              </p>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-xl btn-gradient flex items-center justify-center text-white flex-shrink-0">
+                  {service.icon}
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">{service.title}</h2>
+                  <p className="text-muted-foreground text-sm">
+                    {service.desc}
+                  </p>
+                </div>
+              </div>
             </motion.section>
 
             {details && (
@@ -117,7 +88,7 @@ export default function ServicePage() {
                 <h2 className="text-2xl font-bold mb-6">
                   Key Features &amp; Capabilities
                 </h2>
-                <ul className="space-y-3">
+                <ul className="space-y-1.5">
                   {details.features.map((f) => (
                     <li key={f} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
@@ -138,7 +109,7 @@ export default function ServicePage() {
                   transition={{ duration: 0.5, delay: 0.25 }}
                 >
                   <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
-                  <ul className="space-y-3">
+                  <ul className="space-y-1.5">
                     {details.applicationAreas.map((area) => (
                       <li key={area} className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
@@ -171,26 +142,6 @@ export default function ServicePage() {
                     >
                       {ind}
                     </Link>
-                  ))}
-                </div>
-              </motion.section>
-            )}
-
-            {service.tag && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.35 }}
-              >
-                <div className="flex flex-wrap gap-2">
-                  {service.tag.split(" · ").map((t) => (
-                    <Badge
-                      key={t}
-                      variant="outline"
-                      className="border-primary/30 text-primary/80 bg-primary/5 text-xs"
-                    >
-                      {t}
-                    </Badge>
                   ))}
                 </div>
               </motion.section>
