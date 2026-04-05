@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
-import { CheckCircle2, ChevronRight, Zap } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import { PRODUCTS, PRODUCT_DETAILS, slugify } from "../data";
 import Footer from "./Footer";
@@ -8,7 +8,7 @@ import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
 
 const PRODUCT_BANNERS: Record<string, string> = {
-  ssg: "/assets/generated/product-ssg-banner.dim_1200x400.jpg",
+  ssg: "/assets/generated/product-simax.dim_600x380.jpg",
   trian3dbuilder:
     "/assets/generated/product-trian3dbuilder-banner.dim_1200x400.jpg",
   layar: "/assets/generated/product-layar-banner.dim_1200x400.jpg",
@@ -18,6 +18,7 @@ const PRODUCT_BANNERS: Record<string, string> = {
   paintx: "/assets/generated/product-paintx-banner.dim_1200x400.jpg",
   prodoc: "/assets/generated/product-prodoc-banner.dim_1200x400.jpg",
   remoscape: "/assets/generated/product-remoscape-banner.dim_1200x400.jpg",
+  "remo-3d": "/assets/generated/product-remo3d.dim_600x380.jpg",
 };
 
 export default function ProductPage() {
@@ -62,6 +63,19 @@ export default function ProductPage() {
 
       {/* Content */}
       <main className="container mx-auto px-6 py-12">
+        {/* Back button */}
+        <div className="mb-6">
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1.5 transition-colors"
+            data-ocid="product.secondary_button"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Back
+          </button>
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Main */}
           <div className="lg:col-span-2 space-y-10">
@@ -83,13 +97,46 @@ export default function ProductPage() {
               </div>
             </motion.section>
 
+            {/* Product image above overview paragraph */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <div
+                className="rounded-xl overflow-hidden border border-border mb-6"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
+
+            {/* Overview paragraph */}
+            {detailsObj?.overviewParagraph && (
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.18 }}
+              >
+                <p className="text-muted-foreground leading-relaxed">
+                  {detailsObj.overviewParagraph}
+                </p>
+              </motion.section>
+            )}
+
             {detailsObj && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h2 className="text-2xl font-bold mb-6">Key Features</h2>
+                <h2 className="text-2xl font-bold mb-6">
+                  Key Features &amp; Capabilities
+                </h2>
                 <ul className="space-y-1.5">
                   {detailsObj.features.map((f) => (
                     <li key={f} className="flex items-start gap-3">
@@ -110,9 +157,7 @@ export default function ProductPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.25 }}
                 >
-                  <h2 className="text-2xl font-bold mb-6">
-                    Typical Application Areas
-                  </h2>
+                  <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
                   <ul className="space-y-1.5">
                     {detailsObj.applicationAreas.map((area) => (
                       <li key={area} className="flex items-start gap-3">
@@ -125,29 +170,6 @@ export default function ProductPage() {
                   </ul>
                 </motion.section>
               )}
-
-            {detailsObj && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <h2 className="text-2xl font-bold mb-4">
-                  Technical Highlights
-                </h2>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {detailsObj.highlights.map((h) => (
-                    <div
-                      key={h}
-                      className="bg-card border border-border rounded-lg p-4 flex items-center gap-3"
-                    >
-                      <Zap className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span className="text-sm font-medium">{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.section>
-            )}
           </div>
 
           {/* Sidebar */}
@@ -177,21 +199,24 @@ export default function ProductPage() {
               className="bg-card border border-border rounded-xl p-6"
             >
               <h3 className="font-bold text-base mb-4">Other Products</h3>
-              <ul className="space-y-2">
+              <div className="grid grid-cols-2 gap-2">
                 {PRODUCTS.filter((p) => p.name !== product.name).map((p) => (
-                  <li key={p.name}>
+                  <div key={p.name} className="relative group">
                     <Link
                       to="/products/$slug"
                       params={{ slug: slugify(p.name) }}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                      className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
                       data-ocid="product.link"
                     >
-                      <ChevronRight className="w-4 h-4" />
-                      {p.name}
+                      <ChevronRight className="w-3 h-3 flex-shrink-0" />
+                      <span className="leading-tight">{p.name}</span>
                     </Link>
-                  </li>
+                    <div className="absolute z-50 left-0 top-full mt-1 w-56 bg-popover border border-border rounded-lg p-2.5 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none hidden group-hover:block">
+                      {p.desc}
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </motion.div>
           </div>
         </div>

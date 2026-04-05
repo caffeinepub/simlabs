@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
-import { CheckCircle2, ChevronRight } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import { INDUSTRIES, SERVICES, SERVICE_DETAILS, slugify } from "../data";
+import { SERVICES, SERVICE_DETAILS, slugify } from "../data";
 import Footer from "./Footer";
 import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
@@ -58,6 +58,19 @@ export default function ServicePage() {
 
       {/* Content */}
       <main className="container mx-auto px-6 py-6">
+        {/* Back button */}
+        <div className="mb-6">
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1.5 transition-colors"
+            data-ocid="service.secondary_button"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Back
+          </button>
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Main */}
           <div className="lg:col-span-2 space-y-10">
@@ -76,6 +89,24 @@ export default function ServicePage() {
                     {service.desc}
                   </p>
                 </div>
+              </div>
+            </motion.section>
+
+            {/* Service image above key features */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <div
+                className="rounded-xl overflow-hidden border border-border mb-6"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </motion.section>
 
@@ -121,31 +152,6 @@ export default function ServicePage() {
                   </ul>
                 </motion.section>
               )}
-
-            {details && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <h2 className="text-2xl font-bold mb-4">
-                  Industries Applicable
-                </h2>
-                <div className="flex flex-wrap gap-3">
-                  {details.industries.map((ind) => (
-                    <Link
-                      key={ind}
-                      to="/industries/$slug"
-                      params={{ slug: slugify(ind) }}
-                      onClick={() => window.scrollTo(0, 0)}
-                      className="px-4 py-2 rounded-full bg-card border border-border text-sm font-medium text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors cursor-pointer"
-                    >
-                      {ind}
-                    </Link>
-                  ))}
-                </div>
-              </motion.section>
-            )}
           </div>
 
           {/* Sidebar CTA */}
@@ -178,15 +184,20 @@ export default function ServicePage() {
               <ul className="space-y-2">
                 {SERVICES.filter((s) => s.title !== service.title).map((s) => (
                   <li key={s.title}>
-                    <Link
-                      to="/services/$slug"
-                      params={{ slug: slugify(s.title) }}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                      data-ocid="service.link"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                      {s.title}
-                    </Link>
+                    <div className="relative group">
+                      <Link
+                        to="/services/$slug"
+                        params={{ slug: slugify(s.title) }}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                        data-ocid="service.link"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                        {s.title}
+                      </Link>
+                      <div className="absolute z-50 left-0 top-full mt-1 w-64 bg-popover border border-border rounded-lg p-2.5 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none hidden group-hover:block">
+                        {s.desc}
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>

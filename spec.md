@@ -1,58 +1,57 @@
-# SIMLABS Website Updates
+# SIMLABS Website
 
 ## Current State
-- PRODUCTS array in data.tsx has REMO3D (not "Remo 3D"), no REMOSCAPE entry
-- No dedicated Remoscape product page or PRODUCT_DETAILS entry
-- PageBanner shows icon in the banner itself for products and services (via `icon` prop)
-- After the banner, product/service pages show icon again in the content section below
-- WhatWeOffer section uses a tabbed layout with WhatWeOfferTile (dot bullet + uppercase text + hover tooltip)
-- Tiles currently don't show icons — just a small dot bullet
-- Customer logos in appData.tsx and /assets/logos/ — need to be updated from alllogos zip (already extracted to /assets/logos/)
-- PRODUCT_DETAILS for trian3dbuilder and remo3d have basic features/highlights; need to be replaced with comprehensive content from user
-- PRODUCT_DETAILS for prodoc needs to be updated with full content from user
-- No "Typical Application Areas" section in ProductPage rendering
+Multi-page dark tech website with HomePage, ServicePage, ProductPage, IndustryPage, and others. Data lives in `data.tsx` (SERVICES, PRODUCTS, INDUSTRIES, SERVICE_DETAILS, PRODUCT_DETAILS, INDUSTRY_SOLUTIONS). App.tsx has the WhatWeOffer section with three columns. ProductPage.tsx and ServicePage.tsx each have a sidebar with Other Products/Services links, and a main content area with features/application areas. IndustryPage.tsx shows application areas, relevant services (as tabs), and relevant products.
 
 ## Requested Changes (Diff)
 
 ### Add
-- REMOSCAPE product to PRODUCTS array (next to Remo 3D), with appropriate icon, desc, image
-- Dedicated PRODUCT_DETAILS entry for remoscape with full description/features/application areas
-- Remoscape banner image
-- "Typical Application Areas" / applicationAreas rendering in ProductPage component
-- PRODUCT_BANNERS entry for remoscape
+- Back button/link on ProductPage, ServicePage, IndustryPage (uses browser history / navigate(-1)), showing at the top of the main content area below the banner
+- `overviewParagraph` field to PRODUCT_DETAILS for all products — a well-structured paragraph description from the provided product content
+- Image displayed above Key Features section on ServicePage and IndustryPage (use product.image / service.image, displayed as a rounded image block)
+- Image displayed above the product overview paragraph on ProductPage
+- Hover tooltip on "Other Products" sidebar items (show product.desc on hover), and on "Other Services" sidebar items (show service.desc on hover), and on "Other Industries" sidebar items (show industry.desc on hover)
 
 ### Modify
-- Rename REMO3D → "Remo 3D" everywhere in data.tsx and all references (INDUSTRY_SOLUTIONS products arrays)
-- Rename TRIAN3DBUILDER → "Trian3DBuilder" in display name (keep slug trian3dbuilder)
-- Update PRODUCT_DETAILS.trian3dbuilder with full features from user (comprehensive list)
-- Update PRODUCT_DETAILS.remo3d with full features from user + add applicationAreas
-- Update PRODUCT_DETAILS.prodoc with full features from user (comprehensive list)
-- PageBanner: remove `icon` prop usage in ProductPage and ServicePage (icon should NOT appear in banner)
-- ProductPage and ServicePage: ensure icon appears in the content section below banner (already there, just need to remove from banner)
-- WhatWeOffer tiles: add respective icon before the label text (SERVICES use service icons, PRODUCTS use product icons, INDUSTRIES use industry icons)
-- Customer logos in appData.tsx: update paths to use newer files from alllogos zip where better versions exist
+- **Homepage WhatWeOffer section**:
+  - Intro paragraph font size: change from `text-sm` to match the `Get in Touch` section text which uses default `text-muted-foreground` with no explicit small override (remove the `text-sm` class, use same size as `ContactCTA` paragraph)
+  - Section headings "SERVICES WE OFFER", "PRODUCTS WE OFFER", "INDUSTRIES WE SERVE": change text color to orange (text-primary which is already orange) — make the `h3` heading text explicitly `text-[oklch(0.75_0.18_55)]` (orange)
+  - "View All →" links: move from top of each column (next to heading) to the bottom of each column's tile list
+  - All tile labels: convert from ALL CAPS to proper title case (e.g. "Virtual Reality (VR)", "Augmented Reality (AR)", "Trian3DBuilder", "Remo 3D", "Remoscape", "SSG", "SilverLining", "Triton", "VIDERE", "VRSAFE", "AUGMENTOR", "FARNISH", "PRODOC", "LAYAR", "INTBOT", "PAINTX", "TORQUE", "COLLAB", "Aerospace", "Defense", etc.)
+- **Product name**: Change "SMART SCENARIO GENERATOR" to "SSG" everywhere (PRODUCTS array, PRODUCT_DETAILS key, all page references, navigation text)
+- **VIDERE key features**: Remove "Extrude meshes directly from surfaces", "Multi-user collaboration in a shared virtual space", "Modify and refine meshes within the virtual environment"; Add "Real-time measurements"
+- **ProductPage**: Add `overviewParagraph` display block between the icon/name header and Key Features section; move product image above the overview paragraph; rename "Key Features" section heading to "Key Features & Capabilities"
+- **ServicePage**: Add product image above Key Features section (after the icon/title header block)
+- **IndustryPage**: Add industry image above Key Features/Application Areas section
+- **Replace all "Key Features" headings** with "Key Features & Capabilities" on ProductPage
+- **Product overview paragraphs**: Add structured paragraph for each product in PRODUCT_DETAILS based on provided content
 
 ### Remove
-- Icon from PageBanner call in ProductPage (remove `icon` prop)
-- Icon from PageBanner call in ServicePage (remove `icon` prop)
+- Nothing removed structurally
 
 ## Implementation Plan
-1. Update data.tsx:
-   - Rename REMO3D → "Remo 3D" in PRODUCTS array and all INDUSTRY_SOLUTIONS.products references
-   - Add REMOSCAPE entry to PRODUCTS array right after Remo 3D
-   - Update PRODUCT_DETAILS.trian3dbuilder with full feature list + application areas
-   - Update PRODUCT_DETAILS.remo3d with full feature list + application areas  
-   - Update PRODUCT_DETAILS.prodoc with full feature list + application areas
-   - Add PRODUCT_DETAILS.remoscape with full content
-2. Update ProductPage.tsx:
-   - Remove `icon` prop from PageBanner call
-   - Add PRODUCT_BANNERS entry for remoscape
-   - Add applicationAreas rendering (after Key Features section)
-3. Update ServicePage.tsx:
-   - Remove `icon` prop from PageBanner call (icon shown in Overview section below)
-4. Update App.tsx WhatWeOffer:
-   - WhatWeOfferTile: replace dot bullet with the item's actual icon
-   - Update tile component to accept and display an icon node
-5. Update appData.tsx CUSTOMER_LOGOS:
-   - Use better/updated logo files from the extracted alllogos zip
-6. Generate Remoscape product images (banner + card)
+1. Update `data.tsx`:
+   - Rename "SMART SCENARIO GENERATOR" → "SSG" in PRODUCTS array and PRODUCT_DETAILS
+   - Add `overviewParagraph` field to all entries in PRODUCT_DETAILS with the provided paragraph text
+   - Fix VIDERE features (remove 3, add "Real-time measurements")
+2. Update `App.tsx` (WhatWeOffer section):
+   - Change intro paragraph font size to match ContactCTA paragraph (remove text-sm)
+   - Make section headings orange color
+   - Move "View All" links to bottom of each column
+   - Convert tile labels to proper title case in SERVICES/PRODUCTS/INDUSTRIES display (update label rendering or update underlying data names to title case)
+   - Note: SERVICES titles are already title case. PRODUCTS names need update in data.tsx too. INDUSTRIES names are already fine.
+3. Update `ProductPage.tsx`:
+   - Add Back button at top of main content
+   - Add product image above overview paragraph
+   - Add overview paragraph block between header and Key Features
+   - Rename "Key Features" to "Key Features & Capabilities"
+   - Add tooltip on hover for Other Products sidebar items (show product.desc)
+4. Update `ServicePage.tsx`:
+   - Add Back button
+   - Add service image below the icon/title block, above Key Features
+   - Add tooltip on hover for Other Services sidebar items
+5. Update `IndustryPage.tsx`:
+   - Add Back button
+   - Add industry image below icon/title block, above Application Areas
+   - Add tooltip on hover for Other Industries sidebar items
+6. Update `PRODUCT_DETAILS` in data.tsx to add `overviewParagraph` for all 16 products

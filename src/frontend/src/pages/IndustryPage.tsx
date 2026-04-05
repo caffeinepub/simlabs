@@ -1,7 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
-import { CheckCircle2, ChevronRight } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import {
   INDUSTRIES,
@@ -30,7 +29,7 @@ export default function IndustryPage() {
         </p>
         <Link to="/" data-ocid="not_found.link">
           <Button className="btn-gradient border-0 text-white">
-            ← Back to Home
+            \u2190 Back to Home
           </Button>
         </Link>
       </div>
@@ -57,6 +56,19 @@ export default function IndustryPage() {
 
       {/* Content */}
       <main className="container mx-auto px-6 py-12">
+        {/* Back button */}
+        <div className="mb-6">
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1.5 transition-colors"
+            data-ocid="industry.secondary_button"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Back
+          </button>
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-10">
             <motion.section
@@ -75,12 +87,30 @@ export default function IndustryPage() {
               </div>
             </motion.section>
 
+            {/* Industry image above application areas */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <div
+                className="rounded-xl overflow-hidden border border-border mb-6"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <img
+                  src={industry.bannerImage ?? industry.image}
+                  alt={industry.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.section>
+
             {solutions?.applicationAreas &&
               solutions.applicationAreas.length > 0 && (
                 <motion.section
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.15 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
                   <ul className="space-y-1.5">
@@ -100,41 +130,24 @@ export default function IndustryPage() {
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
               >
-                <h2 className="text-2xl font-bold mb-6">Applicable Services</h2>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <h2 className="text-2xl font-bold mb-6">Relevant Services</h2>
+                <div className="flex flex-wrap gap-3">
                   {applicableServices.map((s) => (
                     <Link
                       key={s.title}
                       to="/services/$slug"
                       params={{ slug: slugify(s.title) }}
                       data-ocid="industry.link"
-                      className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group block"
+                      className="bg-card border border-border rounded-lg px-4 py-2.5 flex items-center gap-2 hover:border-primary/50 hover:text-primary transition-colors group"
                     >
-                      <div
-                        className="relative w-full"
-                        style={{ aspectRatio: "16/9" }}
-                      >
-                        <img
-                          src={s.image}
-                          alt={s.title}
-                          className="absolute inset-0 w-full h-full object-cover"
-                        />
+                      <div className="w-6 h-6 rounded btn-gradient flex items-center justify-center text-white flex-shrink-0 [&>svg]:w-3.5 [&>svg]:h-3.5">
+                        {s.icon}
                       </div>
-                      <div className="p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">
-                            {s.icon}
-                          </div>
-                          <h3 className="font-bold text-sm group-hover:text-primary transition-colors">
-                            {s.title}
-                          </h3>
-                        </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          {s.desc}
-                        </p>
-                      </div>
+                      <span className="text-sm font-semibold tracking-wide group-hover:text-primary transition-colors">
+                        {s.title}
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -206,15 +219,20 @@ export default function IndustryPage() {
                 {INDUSTRIES.filter((ind) => ind.name !== industry.name).map(
                   (ind) => (
                     <li key={ind.name}>
-                      <Link
-                        to="/industries/$slug"
-                        params={{ slug: slugify(ind.name) }}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                        data-ocid="industry.link"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                        {ind.name}
-                      </Link>
+                      <div className="relative group">
+                        <Link
+                          to="/industries/$slug"
+                          params={{ slug: slugify(ind.name) }}
+                          className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                          data-ocid="industry.link"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                          {ind.name}
+                        </Link>
+                        <div className="absolute z-50 left-0 top-full mt-1 w-64 bg-popover border border-border rounded-lg p-2.5 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none hidden group-hover:block">
+                          {ind.desc}
+                        </div>
+                      </div>
                     </li>
                   ),
                 )}
