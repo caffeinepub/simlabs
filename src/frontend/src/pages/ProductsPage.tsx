@@ -72,7 +72,7 @@ export default function ProductsPage() {
                     </div>
                     <div>
                       <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors tracking-wide">
-                        {p.name}
+                        {p.name.toUpperCase()}
                       </h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">
                         {p.desc}

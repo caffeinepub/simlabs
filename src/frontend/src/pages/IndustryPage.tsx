@@ -3,6 +3,7 @@ import { Link, useParams } from "@tanstack/react-router";
 import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import {
+  type AppAreaGroup,
   INDUSTRIES,
   INDUSTRY_SOLUTIONS,
   PRODUCTS,
@@ -29,7 +30,7 @@ export default function IndustryPage() {
         </p>
         <Link to="/" data-ocid="not_found.link">
           <Button className="btn-gradient border-0 text-white">
-            \u2190 Back to Home
+            ← Back to Home
           </Button>
         </Link>
       </div>
@@ -43,6 +44,11 @@ export default function IndustryPage() {
     ? PRODUCTS.filter((p) => solutions.products.includes(p.name))
     : [];
 
+  const isGrouped =
+    solutions?.applicationAreas &&
+    solutions.applicationAreas.length > 0 &&
+    typeof solutions.applicationAreas[0] === "object";
+
   return (
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
       <SharedHeader />
@@ -50,7 +56,7 @@ export default function IndustryPage() {
       <PageBanner
         image={industry.bannerImage ?? industry.image}
         badge="Industry"
-        title={industry.name}
+        title={industry.name.toUpperCase()}
         objectPosition="center"
       />
 
@@ -81,27 +87,11 @@ export default function IndustryPage() {
                   {industry.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">{industry.name}</h2>
+                  <h2 className="text-2xl font-bold">
+                    {industry.name.toUpperCase()}
+                  </h2>
                   <p className="text-muted-foreground">{industry.desc}</p>
                 </div>
-              </div>
-            </motion.section>
-
-            {/* Industry image above application areas */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-            >
-              <div
-                className="rounded-xl overflow-hidden border border-border mb-6"
-                style={{ aspectRatio: "16/9" }}
-              >
-                <img
-                  src={industry.bannerImage ?? industry.image}
-                  alt={industry.name}
-                  className="w-full h-full object-cover"
-                />
               </div>
             </motion.section>
 
@@ -113,16 +103,48 @@ export default function IndustryPage() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
-                  <ul className="space-y-1.5">
-                    {solutions.applicationAreas.map((area) => (
-                      <li key={area} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground leading-relaxed">
-                          {area}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                  {isGrouped ? (
+                    // Grouped layout - two columns
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {(solutions.applicationAreas as AppAreaGroup[]).map(
+                        (group) => (
+                          <div
+                            key={group.category}
+                            className="bg-card border border-border rounded-xl p-4"
+                          >
+                            <h3 className="font-bold text-sm text-primary mb-3 uppercase tracking-wide">
+                              {group.category}
+                            </h3>
+                            <ul className="space-y-1.5">
+                              {group.items.map((item) => (
+                                <li
+                                  key={item}
+                                  className="flex items-start gap-2"
+                                >
+                                  <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                  <span className="text-muted-foreground text-sm leading-relaxed">
+                                    {item}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  ) : (
+                    // Flat list layout
+                    <ul className="space-y-1.5">
+                      {(solutions.applicationAreas as string[]).map((area) => (
+                        <li key={area} className="flex items-start gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                          <span className="text-muted-foreground leading-relaxed">
+                            {area}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </motion.section>
               )}
 
@@ -146,7 +168,7 @@ export default function IndustryPage() {
                         {s.icon}
                       </div>
                       <span className="text-sm font-semibold tracking-wide group-hover:text-primary transition-colors">
-                        {s.title}
+                        {s.title.toUpperCase()}
                       </span>
                     </Link>
                   ))}
@@ -175,7 +197,7 @@ export default function IndustryPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-sm group-hover:text-primary transition-colors tracking-wide">
-                          {p.name}
+                          {p.name.toUpperCase()}
                         </h3>
                         <p className="text-xs text-muted-foreground">
                           {p.desc}
@@ -190,6 +212,21 @@ export default function IndustryPage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Industry image in sidebar */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="rounded-xl overflow-hidden border border-border"
+            >
+              <img
+                src={industry.bannerImage ?? industry.image}
+                alt={industry.name}
+                className="w-full h-full object-cover"
+                style={{ aspectRatio: "16/9" }}
+              />
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -227,7 +264,7 @@ export default function IndustryPage() {
                           data-ocid="industry.link"
                         >
                           <ChevronRight className="w-4 h-4" />
-                          {ind.name}
+                          {ind.name.toUpperCase()}
                         </Link>
                         <div className="absolute z-50 left-0 top-full mt-1 w-64 bg-popover border border-border rounded-lg p-2.5 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none hidden group-hover:block">
                           {ind.desc}

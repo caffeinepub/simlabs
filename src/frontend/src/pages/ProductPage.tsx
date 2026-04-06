@@ -37,7 +37,7 @@ export default function ProductPage() {
         </p>
         <Link to="/" data-ocid="not_found.link">
           <Button className="btn-gradient border-0 text-white">
-            \u2190 Back to Home
+            ← Back to Home
           </Button>
         </Link>
       </div>
@@ -57,7 +57,7 @@ export default function ProductPage() {
       <PageBanner
         image={bannerImage}
         badge="Product"
-        title={product.name}
+        title={product.name.toUpperCase()}
         objectPosition="center"
       />
 
@@ -89,31 +89,15 @@ export default function ProductPage() {
                   {product.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">{product.name}</h2>
+                  <h2 className="text-2xl font-bold">
+                    {product.name.toUpperCase()}
+                  </h2>
                   <p className="text-muted-foreground text-sm">
                     {product.desc}
                   </p>
                 </div>
               </div>
             </motion.section>
-
-            {/* Product image above overview paragraph */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-            >
-              <div
-                className="rounded-xl overflow-hidden border border-border mb-6"
-                style={{ aspectRatio: "16/9" }}
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
 
             {/* Overview paragraph */}
             {detailsObj?.overviewParagraph && (
@@ -174,6 +158,21 @@ export default function ProductPage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Product image in sidebar above CTA */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="rounded-xl overflow-hidden border border-border"
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full object-cover"
+                style={{ aspectRatio: "16/9" }}
+              />
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -209,7 +208,9 @@ export default function ProductPage() {
                       data-ocid="product.link"
                     >
                       <ChevronRight className="w-3 h-3 flex-shrink-0" />
-                      <span className="leading-tight">{p.name}</span>
+                      <span className="leading-tight">
+                        {p.name.toUpperCase()}
+                      </span>
                     </Link>
                     <div className="absolute z-50 left-0 top-full mt-1 w-56 bg-popover border border-border rounded-lg p-2.5 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none hidden group-hover:block">
                       {p.desc}

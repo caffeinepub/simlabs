@@ -74,7 +74,7 @@ export default function ServicesPage() {
                       {s.icon}
                     </div>
                     <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-                      {s.title}
+                      {s.title.toUpperCase()}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                       {s.desc}

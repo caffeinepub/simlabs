@@ -56,6 +56,9 @@ export interface Industry {
   bannerImage?: string;
 }
 
+export type AppAreaGroup = { category: string; items: string[] };
+export type ApplicationAreaEntry = string | AppAreaGroup;
+
 export function slugify(str: string): string {
   return str
     .toLowerCase()
@@ -160,7 +163,7 @@ export const PRODUCTS: Product[] = [
   {
     icon: <Crosshair className="w-5 h-5" />,
     name: "SSG",
-    desc: "Advanced simulation scenario creation platform",
+    desc: "War gaming and advanced simulation scenario creation platform",
     image: "/assets/generated/product-simax.dim_600x380.jpg",
   },
   {
@@ -747,7 +750,7 @@ export const PRODUCT_DETAILS: Record<
   },
   ssg: {
     overviewParagraph:
-      "Smart Scenario Generator (SSG) is an advanced platform designed to create, manage, and execute high-fidelity simulation scenarios for training, mission planning, and analysis. It enables users to build complex, dynamic, and realistic scenarios with ease, supporting a wide range of applications across defense, aerospace, and other simulation-driven industries. The platform focuses on flexibility, scalability, and efficient scenario generation for real-time environments.",
+      "SSG (Smart Scenario Generator) is an advanced war gaming and simulation platform designed to create, manage, and execute high-fidelity simulation scenarios for training, mission planning, and analysis. It enables users to build complex, dynamic, and realistic war gaming scenarios with ease, supporting a wide range of applications across defense, aerospace, and other simulation-driven industries. The platform focuses on flexibility, scalability, and efficient scenario generation for real-time environments.",
     features: [
       "Comprehensive Simulation Framework: scenario preparation, execution, monitoring, evaluation, and debriefing; supports Live, Virtual, and Constructive (LVC) simulation environments; high-fidelity, multi-domain simulation (land, air, and sea)",
       "Large-Scale Distributed Simulation: supports simulation of thousands to millions of entities; distributed real-time simulation with dynamic load balancing; scalable architecture for small to large simulation exercises",
@@ -1116,7 +1119,11 @@ export const PRODUCT_DETAILS: Record<
 
 export const INDUSTRY_SOLUTIONS: Record<
   string,
-  { services: string[]; products: string[]; applicationAreas?: string[] }
+  {
+    services: string[];
+    products: string[];
+    applicationAreas?: ApplicationAreaEntry[];
+  }
 > = {
   aerospace: {
     services: [
@@ -1139,14 +1146,86 @@ export const INDUSTRY_SOLUTIONS: Record<
       "INTBOT",
     ],
     applicationAreas: [
-      "Flight simulation and aircrew training",
-      "Aircraft systems operation and maintenance training",
-      "Mission planning and rehearsal simulation",
-      "Avionics and instrument procedure training",
-      "Air traffic control (ATC) simulation",
-      "3D terrain and airfield visualization",
-      "Design review and engineering visualization",
-      "Digital twin monitoring for aircraft and systems",
+      {
+        category: "Virtual Reality (VR)",
+        items: [
+          "Flight simulation and aircrew training",
+          "Aircraft systems operation and maintenance training",
+          "Mission planning and rehearsal simulation",
+          "Avionics and instrument procedure training",
+          "Immersive design review and engineering visualization",
+          "Virtual cockpit familiarization and procedural training",
+          "Emergency and safety training (fire, evacuation, failure scenarios)",
+          "Cabin crew training and passenger handling scenarios",
+          "Virtual prototyping and human factor (ergonomics) studies",
+          "Maintenance hangar and ground operations training",
+        ],
+      },
+      {
+        category: "Augmented Reality (AR)",
+        items: [
+          "Real-time maintenance guidance with AR overlays",
+          "Aircraft systems operation and maintenance support",
+          "AR-assisted inspection and troubleshooting",
+          "Remote assistance for field technicians",
+          "Visualization of components on physical aircraft",
+          "Step-by-step assembly and disassembly instructions",
+          "AR-enabled digital manuals for technicians",
+          "Wiring, routing, and component identification support",
+          "Quality inspection and validation with overlay references",
+          "On-site training with contextual information display",
+        ],
+      },
+      {
+        category: "Mixed Reality (MR)",
+        items: [
+          "Hands-free maintenance and repair workflows",
+          "Interactive training on real aircraft with virtual overlays",
+          "Collaborative design review and engineering visualization",
+          "Guided assembly and installation procedures",
+          "Real-time simulation of systems on physical assets",
+          "Advanced troubleshooting with interactive holographic guidance",
+          "Multi-user collaborative training and review sessions",
+          "Integration of live data with physical systems for analysis",
+          "Immersive inspection with spatial mapping and overlays",
+        ],
+      },
+      {
+        category: "Visual Simulation (VS)",
+        items: [
+          "Flight simulation and aircrew training systems",
+          "Air traffic control (ATC) simulation",
+          "Mission planning and rehearsal simulation",
+          "Avionics and instrument procedure training",
+          "3D terrain and airfield visualization",
+          "UAV/UAS simulation and operator training",
+          "Radar and sensor simulation",
+          "Weather and environmental condition simulation",
+          "Ground operations and airport logistics simulation",
+          "Defense and combat scenario simulation",
+          "War gaming",
+        ],
+      },
+      {
+        category: "Digital Twins",
+        items: [
+          "Digital twin monitoring for aircraft and systems",
+          "Real-time performance tracking and diagnostics",
+          "Predictive maintenance and failure analysis",
+          "Simulation of operational scenarios for optimization",
+          "Lifecycle management of aerospace assets",
+        ],
+      },
+      {
+        category: "Artificial Intelligence (AI)",
+        items: [
+          "Predictive maintenance and intelligent diagnostics",
+          "AI-driven training evaluation and performance tracking",
+          "Automated analysis of flight and operational data",
+          "Intelligent insights for improving efficiency and reliability",
+          "Automated documentation access and interactive technical support",
+        ],
+      },
     ],
   },
   defense: {
@@ -1170,13 +1249,77 @@ export const INDUSTRY_SOLUTIONS: Record<
       "PRODOC",
     ],
     applicationAreas: [
-      "Tank, ship, army, and navy systems training",
-      "Weapon simulator development and training",
-      "Tactical scenario and wargaming simulation",
-      "Mission rehearsal and combat simulation",
-      "Defence equipment maintenance training",
-      "Command and control (C2/C3I) system integration",
-      "Homeland security and crisis response training",
+      {
+        category: "Virtual Reality (VR)",
+        items: [
+          "Soldier training and combat simulation in immersive environments",
+          "Mission planning and rehearsal simulation",
+          "Weapon handling and operational training",
+          "Vehicle and equipment operation training",
+          "Emergency response and battlefield scenario training",
+          "Virtual boot camps and tactical drills",
+          "Maintenance training for defense equipment and systems",
+          "Human factor and ergonomics studies for gear and systems",
+        ],
+      },
+      {
+        category: "Augmented Reality (AR)",
+        items: [
+          "Real-time battlefield information overlay and situational awareness",
+          "AR-based maintenance and repair guidance for defense equipment",
+          "Remote assistance for field personnel and technicians",
+          "Step-by-step operational instructions and digital manuals",
+          "Equipment identification and system visualization",
+          "AR-assisted inspection and diagnostics",
+          "Training support with contextual overlays in real environments",
+        ],
+      },
+      {
+        category: "Mixed Reality (MR)",
+        items: [
+          "Combined real and virtual training for combat and operations",
+          "Interactive training on physical equipment with virtual overlays",
+          "Collaborative mission planning and strategy sessions",
+          "Guided maintenance and troubleshooting workflows",
+          "Simulation of live scenarios on physical assets",
+          "Multi-user immersive training and coordination exercises",
+          "Advanced visualization for decision-making and planning",
+        ],
+      },
+      {
+        category: "Visual Simulation (VS)",
+        items: [
+          "Battlefield and combat simulation",
+          "Flight and vehicle simulation for defense operations",
+          "UAV/UAS simulation and operator training",
+          "Weapon system simulation and testing",
+          "Radar, sensor, and surveillance simulation",
+          "Mission rehearsal and war-gaming scenarios",
+          "Terrain, environment, and threat simulation",
+          "War gaming",
+          "Command and control (C2) system simulation",
+        ],
+      },
+      {
+        category: "Digital Twins",
+        items: [
+          "Digital twin monitoring of defense equipment and systems",
+          "Real-time performance tracking and diagnostics",
+          "Predictive maintenance for mission-critical assets",
+          "Simulation of operational scenarios for readiness",
+          "Lifecycle management of defense platforms",
+        ],
+      },
+      {
+        category: "Artificial Intelligence (AI)",
+        items: [
+          "AI-powered virtual assistant for defense personnel support",
+          "Analytics and insights from interactions for continuous improvement",
+          "Predictive maintenance and intelligent diagnostics",
+          "AI-driven training evaluation and performance tracking",
+          "Intelligent insights for improving efficiency and reliability",
+        ],
+      },
     ],
   },
   "homeland-security": {

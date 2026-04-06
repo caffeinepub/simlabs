@@ -402,7 +402,7 @@ function WhatWeOffer() {
               {SERVICES.map((s) => (
                 <WhatWeOfferTile
                   key={s.title}
-                  label={s.title}
+                  label={s.title.toUpperCase()}
                   desc={s.desc}
                   icon={s.icon}
                 />
@@ -430,7 +430,7 @@ function WhatWeOffer() {
               {PRODUCTS.map((p) => (
                 <WhatWeOfferTile
                   key={p.name}
-                  label={p.name}
+                  label={p.name.toUpperCase()}
                   desc={p.desc}
                   icon={p.icon}
                 />
@@ -458,7 +458,7 @@ function WhatWeOffer() {
               {INDUSTRIES.map((ind) => (
                 <WhatWeOfferTile
                   key={ind.name}
-                  label={ind.name}
+                  label={ind.name.toUpperCase()}
                   desc=""
                   icon={ind.icon}
                 />

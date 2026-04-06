@@ -35,7 +35,7 @@ export default function ServicePage() {
         </p>
         <Link to="/" data-ocid="not_found.link">
           <Button className="btn-gradient border-0 text-white">
-            \u2190 Back to Home
+            ← Back to Home
           </Button>
         </Link>
       </div>
@@ -52,7 +52,7 @@ export default function ServicePage() {
       <PageBanner
         image={bannerImage}
         badge="Technology Service"
-        title={service.title}
+        title={service.title.toUpperCase()}
         objectPosition="center"
       />
 
@@ -84,29 +84,13 @@ export default function ServicePage() {
                   {service.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">{service.title}</h2>
+                  <h2 className="text-2xl font-bold">
+                    {service.title.toUpperCase()}
+                  </h2>
                   <p className="text-muted-foreground text-sm">
                     {service.desc}
                   </p>
                 </div>
-              </div>
-            </motion.section>
-
-            {/* Service image above key features */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-            >
-              <div
-                className="rounded-xl overflow-hidden border border-border mb-6"
-                style={{ aspectRatio: "16/9" }}
-              >
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover"
-                />
               </div>
             </motion.section>
 
@@ -154,8 +138,23 @@ export default function ServicePage() {
               )}
           </div>
 
-          {/* Sidebar CTA */}
+          {/* Sidebar */}
           <div className="space-y-6">
+            {/* Service image in sidebar above CTA */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="rounded-xl overflow-hidden border border-border"
+            >
+              <img
+                src={service.image}
+                alt={service.title}
+                className="w-full object-cover"
+                style={{ aspectRatio: "16/9" }}
+              />
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -192,7 +191,7 @@ export default function ServicePage() {
                         data-ocid="service.link"
                       >
                         <ChevronRight className="w-4 h-4" />
-                        {s.title}
+                        {s.title.toUpperCase()}
                       </Link>
                       <div className="absolute z-50 left-0 top-full mt-1 w-64 bg-popover border border-border rounded-lg p-2.5 shadow-xl text-xs text-muted-foreground leading-relaxed pointer-events-none hidden group-hover:block">
                         {s.desc}

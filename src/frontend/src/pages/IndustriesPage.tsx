@@ -70,7 +70,7 @@ export default function IndustriesPage() {
                       {ind.icon}
                     </div>
                     <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors">
-                      {ind.name}
+                      {ind.name.toUpperCase()}
                     </h3>
                   </div>
                 </motion.div>
