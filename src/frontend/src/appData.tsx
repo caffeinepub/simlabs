@@ -48,26 +48,34 @@ export const TESTIMONIALS = [
   },
 ];
 
+// NOTE: At least 9 non-IAF logos are placed between IAF Pune (index 0) and IAF Bangalore (index 18).
+// Indices 1–17 are all non-IAF logos (17 logos between the two IAF entries).
 export const CUSTOMER_LOGOS = [
-  { name: "INDIAN AIR FORCE, PUNE", logo: "/assets/logos/IAF.png" },
+  {
+    name: "INDIAN AIR FORCE, PUNE",
+    logo: "/assets/logos/IndianAirForcePune..png",
+  },
   { name: "DRDO", logo: "/assets/logos/DRDO.png" },
   { name: "ISRO", logo: "/assets/logos/ISRO.png" },
   { name: "NAL", logo: "/assets/logos/NAL.png" },
   { name: "ECIL", logo: "/assets/logos/ECIL.png" },
   { name: "AXISCADES", logo: "/assets/logos/AXISCADES.png" },
-  { name: "VOLVO", logo: "/assets/logos/VOLVO.png" },
+  { name: "VOLVO", logo: "/assets/logos/VOLVO_2.png" },
   { name: "GOOGLE", logo: "/assets/logos/GOOGLE.png" },
   { name: "ALSTOM", logo: "/assets/logos/ALSTOM.png" },
   { name: "EPIROC", logo: "/assets/logos/EPIROC.png" },
   { name: "ATLAS COPCO", logo: "/assets/logos/ATLASCOPCO.png" },
-  { name: "LARSEN & TOUBRO", logo: "/assets/logos/landt.png" },
-  { name: "CAE", logo: "/assets/logos/cae.png" },
+  { name: "LARSEN & TOUBRO", logo: "/assets/logos/L&T.png" },
+  { name: "CAE", logo: "/assets/logos/CAE.png" },
   { name: "ABB", logo: "/assets/logos/ABB.png" },
   { name: "CYIENT", logo: "/assets/logos/cyient.png" },
-  { name: "ALPHA DESIGN TECHNOLOGIES", logo: "/assets/logos/adt.png" },
-  { name: "APPLIED MATERIALS", logo: "/assets/logos/amat.png" },
+  { name: "ALPHA DESIGN TECHNOLOGIES", logo: "/assets/logos/APHA.png" },
+  { name: "APPLIED MATERIALS", logo: "/assets/logos/appliedmaterials.png" },
   { name: "INDIAN ARMY", logo: "/assets/logos/army.png" },
-  { name: "INDIAN AIR FORCE, BANGALORE", logo: "/assets/logos/IAF.png" },
+  {
+    name: "INDIAN AIR FORCE, BANGALORE",
+    logo: "/assets/logos/IndianAirForceBangalore.png",
+  },
   { name: "ANIMEDIA", logo: "/assets/logos/animedia.png" },
 ];
 

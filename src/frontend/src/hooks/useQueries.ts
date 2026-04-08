@@ -1,9 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { useActor } from "./useActor";
 
 export function useSubmitContactForm() {
-  const { actor } = useActor();
-
   return useMutation({
     mutationFn: async ({
       name,
@@ -16,8 +13,13 @@ export function useSubmitContactForm() {
       company: string;
       message: string;
     }) => {
-      if (!actor) throw new Error("Actor not ready");
-      return actor.submitContactForm(name, email, company, message);
+      const res = await fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, company, message }),
+      });
+      if (!res.ok) throw new Error("Failed to submit contact form");
+      return res.json();
     },
   });
 }

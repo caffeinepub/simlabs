@@ -2,14 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useParams } from "@tanstack/react-router";
 import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import {
-  type AppAreaGroup,
-  INDUSTRIES,
-  INDUSTRY_SOLUTIONS,
-  PRODUCTS,
-  SERVICES,
-  slugify,
-} from "../data";
+import { INDUSTRIES, INDUSTRY_SOLUTIONS, slugify } from "../data";
 import Footer from "./Footer";
 import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
@@ -37,17 +30,7 @@ export default function IndustryPage() {
     );
   }
 
-  const applicableServices = solutions
-    ? SERVICES.filter((s) => solutions.services.includes(s.title))
-    : [];
-  const applicableProducts = solutions
-    ? PRODUCTS.filter((p) => solutions.products.includes(p.name))
-    : [];
-
-  const isGrouped =
-    solutions?.applicationAreas &&
-    solutions.applicationAreas.length > 0 &&
-    typeof solutions.applicationAreas[0] === "object";
+  const applicableAreas = (solutions?.applicationAreas ?? []) as string[];
 
   return (
     <div className="min-h-screen bg-[oklch(0.09_0.028_247)] text-foreground">
@@ -95,117 +78,26 @@ export default function IndustryPage() {
               </div>
             </motion.section>
 
-            {solutions?.applicationAreas &&
-              solutions.applicationAreas.length > 0 && (
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
-                  {isGrouped ? (
-                    // Grouped layout - two columns
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      {(solutions.applicationAreas as AppAreaGroup[]).map(
-                        (group) => (
-                          <div
-                            key={group.category}
-                            className="bg-card border border-border rounded-xl p-4"
-                          >
-                            <h3 className="font-bold text-sm text-primary mb-3 uppercase tracking-wide">
-                              {group.category}
-                            </h3>
-                            <ul className="space-y-1.5">
-                              {group.items.map((item) => (
-                                <li
-                                  key={item}
-                                  className="flex items-start gap-2"
-                                >
-                                  <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                                  <span className="text-muted-foreground text-sm leading-relaxed">
-                                    {item}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  ) : (
-                    // Flat list layout
-                    <ul className="space-y-1.5">
-                      {(solutions.applicationAreas as string[]).map((area) => (
-                        <li key={area} className="flex items-start gap-3">
-                          <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                          <span className="text-muted-foreground leading-relaxed">
-                            {area}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </motion.section>
-              )}
-
-            {applicableServices.length > 0 && (
+            {applicableAreas.length > 0 && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.25 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h2 className="text-2xl font-bold mb-6">Relevant Services</h2>
-                <div className="flex flex-wrap gap-3">
-                  {applicableServices.map((s) => (
-                    <Link
-                      key={s.title}
-                      to="/services/$slug"
-                      params={{ slug: slugify(s.title) }}
-                      data-ocid="industry.link"
-                      className="bg-card border border-border rounded-lg px-4 py-2.5 flex items-center gap-2 hover:border-primary/50 hover:text-primary transition-colors group"
-                    >
-                      <div className="w-6 h-6 rounded btn-gradient flex items-center justify-center text-white flex-shrink-0 [&>svg]:w-3.5 [&>svg]:h-3.5">
-                        {s.icon}
-                      </div>
-                      <span className="text-sm font-semibold tracking-wide group-hover:text-primary transition-colors">
-                        {s.title.toUpperCase()}
+                <h2 className="text-2xl font-bold mb-6">Application Areas</h2>
+                <div className="space-y-1.5">
+                  {applicableAreas.map((area) => (
+                    <div key={area} className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground leading-relaxed">
+                        {area}
                       </span>
-                    </Link>
+                    </div>
                   ))}
                 </div>
-              </motion.section>
-            )}
-
-            {applicableProducts.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <h2 className="text-2xl font-bold mb-6">Relevant Products</h2>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {applicableProducts.map((p) => (
-                    <Link
-                      key={p.name}
-                      to="/products/$slug"
-                      params={{ slug: slugify(p.name) }}
-                      data-ocid="industry.link"
-                      className="bg-card border border-border rounded-xl overflow-hidden card-glow transition-all duration-300 hover:border-primary/50 group flex items-center gap-3 p-4"
-                    >
-                      <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">
-                        {p.icon}
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-sm group-hover:text-primary transition-colors tracking-wide">
-                          {p.name.toUpperCase()}
-                        </h3>
-                        <p className="text-xs text-muted-foreground">
-                          {p.desc}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                <p className="text-sm text-muted-foreground mt-4 italic">
+                  …. many more
+                </p>
               </motion.section>
             )}
           </div>
@@ -233,16 +125,18 @@ export default function IndustryPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-card border border-border rounded-xl p-6 card-glow"
             >
-              <h3 className="font-bold text-lg mb-3">Explore What We Offer</h3>
+              <h3 className="font-bold text-lg mb-3">
+                Interested in exploring the possibilities?
+              </h3>
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-                Discover how SIMLABS delivers tailored simulation and
-                visualization solutions for the {industry.name} sector.
+                Connect with our experts to see how our services and products
+                can add value to your industry.
               </p>
-              <a href="/#contact" data-ocid="industry.primary_button">
+              <Link to="/contact" data-ocid="industry.primary_button">
                 <Button className="w-full btn-gradient border-0 text-white font-semibold">
-                  Explore What We Offer
+                  Get in Touch
                 </Button>
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div

@@ -61,11 +61,10 @@ export default function CustomersPage() {
             {CUSTOMER_LOGOS.map((c) => (
               <div key={c.name} className="flex flex-col items-center gap-2">
                 <div
-                  className="w-full flex items-center justify-center rounded-lg border border-gray-200 overflow-hidden"
+                  className="w-full flex items-center justify-center rounded-lg border border-border overflow-hidden bg-card"
                   style={{
                     height: "90px",
                     padding: "10px",
-                    backgroundColor: "#ffffff",
                   }}
                 >
                   {c.logo ? (
@@ -76,7 +75,7 @@ export default function CustomersPage() {
                       loading="lazy"
                     />
                   ) : (
-                    <span className="text-xs font-bold text-gray-700 text-center uppercase">
+                    <span className="text-xs font-bold text-muted-foreground text-center uppercase">
                       {c.name}
                     </span>
                   )}

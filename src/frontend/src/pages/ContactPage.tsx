@@ -1,21 +1,163 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@tanstack/react-router";
-import {
-  ChevronRight,
-  Globe,
-  Loader2,
-  Mail,
-  MessageCircle,
-} from "lucide-react";
+import { ChevronRight, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import Footer from "./Footer";
 import PageBanner from "./PageBanner";
 import SharedHeader from "./SharedHeader";
+
+function ContactInfoImage() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [imgSrc, setImgSrc] = useState<string>("");
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    const W = 560;
+    const H = 220;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = `${W}px`;
+    canvas.style.height = `${H}px`;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.scale(dpr, dpr);
+
+    // Background
+    ctx.fillStyle = "#0f1117";
+    ctx.beginPath();
+    ctx.roundRect(0, 0, W, H, 14);
+    ctx.fill();
+
+    // Border
+    ctx.strokeStyle = "rgba(249,115,22,0.35)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, W, H, 14);
+    ctx.stroke();
+
+    // Header bar
+    ctx.fillStyle = "rgba(249,115,22,0.12)";
+    ctx.beginPath();
+    ctx.roundRect(0, 0, W, 36, [14, 14, 0, 0]);
+    ctx.fill();
+
+    // Header label
+    ctx.fillStyle = "#f97316";
+    ctx.font = "bold 11px system-ui, -apple-system, sans-serif";
+    ctx.letterSpacing = "0.1em";
+    ctx.fillText("ENQUIRY DETAILS", 18, 23);
+
+    // Divider line after header
+    ctx.strokeStyle = "rgba(249,115,22,0.2)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, 36);
+    ctx.lineTo(W, 36);
+    ctx.stroke();
+
+    // Business Enquiries section — shifted down by 20px for more top breathing room
+    // Briefcase icon drawn with canvas paths
+    const bx = 14; // icon origin x
+    const by = 68; // icon origin y (top of icon) — was 48, now +20
+    const bw = 18; // icon width
+    const bh = 14; // icon body height
+    ctx.fillStyle = "#f97316";
+    ctx.strokeStyle = "#f97316";
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    // Briefcase body
+    ctx.beginPath();
+    ctx.roundRect(bx, by + 4, bw, bh, 2);
+    ctx.stroke();
+    // Briefcase handle
+    ctx.beginPath();
+    ctx.roundRect(bx + 5, by, bw - 10, 5, 1.5);
+    ctx.stroke();
+    // Briefcase center divider
+    ctx.beginPath();
+    ctx.moveTo(bx, by + 4 + bh / 2);
+    ctx.lineTo(bx + bw, by + 4 + bh / 2);
+    ctx.stroke();
+
+    // Label — was 58, now +20 = 78
+    ctx.fillStyle = "#f97316";
+    ctx.font = "bold 16px system-ui, -apple-system, sans-serif";
+    ctx.letterSpacing = "0.08em";
+    ctx.fillText("BUSINESS ENQUIRIES", 38, 78);
+
+    // Value — was 78, now +20 = 98
+    ctx.fillStyle = "#e2e8f0";
+    ctx.font = "16px system-ui, -apple-system, sans-serif";
+    ctx.letterSpacing = "0";
+    ctx.fillText("Submit the form or write to  simlabs@simlabs.in", 38, 98);
+
+    // Divider between sections — was 98, now +20 = 118
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(16, 128);
+    ctx.lineTo(W - 16, 128);
+    ctx.stroke();
+
+    // Job Enquiries section — shifted down by 30px total for more breathing room
+    // Envelope icon drawn with canvas paths
+    const ex = 14; // icon origin x
+    const ey = 143; // icon origin y — was 108, now +35
+    const ew = 18; // icon width
+    const eh = 13; // icon height
+    ctx.strokeStyle = "#f97316";
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    // Envelope body
+    ctx.beginPath();
+    ctx.roundRect(ex, ey, ew, eh, 2);
+    ctx.stroke();
+    // Envelope flap (V shape)
+    ctx.beginPath();
+    ctx.moveTo(ex, ey);
+    ctx.lineTo(ex + ew / 2, ey + eh * 0.55);
+    ctx.lineTo(ex + ew, ey);
+    ctx.stroke();
+
+    // Label — was 118, now +35 = 153
+    ctx.fillStyle = "#f97316";
+    ctx.font = "bold 16px system-ui, -apple-system, sans-serif";
+    ctx.letterSpacing = "0.08em";
+    ctx.fillText("JOB ENQUIRIES", 38, 153);
+
+    // Value — was 138, now +35 = 173
+    ctx.fillStyle = "#e2e8f0";
+    ctx.font = "16px system-ui, -apple-system, sans-serif";
+    ctx.letterSpacing = "0";
+    ctx.fillText("Write to  jobs@simlabs.in", 38, 173);
+
+    setImgSrc(canvas.toDataURL("image/png"));
+  }, []);
+
+  return (
+    <>
+      {/* Hidden canvas used only for generation */}
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+      {imgSrc && (
+        <img
+          src={imgSrc}
+          alt="Enquiry contact details — Business: simlabs@simlabs.in, Jobs: jobs@simlabs.in"
+          className="w-full rounded-xl select-none pointer-events-none"
+          draggable={false}
+          data-ocid="contact.card"
+        />
+      )}
+    </>
+  );
+}
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -60,14 +202,17 @@ export default function ContactPage() {
     setIsSuccess(false);
     setIsError(false);
     try {
-      const res = await fetch("/contact.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error();
+      const subject = encodeURIComponent(
+        `Contact Form Enquiry from ${form.name} - ${form.company}`,
+      );
+      const body = encodeURIComponent(
+        `Name: ${form.name}\nEmail: ${form.email}\nMobile: ${form.mobile}\nCompany: ${form.company}\nAddress: ${form.address}\nCity: ${form.city}\nState: ${form.state}\nCountry: ${form.country}\nPIN/ZIP: ${form.pinzip}\n\nMessage:\n${form.message}`,
+      );
+      window.location.href = `mailto:simlabs@simlabs.in?subject=${subject}&body=${body}`;
       setIsSuccess(true);
-      toast.success("Message sent! We'll be in touch soon.");
+      toast.success(
+        "Email client opened. Please send the email to complete your enquiry.",
+      );
       setForm({
         name: "",
         email: "",
@@ -83,7 +228,9 @@ export default function ContactPage() {
       resetCaptcha();
     } catch {
       setIsError(true);
-      toast.error("Failed to send. Please try again.");
+      toast.error(
+        "Failed to open email client. Please email us directly at simlabs@simlabs.in",
+      );
     } finally {
       setIsPending(false);
     }
@@ -404,81 +551,7 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-xl font-bold mb-6">Contact Information</h3>
                 <div className="space-y-4">
-                  {/* Business enquiries */}
-                  <div
-                    className="p-4 rounded-xl bg-card border border-border"
-                    data-ocid="contact.card"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">
-                        <Mail className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">
-                          For business enquiries:
-                        </p>
-                        <p className="text-sm font-medium">
-                          info at simlabs dot in / simlabs at simlabs dot in
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* WhatsApp */}
-                  <div
-                    className="p-4 rounded-xl bg-card border border-border"
-                    data-ocid="contact.card"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">
-                        <MessageCircle className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">
-                          WhatsApp
-                        </p>
-                        <p className="text-sm font-medium">+91 7795239395</p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Job enquiries */}
-                  <div
-                    className="p-4 rounded-xl bg-card border border-border"
-                    data-ocid="contact.card"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">
-                        <Mail className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1 font-semibold uppercase tracking-wider">
-                          For job enquiries:
-                        </p>
-                        <p className="text-sm font-medium">
-                          jobs at simlabs dot in
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Website */}
-                  <a
-                    href="https://www.simlabs.in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors group"
-                    data-ocid="contact.link"
-                  >
-                    <div className="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center text-white flex-shrink-0">
-                      <Globe className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-0.5">
-                        Website
-                      </p>
-                      <p className="text-sm font-medium group-hover:text-primary transition-colors">
-                        www.simlabs.in
-                      </p>
-                    </div>
-                  </a>
+                  <ContactInfoImage />
                 </div>
               </div>
               <div className="p-6 rounded-xl bg-primary/5 border border-primary/20">

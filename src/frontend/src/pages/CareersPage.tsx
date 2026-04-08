@@ -207,16 +207,28 @@ export default function CareersPage() {
                         )}
                       </div>
                     </div>
-                    <Badge
-                      className={`shrink-0 text-xs font-semibold uppercase tracking-wide ${
-                        job.type === "Internship"
-                          ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
-                          : "bg-orange-500/15 text-orange-400 border-orange-500/30"
-                      }`}
-                      variant="outline"
-                    >
-                      {job.type}
-                    </Badge>
+                    <div className="flex flex-col items-end gap-2">
+                      <Badge
+                        className={`shrink-0 text-xs font-semibold uppercase tracking-wide ${
+                          job.type === "Internship"
+                            ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
+                            : "bg-orange-500/15 text-orange-400 border-orange-500/30"
+                        }`}
+                        variant="outline"
+                      >
+                        {job.type}
+                      </Badge>
+                      <a href="mailto:jobs@simlabs.in">
+                        <Button
+                          size="sm"
+                          className="btn-gradient text-white text-xs font-semibold h-7 px-3 gap-1"
+                          data-ocid={`careers.apply.${job.id}`}
+                        >
+                          <Mail className="w-3 h-3" />
+                          Apply
+                        </Button>
+                      </a>
+                    </div>
                   </div>
 
                   {/* Description */}
@@ -292,8 +304,7 @@ export default function CareersPage() {
                     >
                       www.simlabs.in
                     </a>{" "}
-                    to learn more about SIMLABS and our work in immersive
-                    technologies.
+                    to learn more about SIMLABS and what we do.
                   </p>
                 </motion.div>
               ))}
@@ -311,12 +322,10 @@ export default function CareersPage() {
               <div className="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mb-6 text-white">
                 <Mail className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold mb-3">
+              <h3 className="text-2xl font-bold text-foreground mb-3">
                 Want to apply? Send us your resume.
               </h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Send your resume to{" "}
-                <span className="text-orange-500">jobs at simlabs dot in</span>.
                 We will reach out if a suitable opportunity becomes available.
               </p>
               <a href="mailto:jobs@simlabs.in">

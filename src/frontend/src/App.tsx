@@ -539,14 +539,13 @@ function CustomerLogoSection() {
               <div
                 key={`${c.name}-${i}`}
                 className="flex-shrink-0 flex flex-col items-center gap-2"
-                style={{ width: "120px" }}
+                style={{ width: "140px" }}
               >
                 <div
-                  className="w-full flex items-center justify-center rounded-lg border border-gray-200 overflow-hidden"
+                  className="w-full flex items-center justify-center rounded-lg border border-border overflow-hidden bg-card"
                   style={{
-                    height: "80px",
-                    padding: "8px",
-                    backgroundColor: "#ffffff",
+                    height: "90px",
+                    padding: "12px",
                   }}
                 >
                   <img

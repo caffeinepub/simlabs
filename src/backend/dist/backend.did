@@ -1,0 +1,12 @@
+type Submission = 
+ record {
+   company: text;
+   email: text;
+   message: text;
+   name: text;
+ };
+service : {
+  getAllSubmissions: () -> (vec Submission) query;
+  submitContactForm: (name: text, email: text, company: text, message:
+   text) -> ();
+}

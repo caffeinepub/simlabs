@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
-import { SiFacebook, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
+import { Linkedin } from "lucide-react";
+import { SiFacebook, SiX, SiYoutube } from "react-icons/si";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -72,7 +73,7 @@ export default function Footer() {
             <div className="flex gap-3">
               {[
                 {
-                  icon: <SiLinkedin className="w-4 h-4" />,
+                  icon: <Linkedin className="w-4 h-4" />,
                   href: "https://in.linkedin.com/in/simlabssoftware",
                   label: "LinkedIn",
                 },
